@@ -7,6 +7,41 @@
 % ¿Qué mejoras propongo sobre algo ya existente?
 % ¿Por qué he elegido esta temática?
 
+A la hora de gestionar una agrupación musical, ya sea por parte de su director o de los administradores, se recurre mayoritariamente a herramientas de comunicación no especializadas, principalmente \textit{WhatsApp}. Así, la gestión de una agrupación consiste en:
+
+\begin{itemize}
+    \item Para la asistencia, cada miembro escribe a través de un grupo, o al director, si no puede asistir a un ensayo o evento.
+    \item Para el repertorio, los distintos documentos (partitura y partes) que necesitan los músicos se envían a través de alguna plataforma de cloud (Google Drive, Onedrive, Dropbox) o se imprimen exclusivamente por los administradores.
+    \item Respecto a los eventos y ensayos, se avisan por el canal no especializado de comunicación y la responsabilidad de recordarlos debidamente antes de su celebración recae en los administradores.
+\end{itemize}
+
+
+Esto deriva en varios problemas:
+
+\begin{itemize}
+    \item La probabilidad de error humano aumenta en el momento en el que los administradores son responsables de recordar eventos y gestionar asistencia.
+    \item Se crea una duplicidad de comunicación, ya que los miembros pueden escribir sobre su asistencia al director o a los administradores, pudiendo darse el caso de que finalmente no todos dispongan de los datos necesarios para organizar un ensayo u evento, o que dispongan de datos contradictorios entre sí.
+\end{itemize}
+
+En los últimos años ha surgido software dedicado a este propósito, como es el caso de \textit{Glissandoo}. Sin embargo, esta herramienta tiene varias desventajas:
+
+\begin{itemize}
+    \item El código es privado, y una agrupación no puede montar su propio servidor con la aplicación en cuestión.
+    \item Es de pago a partir de 20 miembros.
+    \item Solo se puede usar en móvil, ya que no dispone de versión web ni de escritorio.
+    \item Sigue existiendo duplicidad, ya que aunque los miembros usen esta aplicación, la comunicación bidireccional entre administradores y miembros de la banda se sigue realizando a través de una herramienta de comunicación no especializada.
+\end{itemize}
+
+En este trabajo se propone una alternativa libre que pueda resolver los problemas anteriores, de modo que:
+
+\begin{itemize}
+    \item Cada agrupación podrá montar su propio servidor con la aplicación, personálizandola y adaptándola a sus necesidades.
+    \item Los gastos por uso de la herramienta solo dependerán del servidor que use la agrupación, en su caso.
+    \item Será usable en todas las plataformas en las que se pueda acceder a un navegador web.
+    \item Estará integrada en una herramienta de comunicación no especializada como es Telegram, pero añadiendo funcionalidad específica y automática para la gestión de la agrupación.
+\end{itemize}
+
+
 
 \section{Objetivos}
 
@@ -16,8 +51,8 @@
 Los objetivos de este trabajo se pueden resumir en dos fundamentales:
 
 \begin{itemize}
-    \item Por un lado, dar respuesta a los requerimientos de numerosas agrupaciones musicales, como orquestas, bandas, charangas, etc, de un software que les permita gestionar eficientemente eventos, miembros, ensayos, repertorio, etc.
-    \item Por otro lado, investigar hasta qué punto la interfaz de usuario proporcionada por un bot de Telegram es suficiente, competitiva y cómoda para el usuario, teniendo en cuenta que está integrado en un chat, con las limitaciones que ello conlleva, y que todas las interacciones están basadas en el envío de mensajes.
+    \item Por un lado, dar respuesta a los requerimientos de numerosas agrupaciones musicales de diversos tipos, como orquestas, bandas, charangas, etc, de un software que les permita gestionar eficientemente eventos, miembros, ensayos, repertorio, etc.
+    \item Por otro lado, investigar hasta qué punto la interfaz de usuario proporcionada por un bot de Telegram es suficiente, competitiva y cómoda para el usuario. Esta interfaz está integrada en un chat, por lo que se pretende identificar las limitaciones que puedan darse, y explorar soluciones para evitar dichas carencias.
 \end{itemize}
 
 
