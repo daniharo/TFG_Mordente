@@ -5,11 +5,37 @@
 
 \section{Dominio del problema a resolver}
 
+En la actualidad, la digitalización de empresas, administraciones y organismos públicos avanza a ritmo imparable, y la situación excepcional generada por la pandemia de COVID-19 no ha hecho más que afianzar este avance.
 
+Los datos del Índice de Digitalización de la Economía y la Sociedad (DESI) en 2022\cite{desiUE}, índice que monitoriza el rendimiento digital de Europa y el progreso de los países de la Unión Europea en su competitividad digital, muestran que todos los países han progresado en su digitalización. Destaca el hecho de que los países que han empezado en un nivel más bajo de desarrollo digital crecen a un ritmo más rápido, y que numerosos países crecen a un ritmo más elevado del que se les espera, como es el caso de España\cite{desiSpain} (con un 0.7\% más de progreso del esperado).
+En concreto, nuestro país es el séptimo con mayor nivel de digitalización según este índice, y el número de personas con competencias digitales básicas es del 64\%, por encima de la media de la UE, del 54\%. Está por encima de la UE también en implementación de la banda ancha fija de al menos 100 Mbps, usuarios de la administración electrónica o pymes con nivel básico de intensidad digital.
 
+%España 2º lugar Índice de Digitalización de la Economía y la Sociedad
 
+%Otras áreas se han modernizado, como todas las empresas. Datos: https://servicioestudiosugt.com/digitalizacion-de-la-empresa-espanola-3-edicion/
+A nivel empresarial otros estudios concluyen que la digitalización está más estancada\cite{digitalizacionEmpresaUGT}, debido a una baja inversión en TIC.
 
-Para la correcta planificación de ensayos y eventos, tanto el director como los administradores necesitan conocer con antelación qué musicos tienen pensado asistir y cuáles estarán ausentes. Esto les permitirá saber si por ejemplo se necesita llamar a un músico externo a la agrupación para que participe en un evento.
+%Incluso a nivel de la administración se están impulsando estrategias para avanzar en la digitalización, como España Digital 2026
+Por otro lado, a nivel de la administración se están impulsando estrategias para avanzar en la digitalización, como España Digital 2026\cite{espanaDigital2026}, fomentando programas para acelerar la digitalización de pymes (pequeñas y medianas empresas), mejorar la conectividad o 
+
+%Sin embargo, las agrupaciones musicales, que aumentan, siguen sin modernizarse, cuando podrían disfrutar de numerosas ventajas haciendo uso de la tecnología.
+
+Pese a todo esto, algunos sectores de la sociedad aún manifiestan reticencias para proceder a su digitalización, por la falta de herramientas, recursos o ayuda. 
+Una de ellas es la que nos ocupa en este trabajo: las asociaciones o agrupaciones musicales. La complejidad de su gestión es suficiente para que los beneficios de la digitalización se puedan manifestar, dada la cantidad de personas que se pueden encontrar en cada una de ellas y la naturaleza de los procesos que siguen, como la programación de ensayos y eventos, la gestión de repertorio o la gestión de miembros.
+
+Por ejemplo, para la correcta planificación de ensayos y eventos, tanto el director como los administradores necesitan conocer con antelación qué músicos tienen pensado asistir y cuáles estarán ausentes. Esto les permitirá saber si se necesita llamar a un músico externo a la agrupación para que participe en un evento, o si es mejor cancelar o aplazar el evento. Para esta tarea, habitualmente el director avisa del evento por un grupo de mensajería a los miembros, y pide que quien no tenga pensado asistir se lo notifique. De este modo se generan varios problemas:
+
+\begin{itemize}
+    \item La información sobre qué miembros han notificado su ``no asistencia'' solo la tiene el director, por lo que si otros administradores quieren conocerla se la tienen que pedir individualmente.
+    \item Si algún miembro ha comunicado su ``no asistencia'' a otro administrador, tiene que poner la información en común con la del director, pudiendo dar lugar a discrepancias.
+    \item Si el director quiere tener la información de asistencia centralizada, tiene que repasar sus conversaciones con los miembros para elaborar una tabla de asistencia, que tiene que ir actualizando manualmente, con la carga de trabajo que ello supone.
+\end{itemize}
+
+Similares problemas se crean para los demás procesos que se llevan a cabo en una agrupación musical.
+
+Es evidente, por tanto, que se necesita una herramienta específica que permita automatizar sus procesos y avanzar en su digitalización para equipararla a la del resto de la sociedad.
+
+Aunque ya existen herramientas como Glissandoo, que se analiza en este capítulo, son de pago, poco personalizables o están poco integradas en el flujo de trabajo actual de las agrupaciones. Es por ello que este trabajo pretende aportar una alternativa libre que solucione estos inconvenientes, analizando de paso las desventajas que puede suponer otro tipo de implementación y el conocimiento colectivo que se puede crear durante el proceso.
 
 % Descripción más detallada del problema, carencias que existen,
 % características específicas de los usuarios finales, descripción de
@@ -33,6 +59,7 @@ Para la correcta planificación de ensayos y eventos, tanto el director como los
     \item Telegraf
     \item node-telegram-bot-api
     \item python-telegram-bot
+    \item grammY
 \end{itemize}
 
 \subsection{Base de datos}
