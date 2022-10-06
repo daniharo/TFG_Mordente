@@ -35,12 +35,76 @@ Similares problemas se crean para los demás procesos que se llevan a cabo en un
 
 Es evidente, por tanto, que se necesita una herramienta específica que permita automatizar sus procesos y avanzar en su digitalización para equipararla a la del resto de la sociedad.
 
-Aunque ya existen herramientas como Glissandoo, que se analiza en este capítulo, son de pago, poco personalizables o están poco integradas en el flujo de trabajo actual de las agrupaciones. Es por ello que este trabajo pretende aportar una alternativa libre que solucione estos inconvenientes, analizando de paso las desventajas que puede suponer otro tipo de implementación y el conocimiento colectivo que se puede crear durante el proceso.
+Aunque ya existen herramientas como Glissandoo, que se analiza en este capítulo, son de pago, poco personalizables o están poco integradas en el flujo de trabajo actual de las agrupaciones. Es por ello que este trabajo pretende aportar una alternativa libre que solucione estos inconvenientes, de modo que:
+
+\begin{itemize}
+    \item Cada agrupación pueda montar su propio servidor con la aplicación, personálizandola y adaptándola a sus necesidades.
+    \item Los gastos por uso de la herramienta solo dependan del servidor que use la agrupación, si usa un servidor dedicado.
+    \item Sea usable en todas las plataformas en las que se pueda acceder a un navegador web.
+    \item Esté integrada en una herramienta de mensajería que ya esté en uso como es Telegram, pero añadiendo funcionalidad específica y automática necesaria para la gestión de la agrupación, eximiendo a los administradores y el director de tareas que se pueden automatizar.
+\end{itemize}
+
 
 % Descripción más detallada del problema, carencias que existen,
 % características específicas de los usuarios finales, descripción de
 % trabajos previos del cual este es una extensión o de proyectos de 
 % investigación en el que se enmarca, etc.
+
+\section{Trabajos relacionados}
+% Evidencias científicas o revisiones recientes de uso de tecnologías o
+% metodologías para resolver un problema igual o similar al mío. Buscar
+% referencias en fuentes fiables como Google Scholar.
+
+\section{Aplicaciones similares}
+% Descripciones, capturas y tabla comparativa
+% Alternativas: Glissandoo, Whatsapp
+
+Aunque aún la mayoría de agrupaciones usan Whatsapp como herramienta de comunicación sin usar ningún software más que automatice las tareas, en los últimos tiempos han surgido otras herramientas que dan respuesta a sus necesidades:
+
+\subsection{Glissandoo}
+
+Glissando (\url{https://glissandoo.com/}) es un software creado por la empresa Plausible Technologies, con sede en Valencia. En su página web se define como ``un software que nace con el objetivo de profesionalizar, modernizar y digitalizar las instituciones musicales''. Incorpora numerosas funcionalidades para digitalizar instituciones musicales, tal y como pretende este trabajo. Entre ellas se encuentran:
+
+\begin{itemize}
+    \item Organización de ensayos y conciertos. Los miembros pueden ver los ensayos y conciertos en la página de inicio.
+    \item Previsión de asistencia y pasar lista: para cada ensayo o concierto, el miembro puede seleccionar si tiene prevista su asistencia o no.
+    \item Distribución de partituras: en la sección de inicio se puede acceder a un listado de todo el repertorio de los ensayos y conciertos programados, y en cada uno de los ensayos se puede ver el repertorio asociado.
+    \item Comunicaciones: los administradores pueden añadir avisos que reciben los miembros, teniendo la capacidad de responder, reaccionar, y adjuntar archivos a los comunicados.
+\end{itemize}
+
+Se pueden ver varias capturas de la aplicación en la figura \ref{fig:capturas_glissandoo}.
+\begin{figure}[h]
+\minipage{0.32\textwidth}
+  \includegraphics[width=\linewidth]{imagenes/capturas_glissandoo/IMG_0928.jpeg}
+\endminipage\hfill
+\minipage{0.32\textwidth}
+  \includegraphics[width=\linewidth]{imagenes/capturas_glissandoo/IMG_0929.jpeg}
+\endminipage\hfill
+\minipage{0.32\textwidth}
+  \includegraphics[width=\linewidth]{imagenes/capturas_glissandoo/IMG_0930.jpeg}
+\endminipage
+\caption{Capturas de la aplicación \textit{Glissandoo}}\label{fig:capturas_glissandoo}
+\centering
+\end{figure}
+
+Algunas ventajas de esta alternativa son:
+
+\begin{itemize}
+    \item Presenta un diseño intuitivo y fácil de usar para todos los usuarios.
+    \item Está disponible para las plataformas móviles iOS y Android, ampliamente usadas por los usuarios.
+    \item Es gratuita si la agrupación tiene menos de 20 músicos.
+    \item Es elaborada en por una empresa valenciana, lo cual da seguridad de que se adaptará a las necesidades de las agrupaciones musicales españolas.
+    \item Incorpora un módulo de comunicaciones para poder centralizar todos los procesos de la agrupación en la aplicación, sin dejar los comunicados en otra aplicación de mensajería como WhatsApp.
+\end{itemize}
+
+Sin embargo, esta herramienta tiene varias desventajas:
+
+\begin{itemize}
+    \item El código es privado, y una agrupación no puede montar su propio servidor con la aplicación en cuestión.
+    \item Es de pago para uso en agrupaciones con más de 20 miembros.
+    \item Solo se puede usar en móvil, ya que no dispone de versión web ni de escritorio. (Esto ha cambiado durante la realización de este trabajo, ya que han implementado una versión web)
+    \item Sigue existiendo duplicidad, ya que aunque los miembros usen esta aplicación, la comunicación bidireccional entre administradores y miembros de la banda se sigue realizando a través de una herramienta distinta de comunicación no especializada.
+\end{itemize}
 
 
 \section{Metodologías y tecnologías de base que podrían usarse}
@@ -114,31 +178,3 @@ Aunque ya existen herramientas como Glissandoo, que se analiza en este capítulo
 % Se explican brevemente, con logos y capturas ilustrativas si es necesario, 
 % y se proporcionan tablas comparativas. No se decide todavía cuáles elegir, 
 % luego en la propuesta
-
-\section{Trabajos relacionados}
-% Evidencias científicas o revisiones recientes de uso de tecnologías o
-% metodologías para resolver un problema igual o similar al mío. Buscar
-% referencias en fuentes fiables como Google Scholar.
-
-\section{Aplicaciones similares}
-% Descripciones, capturas y tabla comparativa
-Alternativas: Glissandoo, Whatsapp
-
-En los últimos años ha surgido software dedicado a este propósito, como es el caso de \textit{Glissandoo}. Sin embargo, esta herramienta tiene varias desventajas:
-
-\begin{itemize}
-    \item El código es privado, y una agrupación no puede montar su propio servidor con la aplicación en cuestión.
-    \item Es de pago para uso en agrupaciones con más de 20 miembros.
-    \item Solo se puede usar en móvil, ya que no dispone de versión web ni de escritorio. (Esto ha cambiado durante la realización de este trabajo, ya que han implementado una versión web)
-    \item Sigue existiendo duplicidad, ya que aunque los miembros usen esta aplicación, la comunicación bidireccional entre administradores y miembros de la banda se sigue realizando a través de una herramienta distinta de comunicación no especializada.
-\end{itemize}
-
-En este trabajo se propone una alternativa libre que pueda resolver los problemas anteriores, de modo que:
-
-\begin{itemize}
-    \item Cada agrupación podrá montar su propio servidor con la aplicación, personálizandola y adaptándola a sus necesidades.
-    \item Los gastos por uso de la herramienta solo dependerán del servidor que use la agrupación, si usa un servidor dedicado.
-    \item Será usable en todas las plataformas en las que se pueda acceder a un navegador web.
-    \item Estará integrada en una herramienta de comunicación no especializada como es Telegram, pero añadiendo funcionalidad específica y automática necesaria para la gestión de la agrupación, eximiendo a los administradores y el director de tareas que se pueden automatizar.
-\end{itemize}
-
