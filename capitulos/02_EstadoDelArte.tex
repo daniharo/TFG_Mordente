@@ -119,8 +119,9 @@ Se plantean los siguientes lenguajes de alto nivel, que disponen de frameworks i
     \item \textbf{PHP}: es un lenguaje interpretado usado principalmente para desarrollo web en el lado del servidor, cuya principal característica es que puede ser embebido en HTML, de forma que cada ``trozo de PHP'' se ejecuta para intercambiarse por HTML. Sin embargo su uso ha cambiado en los últimos años, dando lugar a frameworks como Symphony (\url{https://symfony.com/}) o Laravel (\url{https://laravel.com/}) basados en la arquitectura Modelo-vista-controlador.
 \end{itemize}
 
-Se proporciona una tabla comparativa entre los lenguajes.
+Se proporciona una tabla comparativa entre los lenguajes, la tabla \ref{tab:comparacionLenguajes}.
 
+\begin{table}
 \begin{minipage}{\textwidth}
 \begin{tabularx}{\textwidth}{|l|X|X|X|X|}
 \hline
@@ -138,16 +139,36 @@ Comunidad \footnote{Preguntas totales en stackoverflow: \url{https://stackoverfl
 \hline
 \end{tabularx}
 \end{minipage}
+\caption{Comparación de lenguajes de programación}\label{tab:comparacionLenguajes}
+\end{table}
+
 
 \subsection{Framework para el desarrollo del bot}
 \begin{itemize}
-    \item Telegraf
-    \item node-telegram-bot-api
-    \item python-telegram-bot
-    \item grammY
+    \item \textbf{Telegraf}: biblioteca desarrollada inicialmente para JavaScript, migrada en la versión 4 dando soporte a TypeScript. No dispone de documentación guiada, y la migración a la versión 4 trajo consigo más complejidad de uso. Está inspirada el sistema de middleware de Express.\footnote{\url{https://expressjs.com/es/guide/using-middleware.html}}
+    \item \textbf{grammY}: biblioteca desarrollada desde un inicio para TypeScript (aunque se puede usar con JavaScript). Fue creada desde cero por uno de los antiguos mantenedores de Telegraf para resolver sus mayores inconvenientes\footnote{\url{https://github.com/telegraf/telegraf/discussions/1526}}. Dispone de una completa documentación con guías para cada uno de los conceptos importantes.
+    \item \textbf{node-telegram-bot-api}: biblioteca ligera para interactuar con la API de Telegram, diseñada para Node.js,y no implementa un sistema de middleware.
+    \item \textbf{python-telegram-bot}: biblioteca para Python que provee clases de alto nivel como capa de abstracción sobre la API de Telegram.
 \end{itemize}
 
-El tiempo de aprendizaje es similar 
+La tabla \ref{tab:comparacionFrameworks} compara los distintos frameworks.
+
+\begin{table}
+\begin{minipage}{\textwidth}
+\begin{tabularx}{\textwidth}{|l|X|X|X|X|}
+\hline
+& telegraf & grammY & node-telegram-bot-api & python-telegram-bot \\
+\hline
+Lenguaje & JavaScript & Typescript & JavaScript & Python \\
+\hline
+Documentación & Autogenerada, solo API & Completa, numerosos tutoriales & Básica & Autogenerada, solo API \\
+\hline
+Popularidad\footnote{Estrellas en GitHub} & 6.1k & 663 & 6.5k & 19.8k \\
+\hline
+\end{tabularx}
+\end{minipage}
+\caption{Comparación de frameworks para creación de bots de Telegram}\label{tab:comparacionFrameworks}
+\end{table}
 
 \subsection{Base de datos}
 \begin{itemize}
