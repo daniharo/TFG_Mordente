@@ -59,7 +59,7 @@ Aunque ya existen herramientas como Glissandoo, que se analiza en este capítulo
 % Descripciones, capturas y tabla comparativa
 % Alternativas: Glissandoo, Whatsapp
 
-Aunque aún la mayoría de agrupaciones usan Whatsapp como herramienta de comunicación sin usar ningún software más que automatice las tareas, en los últimos tiempos han surgido otras herramientas que dan respuesta a sus necesidades:
+Aunque aún la mayoría de agrupaciones usan Whatsapp como herramienta de comunicación sin usar ningún software más que automatice las tareas, en los últimos tiempos ha surgido otra herramienta que da respuesta a sus necesidades:
 
 \subsection{Glissandoo}
 
@@ -103,19 +103,41 @@ Sin embargo, esta herramienta tiene varias desventajas:
     \item El código es privado, y una agrupación no puede montar su propio servidor con la aplicación en cuestión.
     \item Es de pago para uso en agrupaciones con más de 20 miembros.
     \item Solo se puede usar en móvil, ya que no dispone de versión web ni de escritorio. (Esto ha cambiado durante la realización de este trabajo, ya que han implementado una versión web)
-    \item Sigue existiendo duplicidad, ya que aunque los miembros usen esta aplicación, la comunicación bidireccional entre administradores y miembros de la banda se sigue realizando a través de una herramienta distinta de comunicación no especializada.
+    \item Sigue existiendo duplicidad, ya que aunque los miembros usen esta aplicación, la comunicación bidireccional ocasional entre administradores y miembros de la banda se sigue realizando a través de una herramienta distinta de comunicación no especializada.
 \end{itemize}
 
 
 \section{Metodologías y tecnologías de base que podrían usarse}
 
 \subsection{Lenguaje de programación}
+Se plantean los siguientes lenguajes de alto nivel, que disponen de frameworks implementados para crear un bot de Telegram:
 
 \begin{itemize}
-    \item JavaScript
-    \item TypeScript
-    \item Python
+    \item \textbf{JavaScript}: es un lenguaje compilado en tiempo de ejecución, con tipado dinámico y multi-paradigma, soportando programación orientada a objetos, funcional, imperativa y dirigida por eventos\cite{wiki:JavaScript}. Se conforma al estándar ``ECMAScript'', y es una de las tecnologías centrales de la World Wide Web: el 98\% de los sitios web lo usan en el lado del cliente\cite{javascriptUsage}, y desde el surgimiento de Node.js es una tecnología en auge para servidores.
+    \item \textbf{TypeScript}: es un superconjunto de JavaScript que añade sintaxis para tipos estáticos, y a través de un compilador genera código JavaScript\cite{typescriptWeb}. El añadido de tipos estáticos permite detectar errores de forma más temprana y agilizar la escritura de código gracias al autocompletado. Por otro lado, la adición de tipos es un tiempo extra empleado por el programador, por lo que debe analizarse si es conveniente su uso o no.
+    \item \textbf{Python}: es un lenguaje interpretado, interactivo y principalmente orientado a objetos, aunque soporta otros paradigmas como el funcional o el procedimental\cite{pythonFAQGeneral}. Es muy usado en el campo de la computación científica y la inteligencia artificial. Su uso en el desarrollo web se ha extendido para el lado del servidor con la aparición de frameworks como Django (\url{https://www.djangoproject.com/}) o Flask (\url{https://flask.palletsprojects.com/}).
+    \item \textbf{PHP}: es un lenguaje interpretado usado principalmente para desarrollo web en el lado del servidor, cuya principal característica es que puede ser embebido en HTML, de forma que cada ``trozo de PHP'' se ejecuta para intercambiarse por HTML. Sin embargo su uso ha cambiado en los últimos años, dando lugar a frameworks como Symphony (\url{https://symfony.com/}) o Laravel (\url{https://laravel.com/}) basados en la arquitectura Modelo-vista-controlador.
 \end{itemize}
+
+Se proporciona una tabla comparativa entre los lenguajes.
+
+\begin{minipage}{\textwidth}
+\begin{tabularx}{\textwidth}{|l|X|X|X|X|}
+\hline
+                                                    & JavaScript                       & TypeScript             & Python                    & PHP                       \\
+\hline
+Tipo                                                & Compilado en tiempo de ejecución & Compilado a JavaScript & Interpretado              & Interpretado              \\
+\hline
+Tipado estático                                     & No                               & Sí                     & Poco estricto, y poco uso & Poco estricto, y poco uso \\
+\hline
+Coste\footnote{Aprendizaje necesario por parte del autor para poder implementar el proyecto}                                & Nulo                             & Bajo                   & Medio                     & Medio                     \\
+\hline
+Popularidad\footnote{\url{https://survey.stackoverflow.co/2022/}} & 65.36\%                          & 34.83\%                & 48.07\%                   & 20.87\%                   \\
+\hline
+Comunidad \footnote{Preguntas totales en stackoverflow: \url{https://stackoverflow.com/tags}}      & 2432281                          & 196707                 & 2035248                   & 1447104                  &
+\hline
+\end{tabularx}
+\end{minipage}
 
 \subsection{Framework para el desarrollo del bot}
 \begin{itemize}
@@ -124,6 +146,8 @@ Sin embargo, esta herramienta tiene varias desventajas:
     \item python-telegram-bot
     \item grammY
 \end{itemize}
+
+El tiempo de aprendizaje es similar 
 
 \subsection{Base de datos}
 \begin{itemize}
