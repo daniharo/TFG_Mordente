@@ -84,30 +84,179 @@ Los perfiles que vemos en las figuras \ref{fig:persona_david} y \ref{fig:persona
 
 \section{Malla receptora de información}
 
-La malla receptora de información (\textit{Feedback Capture Grid}) 
+La malla receptora de información (\textit{Feedback Capture Grid}) es un método para organizar feedback de manera estructurada en el cual se divide una hoja de papel en cuatro cuadrantes, cada uno representado con un símbolo diferente. El superior izquierdo se representa con un símbolo ``+'', y en él anota el feedback positivo. En el superior derecho, con símbolo de triángulo, se recogen las críticas. En el inferior izquierdo, con una interrogación, se añaden las preguntas que han surgido y en el inferior derecho, con una bombilla, las nuevas ideas que surgen.\cite{feedbackCaptureGrid}
 
+A continuación se resumen los puntos recogidos para cada uno de los apartados.
 
 \subsection{Aspectos interesantes o relevantes de la idea}
 
+\begin{itemize}
+    \item Está integrado en una app de mensajería.
+    \item Funciona en todos los dispositivos móviles y de escritorio.
+    \item El software es de código abierto.
+    \item Lo puede utilizar cualquier agrupación.
+    \item Se reciben notificaciones a través de la misma app de comunicación.
+    \item Se pueden crear instancias del bot configurables a las necesidades de distintas agrupaciones.
+\end{itemize}
 
 \subsection{Críticas constructivas o posibilidades de mejora}
 
+\begin{itemize}
+    \item Depende del funcionamiento de Telegram.
+    \item La interfaz es más limitada que una aplicación web.
+    \item Se requiere tener cuenta de Telegram.
+    \item Se requiere un servidor propio en el que esté alojada la aplicación para funcionar, o pagar el uso de uno en la nube.
+    \item La interfaz en ordenador requiere de demasiados clics para llevar a cabo las tareas.
+\end{itemize}
 
 \subsection{Preguntas nuevas a partir de la experiencia del usuario}
 
+\begin{itemize}
+    \item ¿Cuál es el coste de mantener la aplicación?
+    \item ¿Se podrá pedir algo al bot desde un grupo?
+    \item ¿Se podrán elegir qué notificaciones y recordatorios queremos recibir?
+    \item ¿Los administradores podrán ver informes de la asistencia a ensayos?
+    \item ¿La aplicación fomentará la asistencia de los miembros a los ensayos?
+    \item ¿Los usuarios más reacios a la tecnología sabrán usar el bot con soltura?
+    \item ¿Se va a poder usar el bot en varios idiomas?
+\end{itemize}
 
 \subsection{Ideas que surgen}
 
+\begin{itemize}
+    \item Hacer también una aplicación web para no depender de Telegram.
+    \item Implementar un sistema de premios para los usuarios que cumplan objetivos de asistencia.
+    \item Tener una instancia del bot funcionando para las agrupaciones que no lo quieran tener en un servidor propio.
+    \item Crear una página web con guías para el uso del bot.
+    \item Implementar internacionalización con varios idiomas.
+\end{itemize}
 
 \section{Descripción de la propuesta}
 
+Teniendo en cuenta el análisis que se ha hecho hasta ahora, se puede dar una propuesta de solución que responda a las preguntas y necesidades expuestas, tanto en las personas ficticias como en el \textit{Feedback Capture Grid}.
+
 \subsection{Propuesta del producto}
+
+Primeramente se determinan unas características y funcionalidades mínimas para tener un Producto Mínimo Viable, o MVP por sus siglas en inglés. El Producto Mínimo Viable es una técnica que se basa en disponer de suficientes características para satisfacer a los primeros usuarios, de manera que las siguientes funcionalidades se pueden desarrollar teniendo en cuenta el feedback de estos primeros usuarios.\cite{mvp} En nuestro caso, las funcionalidades incorporadas en esta primera versión serán:
+
+\begin{enumerate}
+    \item Agrupaciones:
+    \begin{enumerate}
+        \item {[Administrador]} Crear nuevas agrupaciones
+        \item {[Administrador]} Eliminar agrupaciones
+        \item {[Administrador]} Invitar miembros a la agrupación
+        \item {[Administrador]} Eliminar miembros de la agrupación
+        \item {[Usuario]} Unirse a una agrupación existente
+        \item {[Usuario]} Salirse de una agrupación
+        \item {[Usuario]} Ver todas las agrupaciones en las que estoy inscrito
+        \item {[Usuario]} Ver el detalle de una agrupación
+    \end{enumerate}
+    \item Eventos:
+    \begin{enumerate}
+        \item {[Administrador]} Crear nuevos eventos en mi agrupación
+        \item {[Administrador]} Eliminar eventos
+        \item {[Administrador]} Invitar miembros a un evento
+        \item {[Administrador]} Eliminar miembros de un evento
+        \item {[Usuario]} Ver los eventos próximos
+        \item {[Usuario]} Ver el detalle de un evento
+    \end{enumerate}
+    \item Asistencia:
+    \begin{enumerate}
+        \item {[Administrador]} Ver qué usuarios han respondido su asistencia a un evento
+        \item {[Usuario]} Responder la asistencia a un evento
+        \item {[Usuario]} Registrar la razón por la que no puedo asistir a un evento
+    \end{enumerate}
+    \item Recordatorios:
+    \begin{enumerate}
+        \item {[Usuario]} Recibir recordatorios diarios con los eventos de ese día
+    \end{enumerate}
+    \item Repertorio:
+    \begin{enumerate}
+        \item {[Administrador]} Añadir una obra a la agrupación
+        \item {[Administrador]} Eliminar una obra la agrupación
+        \item {[Administrador]} Subir partituras de las obras
+        \item {[Administrador]} Eliminar una obra de la agrupación
+        \item {[Usuario]} Ver las obras de mi agrupación
+        \item {[Usuario]} Descargar las partituras de mi agrupación
+    \end{enumerate}
+    \item Administración:
+    \begin{enumerate}
+        \item {[Administrador]} Añadir administradores
+        \item {[Administrador]} Quitar administradores
+    \end{enumerate}
+    \item Notificaciones:
+    \begin{enumerate}
+        \item {[Administrador]} Recibir notificación cuando un miembro responde sobre su asistencia
+        \item {[Usuario]} Recibir notificación cuando se asigna un evento
+    \end{enumerate}
+\end{enumerate}
 
 
 \subsection{Elección de metodología de desarrollo}
 
+Dadas las características del proyecto, se va a apostar por una metodología de desarrollo ágil como es SCRUM, aunque con ciertas adaptaciones ya que el equipo de desarrollo va a estar compuesto por una sola persona.
+
+Esta metodología ágil nos permitirá ir mejorando el producto a lo largo del desarrollo, pudiendo probarlo desde etapas tempranas. SCRUM es un método de desarrollo e innovación que enfatiza un conjunto de valores y prácticas para la gestión de proyectos, más que tratar requerimientos e implementación. Trata de hacer el proceso de la gestión más \textbf{empírico} que \textbf{definido}.\cite{scrum}
+
+La naturaleza flexible del marco de trabajo SCRUM se adapta a proyectos como el que nos ocupa, dado que no se conocen todos los requisitos concretamente con antelación y nos ayuda a que el usuario sea parte del desarrollo, algo útil si queremos hacer un desarrollo centrado en el usuario.
 
 \subsection{Planificación}
+
+Para poder tener un producto que cumpla con los objetivos reseñados anteriormente, es necesario establecer en qué orden se van a realizar las distintas tareas.
+
+
+\subsubsection{Planificación en sprints}
+
+Dado que la metodología de desarrollo a usar será SCRUM, para la planificación del proyecto se va a usar uno de sus elementos más importantes como es la planificación de los sprints. 
+
+Los sprints son eventos de una longitud fija, generalmente menor a un mes. Durante un sprint se intenta realizar todo el trabajo necesario para alcanzar el objetivo del producto.
+
+Los sprints corresponden a objetivos concretos del producto, por lo que el resto de tareas (como la toma de decisiones o el aprendizaje) se van a incluir en la planificación temporal pero no como sprints. Los sprints planificados para este proyecto son:
+
+\begin{enumerate}
+
+\item \textbf{Primer sprint:} Se va a implementar un bot de prueba con funcionalidad de actualización de una base de datos de palabras. Este bot servirá como exploración de las distintas funcionalidades que se usarán posteriormente.
+\item \textbf{Segundo sprint:} Se va a implementar la lógica para responder a los comandos de los usuarios, así como la funcionalidad para crear agrupaciones y unirse a una agrupación.
+\item \textbf{Tercer sprint:} Se van a crear diversos plugins, uno para permitir guardar la sesión del usuario en la base de datos y otro para usar un menú de calendario que sirva para fijar las fechas de eventos. Estos plugins serán publicados.
+\item \textbf{Cuarto sprint:} Se añadirá la funcionalidad básica relacionada con los eventos, como la creación y eliminación. También permitir a un miembro salirse de una agrupación, así como habilitar enlaces de invitación.
+\item \textbf{Quinto sprint:} Se podrán añadir y eliminar obras a las agrupaciones. Función de edición de agrupaciones, eventos y obras. 
+\item \textbf{Sexto sprint:} Notificaciones y recordatorios. Función de edición para todos los elementos (agrupaciones, eventos y obras).
+\end{enumerate}
+
+\subsubsection{Planificación temporal}
+
+La planificación del desarrollo del bot en el tiempo se sucederá de la siguiente forma:
+
+\begin{itemize}
+    \item Primeramente se tomarán las decisiones oportunas sobre las herramientas a utilizar, requisitos concretos del software y análisis de la competencia.
+    \item Después habrá un periodo de formación en las herramientas necesarias para el desarrollo de la aplicación. Esta formación también se extenderá a lo largo de todo el desarrollo.
+    \item Los sprints de desarrollo vendrán tras el periodo inicial de formación.
+    \item Finalmente tendremos un periodo de pruebas y de finalización de la memoria.
+\end{itemize}
+
+En la tabla \ref{tab:planificacionTemporal} se muestra el tiempo estimado que requerirá cada tarea del desarrollo.
+
+\begin{table}[]
+    \centering
+    \begin{tabular}{|c|c|}
+        \hline
+        Toma de decisiones & 10 horas \\
+        \hline
+        Formación   & 100 horas \\
+        \hline
+        Implementación & 200 horas \\
+        \hline
+        Pruebas & 10 horas \\
+        \hline
+        Memoria & 100 horas \\
+        \hline
+        \hline
+        Total & 420 horas \\
+        \hline
+    \end{tabular}
+    \caption{Planificación temporal}
+    \label{tab:planificacionTemporal}
+\end{table}
 
 
 \subsection{Presupuesto}
