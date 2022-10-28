@@ -9,15 +9,17 @@ jobs:
     steps:
       - name: Set up Git repository
         uses: actions/checkout@v3
-        with:
-          ref: build
+      - name: Set Git config
+        run: |
+            git config --local user.email "actions@github.com"
+            git config --local user.name "Github Actions"
       - name: Merge main -> build
-        uses: devmasx/merge-branch@master
-        with:
-          type: now
-          from_branch: main
-          target_branch: build
-          github_token: ${{ github.token }}
+        run: |
+            git fetch --unshallow
+            git checkout build
+            git pull
+            git merge --no-ff main -m "Auto-merge main to build"
+            git push
       - name: Compile LaTeX document
         uses: xu-cheng/latex-action@v2
         with:
