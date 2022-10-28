@@ -106,139 +106,22 @@ Sin embargo, esta herramienta tiene varias desventajas:
     \item Sigue existiendo duplicidad, ya que aunque los miembros usen esta aplicación, la comunicación bidireccional ocasional entre administradores y miembros de la banda se sigue realizando a través de una herramienta distinta de comunicación no especializada.
 \end{itemize}
 
+\subsection{Agregación de servicios no especializados}
 
-\section{Metodologías y tecnologías de base que podrían usarse}
-
-\subsection{Lenguaje de programación}
-Se plantean los siguientes lenguajes de alto nivel, que disponen de frameworks implementados para crear un bot de Telegram:
+Mediante \textit{agregación de servicios no especializados} nos referimos al uso de varias herramientas que no están especializadas para este caso de uso, pero que de cierta forma pueden suplir las necesidades:
 
 \begin{itemize}
-    \item \textbf{JavaScript}: es un lenguaje compilado en tiempo de ejecución, con tipado dinámico y multi-paradigma, soportando programación orientada a objetos, funcional, imperativa y dirigida por eventos\cite{wiki:JavaScript}. Se conforma al estándar ``ECMAScript'', y es una de las tecnologías centrales de la World Wide Web: el 98\% de los sitios web lo usan en el lado del cliente\cite{javascriptUsage}, y desde el surgimiento de Node.js es una tecnología en auge para servidores.
-    \item \textbf{TypeScript} (\url{https://www.typescriptlang.org/}): es un superconjunto de JavaScript que añade sintaxis para tipos estáticos, y a través de un compilador genera código JavaScript\cite{typescriptWeb}. El añadido de tipos estáticos permite detectar errores de forma más temprana y agilizar la escritura de código gracias al autocompletado. Por otro lado, la adición de tipos es un tiempo extra empleado por el programador, por lo que debe analizarse si es conveniente su uso o no.
-    \item \textbf{Python} (\url{https://www.python.org/}): es un lenguaje interpretado, interactivo y principalmente orientado a objetos, aunque soporta otros paradigmas como el funcional o el procedimental\cite{pythonFAQGeneral}. Es muy usado en el campo de la computación científica y la inteligencia artificial. Su uso en el desarrollo web se ha extendido para el lado del servidor con la aparición de frameworks como Django (\url{https://www.djangoproject.com/}) o Flask (\url{https://flask.palletsprojects.com/}).
-    \item \textbf{PHP} (\url{https://www.php.net/}): es un lenguaje interpretado usado principalmente para desarrollo web en el lado del servidor, cuya principal característica es que puede ser embebido en HTML, de forma que cada ``trozo de PHP'' se ejecuta para intercambiarse por HTML. Sin embargo su uso ha cambiado en los últimos años, dando lugar a frameworks como Symphony (\url{https://symfony.com/}) o Laravel (\url{https://laravel.com/}) basados en la arquitectura Modelo-vista-controlador.
+    \item Como almacenamiento de partituras, existen servicios como Google Drive, Dropbox o Microsoft OneDrive.
+    \item Para la planificación de eventos y conciertos se puede usar un calendario web como Google Calendar o Microsoft Outlook.
+    \item Para estimar la asistencia se pueden usar herramientas que permiten encuestas de este tipo como Doodle.
+    \item Para controlar la asistencia real se puede usar una hoja de cálculo o herramientas como Alexia.
+    \item Como medio de comunicación se utiliza otro servicio como WhatsApp o Telegram.
 \end{itemize}
 
-Se proporciona una tabla comparativa entre los lenguajes, la tabla \ref{tab:comparacionLenguajes}.
+La ventaja de esta aproximación (la mayormente utilizada en la actualidad) es el mayor grado de personalización, ya que los servicios se pueden intercambiar si la funcionalidad o confiabilidad no es la esperada.
 
-\begin{table}
-\begin{minipage}{\textwidth}
-\begin{tabularx}{\textwidth}{|l|X|X|X|X|}
-\hline
-                                                    & JavaScript                       & TypeScript             & Python                    & PHP                       \\
-\hline
-Tipo                                                & Compilado en tiempo de ejecución & Compilado a JavaScript & Interpretado              & Interpretado              \\
-\hline
-Tipado estático                                     & No                               & Sí                     & Poco estricto, y poco uso & Poco estricto, y poco uso \\
-\hline
-Coste\footnote{Aprendizaje necesario por parte del autor para poder implementar el proyecto}                                & Nulo                             & Bajo                   & Medio                     & Medio                     \\
-\hline
-Popularidad\footnote{\url{https://survey.stackoverflow.co/2022/}} & 65.36\%                          & 34.83\%                & 48.07\%                   & 20.87\%                   \\
-\hline
-Comunidad \footnote{Preguntas totales en stackoverflow: \url{https://stackoverflow.com/tags}}      & 2432281                          & 196707                 & 2035248                   & 1447104                  &
-\hline
-\end{tabularx}
-\end{minipage}
-\caption{Comparación de lenguajes de programación}\label{tab:comparacionLenguajes}
-\end{table}
-
-
-\subsection{Framework para el desarrollo del bot}
-
-Existen diversas bibliotecas que ayudan a crear un bot, de forma que no haya que escribir todo el código desde cero para interaccionar con la API de Telegram, siguiendo el principio ``Don't Reinvent the Wheel'' (``No reinventes la rueda'') para también ahorrar presupuesto.
-
-Las opciones que se analizan son:
-
+No obstante, las desventajas son numerosas, como ya se ha comentado anteriormente:
 \begin{itemize}
-    \item \textbf{Telegraf} (\url{https://telegraf.js.org/}): biblioteca desarrollada inicialmente para JavaScript, migrada en la versión 4 dando soporte a TypeScript. No dispone de documentación guiada, y la migración a la versión 4 trajo consigo más complejidad de uso. Está inspirada el sistema de middleware de Express.\footnote{\url{https://expressjs.com/es/guide/using-middleware.html}}
-    \item \textbf{grammY} (\url{https://grammy.dev/}): biblioteca desarrollada desde un inicio para TypeScript (aunque se puede usar con JavaScript). Está inspirada en telegraf y fue creada desde cero por uno de los antiguos mantenedores de Telegraf como única forma de resolver sus mayores inconvenientes\footnote{\url{https://github.com/telegraf/telegraf/discussions/1526}}. Dispone de una completa documentación con guías para cada uno de los conceptos importantes.
-    \item \textbf{node-telegram-bot-api} (\url{https://github.com/yagop/node-telegram-bot-api}): biblioteca ligera para interactuar con la API de Telegram, diseñada para Node.js, y no implementa un sistema de middleware.
-    \item \textbf{python-telegram-bot} (\url{https://python-telegram-bot.org/}): biblioteca para Python que provee clases de alto nivel como capa de abstracción sobre la API de Telegram.
+    \item 
 \end{itemize}
 
-La tabla \ref{tab:comparacionFrameworks} compara los distintos frameworks.
-
-\begin{table}
-\begin{minipage}{\textwidth}
-\begin{tabularx}{\textwidth}{|l|X|X|X|X|}
-\hline
-& telegraf & grammY & node-telegram-bot-api & python-telegram-bot \\
-\hline
-Lenguaje & JavaScript & Typescript & JavaScript & Python \\
-\hline
-Documentación & Autogenerada, solo API & Completa, numerosos tutoriales & Básica & Autogenerada, solo API \\
-\hline
-\makecell[l]{Versión API \\Telegram} & 6.2 & 6.2 & 6.2 & 6.2 \\
-\hline
-Popularidad\footnote{Estrellas en GitHub a 07/10/2022} & 6.1k & 663 & 6.5k & 19.8k \\
-\hline
-\end{tabularx}
-\end{minipage}
-\caption{Comparación de frameworks para creación de bots de Telegram}\label{tab:comparacionFrameworks}
-\end{table}
-
-\subsection{Base de datos}
-
-La base de datos es ``una colección compartida de datos lógicamente relacionados, junto con una descripción de estos datos, que están diseñados para satisfacer las necesidades de información de una organización''.\cite{alma991009264529704990}
-
-Por otra parte, el sistema gestor de base de datos (SGBD) es ``un sistema software que permite a los usuarios definir, mantener, crear y controlar el acceso a la base de datos.\cite{alma991009264529704990}
-
-Necesitaremos estas herramientas ya que buscamos un sistema que guarde datos de manera persistente y poder recuperarlos y actualizarlos en cualquier momento.
-
-Se analizan alternativas para bases de datos relacionales, basadas en el concepto matemático de relación, representado por tablas\cite{alma991009264529704990}; y también para bases de datos no relacionales documentales.
-
-\begin{itemize}
-    \item Para bases de datos relacionales:
-    \begin{itemize}
-        \item PostgreSQL (\url{https://www.postgresql.org/}): es un SGBD de código abierto y centrado en la escabilidad.
-        \item MySQL (\url{https://www.mysql.com/}): es un SGDB de código abierto desarrollado por Oracle.
-        \item MariaDB (\url{https://mariadb.org/}): es un SGDB de código abierto creado por desarrolladores de MySQL como respuesta a la adquisición por parte de Oracle, y con características muy parecidas.
-    \end{itemize}
-    \item Para bases de datos no relacionales:
-    \begin{itemize}
-        \item MongoDB (\url{https://www.mongodb.com/}): SGDB de código disponible (no necesariamente de código abierto, por usar una licencia SSPL.\cite{ssplLicense}
-        \item Firestore (\url{https://firebase.google.com/docs/firestore}): incluido en la suite de servicios ``Firebase'' de Google destinada a la gestión rápida y centralizada de aplicaciones.
-    \end{itemize}
-\end{itemize}
-
-
-% Puesto que las diferencias son pequeñas entre las opciones de base de datos relacional y la documentación de Prisma está mayormente basada en PostgreSQL, se escoge esta opción.
-
-%\subsection{ORM}
-%\begin{itemize}
-%    \item TypeORM
-%    \item Sequelize
-%    \item Prisma
-%\end{itemize}
-
-\subsection{Almacenamiento de archivos}
-\begin{itemize}
-    \item Amazon S3
-    \item DigitalOcean Spaces
-    \item Google Cloud Storage / Firestore Storage
-\end{itemize}
-
-\subsection{IDE}
-\begin{itemize}
-    \item VSCode
-    \item JetBrains
-\end{itemize}
-
-%\subsection{Gestor de paquetes}
-%\begin{itemize}
-%    \item npm
-%    \item yarn
-%    \item pnpm
-%\end{itemize}
-
-\subsection{Documentación}
-\begin{itemize}
-    \item Docusaurus
-    \item GitBook
-    \item VuePress
-\end{itemize}
-
-
-% Se explican brevemente, con logos y capturas ilustrativas si es necesario, 
-% y se proporcionan tablas comparativas. No se decide todavía cuáles elegir, 
-% luego en la propuesta

@@ -1,3 +1,46 @@
 \chapter{Diseño de la interfaz de usuario}
 
+A nivel de diseño de la interfaz, lo princpal es reseñar que nos encontramos con una gran limitación: no podemos desarrollar una interfaz\footnote{El 16 de abril de 2022, la API para bots Telegram fue actualizada\cite{telegramWebappUpdate} con una nueva función para abrir una aplicación web sin salir del bot como respuesta a varios eventos. Sin embargo, esa opción se ha descartado para este trabajo ya que la implementación del bot se encontraba en estado avanzado y se ha analizado que las complicaciones técnicas de implementar esta nueva interfaz extenderían el tiempo de desarrollo considerablemente. Se propone como mejora futura.} totalmente a nuestro gusto, sino que debemos usar la API que nos proporciona Telegram.
+
+Es decir, nuestro bot va a operar dentro de un chat, y como todo chat, la interfaz estará compuesto sola y únicamente por mensajes, que podrán ser de distinto tipo (texto, imágenes, documentos, stickers...). La única adición que aporta Telegram a esta interfaz es que los mensajes que envía el bot pueden adjuntar un menú de opciones que el usuario puede pulsar para pedir al bot una determinada acción, además de tener un menú de comandos disponible continuamente junto al cuadro de introducción de texto.
+
+Esta limitación de interfaz (autoimpuesta) debe ser vista también como una serie de ventajas:
+
+\begin{itemize}
+    \item Las decisiones de diseño son mucho más simples, puesto que no tenemos todo un elenco de estilos, formatos e interacciones que elegir. Por ejemplo, si el usuario quiere acceder a la información general sobre la aplicación, la mejor solución dentro del bot es que el usuario use un comando \texttt{/about} al cual el bot responde con un texto explicativo. En el caso de una aplicación web, la interacción por parte del usuario podría ser desde pulsar un botón hasta usar un atajo de teclado, y la visualización podría ser desde sobreponer un cuadro con la información hasta enlazar a una página distinta.
+    \item La personalización ya está implementada para nosotros: esta característica se delega a la propia aplicación de Telegram, que permite seleccionar el tema claro u oscuro o cambiar el tamaño del texto.
+    \item La accesibilidad está garantizada, ya que la interfaz de mensajes ya está totalmente adaptada a personas con discapacidad auditiva o visual.
+    \item La familiarización del usuario con la interfaz es mayor de antemano, ya que con toda probabilidad habrá usado un chat antes y la interfaz del bot no es más que una extensión de un chat corriente. Esto le supondrá una adaptación más sencilla y más centrada en saber cuál es la funcionalidad que en cómo está dispuesta.
+    \item El usuario interacciona de forma privada en un chat con el bot, de modo que el tono de respuesta del bot y el intercambio de mensajes hacen que el usuario perciba la interfaz como más amigable y cercana.
+    \item Los entornos que más necesitan la comunicación se benefician de esta integración. Por ejemplo, en el caso que nos ocupa siempre se suele usar un grupo de mensajería, y un bot puede ser integrado en un grupo de Telegram.
+\end{itemize}
+
+Decimos que la limitación es autoimpuesta porque es tarea de este trabajo también analizar si las ventajas expuestas superan o igualan a las desventajas de operar dentro de un chat, es decir, si un bot de Telegram de este tipo puede operar sin la ayuda de una aplicación web o móvil que la acompañe.
+
+
+\subsection{Bocetos de interfaz}
+
+Con todo lo anterior en mente, pasamos a crear varios bocetos de lo que debería ser la interfaz entre el usuario y el bot:
+
+\subsubsection{Lista de elementos}
+
+Aunque se ha expuesto que la interfaz está limitada a la API disponible, en el caso de las listas tenemos 3 opciones si queremos que el usuario pueda acceder al detalle de cada elemento:
+\begin{enumerate}
+    \item Enviar un mensaje muy corto acompañado de un menú, cada botón del menú muestra el título de un elemento y al pulsar en él se recibe el detalle.
+    \item Igual que la opción 1, pero añadiendo en el texto una lista de los elementos con un resumen de cada uno.
+    \item Nueva opción explorada en este trabajo como variación de la opción 2: omitir el menú para no repetir los nombres, y en su lugar acompañar cada elemento de la lista con un comando del estilo \texttt{/event\_N} de manera que al pulsar y enviar el comando el bot responda con el detalle del elemento.
+\end{enumerate}
+
+
+\subsubsection{Detalle de elemento}
+
+En este caso, toda la información sobre el elemento se muestra en el mensaje de respuesta, que va acompañado de un menú con las acciones que se pueden realizar con el elemento:
+
+
+\subsubsection{Creación de elemento}
+
+La interfaz más sencilla y equivalente a un formulario para crear un elemento es una conversación: el bot va preguntando cada campo requerido al usuario, que puede saltar los campos opcionales mediante un botón de ``Saltar''.
+Idealmente, para la introducción de fechas se debería mostrar un menú con forma de calendario.
+
+
 
