@@ -17,7 +17,7 @@ jobs:
             git config --local user.name "Github Actions"
       - name: Merge main ->.build
         run: |
-            git merge --no-ff main -m "Auto-merge main to build"
+            git merge --no-ff origin/main -m "Auto-merge main to build"
             git push
       - name: Compile LaTeX document
         uses: xu-cheng/latex-action@v2
