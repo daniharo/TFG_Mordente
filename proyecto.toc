@@ -1,0 +1,70 @@
+\babel@toc {spanish}{}\relax 
+\contentsline {chapter}{\numberline {1}Introducción}{19}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Motivación y justificación del proyecto}{19}{section.1.1}%
+\contentsline {section}{\numberline {1.2}Objetivos}{21}{section.1.2}%
+\contentsline {chapter}{\numberline {2}Estado del arte}{23}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Dominio del problema a resolver}{23}{section.2.1}%
+\contentsline {section}{\numberline {2.2}Trabajos relacionados}{25}{section.2.2}%
+\contentsline {section}{\numberline {2.3}Aplicaciones similares}{25}{section.2.3}%
+\contentsline {subsection}{\numberline {2.3.1}Glissandoo}{25}{subsection.2.3.1}%
+\contentsline {subsection}{\numberline {2.3.2}Agregación de servicios no especializados}{27}{subsection.2.3.2}%
+\contentsline {chapter}{\numberline {3}Mordente}{29}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Desarrollo de Mordente}{29}{section.3.1}%
+\contentsline {subsection}{\numberline {3.1.1}Diseño Centrado en el Usuario}{29}{subsection.3.1.1}%
+\contentsline {subsection}{\numberline {3.1.2}Design Thinking}{30}{subsection.3.1.2}%
+\contentsline {subsubsection}{Procesos}{30}{section*.8}%
+\contentsline {section}{\numberline {3.2}Personas ficticias}{30}{section.3.2}%
+\contentsline {section}{\numberline {3.3}Malla receptora de información}{32}{section.3.3}%
+\contentsline {subsection}{\numberline {3.3.1}Aspectos interesantes o relevantes de la idea}{32}{subsection.3.3.1}%
+\contentsline {subsection}{\numberline {3.3.2}Críticas constructivas o posibilidades de mejora}{33}{subsection.3.3.2}%
+\contentsline {subsection}{\numberline {3.3.3}Preguntas nuevas a partir de la experiencia del usuario}{33}{subsection.3.3.3}%
+\contentsline {subsection}{\numberline {3.3.4}Ideas que surgen}{34}{subsection.3.3.4}%
+\contentsline {section}{\numberline {3.4}Descripción de la propuesta}{34}{section.3.4}%
+\contentsline {subsection}{\numberline {3.4.1}Propuesta del producto}{34}{subsection.3.4.1}%
+\contentsline {subsection}{\numberline {3.4.2}Elección de metodología de desarrollo}{36}{subsection.3.4.2}%
+\contentsline {subsection}{\numberline {3.4.3}Planificación}{36}{subsection.3.4.3}%
+\contentsline {subsubsection}{Planificación en sprints}{36}{section*.9}%
+\contentsline {subsubsection}{Planificación temporal}{37}{section*.10}%
+\contentsline {subsection}{\numberline {3.4.4}Presupuesto}{38}{subsection.3.4.4}%
+\contentsline {chapter}{\numberline {4}Diseño de la interfaz de usuario}{39}{chapter.4}%
+\contentsline {subsection}{\numberline {4.0.1}Bocetos de interfaz}{40}{subsection.4.0.1}%
+\contentsline {subsubsection}{Lista de elementos}{40}{section*.11}%
+\contentsline {subsubsection}{Detalle de elemento}{41}{section*.12}%
+\contentsline {subsubsection}{Creación de elemento}{41}{section*.13}%
+\contentsline {chapter}{\numberline {5}Diseño técnico}{43}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Listado de historias de usuario (Backlog)}{43}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Historias de usuario}{43}{section.5.2}%
+\contentsline {section}{\numberline {5.3}Metodologías y tecnologías de base que podrían usarse}{43}{section.5.3}%
+\contentsline {subsection}{\numberline {5.3.1}Lenguaje de programación}{43}{subsection.5.3.1}%
+\contentsline {subsection}{\numberline {5.3.2}Framework para el desarrollo del bot}{44}{subsection.5.3.2}%
+\contentsline {subsection}{\numberline {5.3.3}Base de datos}{45}{subsection.5.3.3}%
+\contentsline {subsection}{\numberline {5.3.4}Almacenamiento de archivos}{46}{subsection.5.3.4}%
+\contentsline {subsection}{\numberline {5.3.5}IDE}{46}{subsection.5.3.5}%
+\contentsline {subsection}{\numberline {5.3.6}Documentación}{46}{subsection.5.3.6}%
+\contentsline {section}{\numberline {5.4}Modelo de la base de datos}{47}{section.5.4}%
+\contentsline {section}{\numberline {5.5}Arquitectura de Mordente}{47}{section.5.5}%
+\contentsline {subsection}{\numberline {5.5.1}Arquitectura entre puntos}{47}{subsection.5.5.1}%
+\contentsline {subsection}{\numberline {5.5.2}Arquitectura entre servicios}{47}{subsection.5.5.2}%
+\contentsline {chapter}{\numberline {6}Implementación}{49}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Metodología de trabajo}{49}{section.6.1}%
+\contentsline {subsection}{\numberline {6.1.1}Planificación temporal}{49}{subsection.6.1.1}%
+\contentsline {section}{\numberline {6.2}Presupuesto}{50}{section.6.2}%
+\contentsline {section}{\numberline {6.3}Herramientas y tecnologías escogidas}{50}{section.6.3}%
+\contentsline {subsection}{\numberline {6.3.1}Lenguaje de programación}{50}{subsection.6.3.1}%
+\contentsline {subsection}{\numberline {6.3.2}Framework}{50}{subsection.6.3.2}%
+\contentsline {subsection}{\numberline {6.3.3}Base de datos}{50}{subsection.6.3.3}%
+\contentsline {subsection}{\numberline {6.3.4}ORM}{50}{subsection.6.3.4}%
+\contentsline {subsection}{\numberline {6.3.5}IDE}{50}{subsection.6.3.5}%
+\contentsline {section}{\numberline {6.4}Primer sprint}{50}{section.6.4}%
+\contentsline {section}{\numberline {6.5}Segundo sprint}{50}{section.6.5}%
+\contentsline {chapter}{\numberline {7}Pruebas}{51}{chapter.7}%
+\contentsline {section}{\numberline {7.1}Diseño de las pruebas}{51}{section.7.1}%
+\contentsline {section}{\numberline {7.2}Realización de las pruebas}{51}{section.7.2}%
+\contentsline {section}{\numberline {7.3}Informe final de las pruebas}{51}{section.7.3}%
+\contentsline {section}{\numberline {7.4}Demostración en vídeo}{51}{section.7.4}%
+\contentsline {chapter}{\numberline {8}Conclusiones y trabajos futuros}{53}{chapter.8}%
+\contentsline {section}{\numberline {8.1}Conclusiones}{53}{section.8.1}%
+\contentsline {section}{\numberline {8.2}Trabajos futuros}{53}{section.8.2}%
+\contentsline {subsection}{\numberline {8.2.1}Webapp}{53}{subsection.8.2.1}%
+\contentsline {subsection}{\numberline {8.2.2}Webapp integrada en el bot}{53}{subsection.8.2.2}%
+\contentsline {chapter}{Bibliografía}{57}{chapter*.14}%
