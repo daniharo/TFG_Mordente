@@ -13,6 +13,7 @@ jobs:
         uses: xu-cheng/latex-action@v2
         with:
           root_file: proyecto.tex
+          args: -pdf -f -file-line-error -interaction=nonstopmode
       - name: Upload PDF file
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
