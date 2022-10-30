@@ -31,16 +31,36 @@ Aunque se ha expuesto que la interfaz está limitada a la API disponible, en el 
     \item Nueva opción explorada en este trabajo como variación de la opción 2: omitir el menú para no repetir los nombres, y en su lugar acompañar cada elemento de la lista con un comando del estilo \texttt{/event\_N} de manera que al pulsar y enviar el comando el bot responda con el detalle del elemento.
 \end{enumerate}
 
+En todo caso la lista debe ir acompañada de un botón para añadir elementos.
+
+El diseño se ve en la figura \ref{fig:disenyo_lista}.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.5\textwidth]{imagenes/disenso_interfaz/lista.drawio.pdf}
+\caption{Diseño de la interfaz de lista}
+\label{fig:disenyo_lista}
+\end{figure}
 
 \subsubsection{Detalle de elemento}
 
-En este caso, toda la información sobre el elemento se muestra en el mensaje de respuesta, que va acompañado de un menú con las acciones que se pueden realizar con el elemento:
+En este caso, toda la información sobre el elemento se muestra en el mensaje de respuesta, que va acompañado de un menú con las acciones que se pueden realizar con el elemento. Ver figura \ref{fig:disenyo_detalle}.
 
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.5\textwidth]{imagenes/disenso_interfaz/detalle.drawio.pdf}
+\caption{Diseño de la interfaz del detalle de un elemento}
+\label{fig:disenyo_detalle}
+\end{figure}
 
 \subsubsection{Creación de elemento}
 
 La interfaz más sencilla y equivalente a un formulario para crear un elemento es una conversación: el bot va preguntando cada campo requerido al usuario, que puede saltar los campos opcionales mediante un botón de ``Saltar''.
-Idealmente, para la introducción de fechas se debería mostrar un menú con forma de calendario.
+Idealmente, para la introducción de fechas se debería mostrar un menú con forma de calendario. Ver figura \ref{fig:disenyo_creacion}.
 
-
-
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.5\textwidth]{imagenes/disenso_interfaz/creacion.drawio.pdf}
+\caption{Diseño de la interfaz de creación de un elemento}
+\label{fig:disenyo_creacion}
+\end{figure}
