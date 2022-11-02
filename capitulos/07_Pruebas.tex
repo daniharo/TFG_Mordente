@@ -17,7 +17,7 @@
 
 Tras el capítulo anterior, ya tenemos una implementación de nuestra herramienta que los usuarios pueden probar para darnos retroalimentación de cara a mejorar la usabilidad de la plataforma.
 
-Las pruebas que se van a realizar en este trabajo, dado que la metodología usada ha sido la del \textit{Design Thinking} y el Diseño Centrado en el Usuario, serán pruebas de usabilidad con usuarios reales.w
+Las pruebas que se van a realizar en este trabajo, dado que la metodología usada ha sido la del \textit{Design Thinking} y el Diseño Centrado en el Usuario, serán pruebas de usabilidad con usuarios reales.
 
 \section{Diseño de las pruebas}
 
@@ -59,18 +59,43 @@ En el caso de los miembros:
 
 \subsection{Preguntas a realizar}
 
-Para cada tarea, se propondrán las siguientes preguntas:
-\begin{enumerate}
-    \item ¿Has podido realizar la tarea? La respuesta puede ser sí o no.
-    \item ¿Ha sido fácil realizar la tarea? Respuesta entre 1 y 5.
-\end{enumerate}
+Las preguntas que se van a realizar a los usuarios son las descritas en la tabla \ref{tab:preguntasPrueba}.
 
-Finalmente, se añadirán dos preguntas genéricas:
+Las relacionadas con tareas concretas nos ayudarán a realizar una mejora de la usabilidad antes de la entrega, solucionando los problemas que manifiesten los usuarios y que se puedan solucionar rápidamente, y planificando como trabajos futuros las soluciones más costosas.
 
-\begin{enumerate}
-    \item ¿Recomendarías la aplicación a un amigo? Entre 0 y 10.
-    \item ¿Tienes algún comentario? Respuesta libre.
-\end{enumerate}
+Por otro lado, la primera pregunta genérica nos ayudará a calcular el \textit{NET Promoter Score} o NPS. Según esta herramienta, los encuestados que respondan entre 0 y 6 son detractores, entre 7 y 8 son pasivos y entre 9 y 10 son promotores. De esta forma, se obtendrá un índice realizando el siguiente cálculo:
+\[
+\textrm{NET} = \frac{\textrm{Promotores} - \textrm{Detractores}}{\textrm{Encuestados}} \times 100
+\]
+
+Este índice puede resultar entre -100 y 100. Diremos que tiene un resultado positivo si es mayor a 0, y excelente si es mayor a 50.
+
+
+\begin{table}[]
+    \centering
+    \begin{tabular}{|l|c|}
+        \hline
+        \multicolumn{2}{|c|}{Preguntas por tarea} \\
+        \hline
+        Pregunta & Tipo de respuesta \\
+        \hline
+        1. ?`Has podido realizar la tarea? & Sí/No \\
+        \hline
+        2. ?`Ha sido fácil realizar la tarea? & Entre 1 y 5. \\
+        \hline
+        \hline
+        \multicolumn{2}{|c|}{Preguntas genéricas} \\
+        \hline
+        Pregunta & Tipo de respuesta \\
+        \hline
+        1. ?`Recomendarías la aplicación a un amigo? & Entre 0 y 10 \\
+        \hline
+        2. ?`Tienes algún comentario? & Respuesta libre. \\
+        \hline
+    \end{tabular}
+    \caption{Formulario para la prueba de usabilidad}
+    \label{tab:preguntasPrueba}
+\end{table}
 
 \section{Realización de las pruebas}
 
