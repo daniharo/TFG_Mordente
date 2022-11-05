@@ -67,7 +67,7 @@ Documentación & Autogenerada, solo API & Completa, numerosos tutoriales & Bási
 \hline
 \makecell[l]{Versión API \\Telegram} & 6.2 & 6.2 & 6.2 & 6.2 \\
 \hline
-Popularidad\footnote{Estrellas en GitHub a 07/10/2022} & 6.1k & 663 & 6.5k & 19.8k \\
+Popularidad\footnote{Estrellas en GitHub a 7 de octubre de 2022} & 6.1k & 663 & 6.5k & 19.8k \\
 \hline
 \end{tabularx}
 \end{minipage}
@@ -144,12 +144,80 @@ Expliquemos la arquitectura utilizada en dos pasos:
 
 \subsection{Arquitectura entre puntos}
 
+Con la arquitectura entre puntos nos referimos a la visualización a alto nivel de las distintas partes físicas necesarias para que nuestra herramienta funcione.
+
+En nuestro caso, existen tres partes claramente diferenciadas:
+
+\begin{itemize}
+    \item \textbf{El dispositivo del usuario}, o también llamado cliente. Tiene instalada la aplicación de Telegram, y se comunica bidireccionalmente con los servidores de Telegram para enviar y recibir mensajes.
+    \item \textbf{Los servidores de Telegram}. Actúan como intermediarios entre distintos usuarios, así como entre los usuarios y nuestro bot.
+    \item \textbf{El bot}. Es un programa que se comunica con los servidores de Telegram para enviar y recibir mensajes, tal y como los clientes, aunque con ciertas diferencias de funcionamiento con los clientes. Este programa puede estar alojado en cualquier ordenador, y en nuestro caso estará alojado en un servidor privado virtual.
+\end{itemize}
+
+Esta arquitectura está representada en la figura \ref{fig:arquitecturaPuntos}.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=1\textwidth]{imagenes/disenyo_tecnico/arquitectura_puntos.png}
+\caption{Arquitectura entre puntos}
+\label{fig:arquitecturaPuntos}
+\end{figure}
+
+Es importante entender que la única responsabilidad que nos corresponde a nosotros es la de desarrollar la última parte: el bot. El cliente y los servidores de Telegram son partes externas fuera de nuestra responsabilidad, lo cual es una de las ventajas de desarrollar un servicio de este tipo.
 
 
 % VPS   <->   Telegram API   <->    Telegram Client
 
 
 \subsection{Arquitectura entre servicios}
+
+Para la funcionalidad que necesitamos, el bot debe estar compuesto por varios microservicios a su vez: 
+
+\begin{itemize}
+    \item \textbf{El propio bot:} es el microservicio donde implementaremos la comunicación con los servidores de Telegram para recibir mensajes, procesarlos y responderlos adecuadamente.
+    \item El bot realiza peticiones a una \textbf{base de datos} donde almacenaremos de forma persistente los datos de los usuarios. Esto garantizará que no perdamos información cuando el bot se reinicie.
+    \item Opcionalmente, podremos añadir un microservicio encargado de realizar una \textbf{copia de seguridad} periódica de la base de datos.
+    \item Por otro lado tendremos un servicio de \textbf{almacenamiento de archivos} para guardar las copias de seguridad y otros archivos (en nuestro caso, las partituras).
+\end{itemize}
+
+En la figura \ref{fig:arquitecturaServicios} se puede visualizar la arquitectura entre los distintos servicios.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{imagenes/disenyo_tecnico/arquitectura_servicios.png}
+\caption{Arquitectura entre servicios}
+\label{fig:arquitecturaServicios}
+\end{figure}
+
+\subsubsection{Localización de los servicios}
+
+Con respecto a dónde disponer los distintos servicios, existen al menos dos opciones: una es alojarlos en el propio servidor que gestionaremos nosotros y cuyos microservicios podremos levantar en un solo paso usando \textit{Docker Compose}, y otra es utilizar servicios auto-gestionados por plataformas externas. Hagamos una reflexión para cada uno de los servicios:
+
+\begin{itemize}
+    \item El \textbf{bot} puede estar en un servidor propio o en un servicio gestionado, ambas opciones son válidas. La ventaja de tenerlo en el servidor propio será la mayor cercanía posible con la base de datos, resultando en una mayor velocidad de respuesta. La ventaja de utilizar un servicio gestionado es la mayor facilidad de escalado, sin embargo esto no es algo prioritario en la primera fase de desarrollo.
+    \item Casi todos los proveedores de servicios en la nube ofrecen \textbf{bases de datos} gestionadas\footnote{Ejemplos: Digital Ocean Managed Databases, Heroku Postgres, Firebase Cloud Firestore...}, aunque siempre es conveniente que el bot y la base de datos se encuentren físicamente cercanos para reducir la latencia de las frecuentes consultas. Es por ello y porque no se prevé una gran cantidad de información almacenada durante el periodo inicial que optaremos por alojar la base de datos dentro de nuestro servidor, al igual que el bot.
+    \item El \textbf{almacenamiento de archivos} siempre se suele delegar a un servicio externo gestionado. La mayor ventaja de esta aproximación es la disponibilidad de una CDN (\textit{Content Delivery Network}, o Red de Entrega de Contenidos). Gracias a esta red tendremos un conjunto de servidores distribuidos geográficamente que pueden entregar rápidamente el contenido. Además, usar un servicio fuera de nuestro servidor garantiza que podamos realizar copias de seguridad de la base de datos que no se pierdan si el servidor se rompe por cualquier causa.
+\end{itemize}
+
+
+\subsubsection{Entorno de producción y de desarrollo}
+
+Es importante tener en cuenta también que esta configuración puede variar dependiendo de si nos encontramos en el entorno de desarrollo o de producción. En nuestro caso, el servicio de copias de seguridad no existirá en el entorno de desarrollo. 
+
+Además, tendremos dos réplicas (una de producción y otra de desarrollo) del bot, la base de datos y el almacenamiento de archivos para que las pruebas no afecten en ningún caso a los datos de los usuarios reales.
+
+\section{Seguridad}
+
+Se intentará maximizar la seguridad de la aplicación gracias a los siguientes puntos:
+
+\begin{itemize}
+    \item Los contenedores de Docker utilizados en el servidor están completamente aislados de la red excepto en los puertos que configuremos manualmente. En nuestro caso, el bot podrá conectarse a la base de datos pero ninguno de los contenedores tendrá puertos expuestos al exterior que pudieran ser usados por atacantes.
+    \item Gracias al punto anterior, los ataques de denegación de servicio (DDoS) no son un riesgo. Además el servidor tendrá un Firewall configurado.
+    \item El uso de herramientas \textit{open-source} como Prisma para hacer las consultas a la base de datos en lugar de realizarlas manualmente con código SQL disminuye al máximo la posibilidad de Inyecciones SQL.
+    \item La inyección de código al servidor no es posible ya que no se ejecuta ningún código enviado por el cliente, y por otro lado el cliente es responsabilidad de Telegram.
+    \item Se añadirán métodos que permitan detectar automáticamente las vulnerabilidades introducidas por dependencias externas. Como el repositorio estará alojado en GitHub, se propone el uso de \textit{Dependabot}\footnote{\url{https://docs.github.com/es/code-security/dependabot}}.
+\end{itemize}
+
 
 % VPS:
 
