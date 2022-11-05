@@ -26,7 +26,7 @@ Una de ellas es la que nos ocupa en este trabajo: las asociaciones o agrupacione
 Por ejemplo, para la correcta planificación de ensayos y eventos, tanto el director como los administradores necesitan conocer con antelación qué músicos tienen pensado asistir y cuáles estarán ausentes. Esto les permitirá saber si se necesita llamar a un músico externo a la agrupación para que participe en un evento, o si es mejor cancelar o aplazar el evento. Para esta tarea, habitualmente el director avisa del evento por un grupo de mensajería a los miembros, y pide que quien no tenga pensado asistir se lo notifique. De este modo se generan varios problemas:
 
 \begin{itemize}
-    \item La información sobre qué miembros han notificado su ``no asistencia'' solo la tiene el director, por lo que si otros administradores quieren conocerla se la tienen que pedir individualmente.
+    \item La información sobre qué miembros han notificado su \textit{no asistencia} solo la tiene el director, por lo que si otros administradores quieren conocerla se la tienen que pedir individualmente.
     \item Si algún miembro ha comunicado su ``no asistencia'' a otro administrador, tiene que poner la información en común con la del director, pudiendo dar lugar a discrepancias.
     \item Si el director quiere tener la información de asistencia centralizada, tiene que repasar sus conversaciones con los miembros para elaborar una tabla de asistencia, que tiene que ir actualizando manualmente, con la carga de trabajo que ello supone.
 \end{itemize}
@@ -35,13 +35,13 @@ Similares problemas se crean para los demás procesos que se llevan a cabo en un
 
 Es evidente, por tanto, que se necesita una herramienta específica que permita automatizar sus procesos y avanzar en su digitalización para equipararla a la del resto de la sociedad.
 
-Aunque ya existen herramientas como Glissandoo, que se analiza en este capítulo, son de pago, poco personalizables o están poco integradas en el flujo de trabajo actual de las agrupaciones. Es por ello que este trabajo pretende aportar una alternativa libre que solucione estos inconvenientes, de modo que:
+Aunque ya existen herramientas como Glissandoo, que se analiza en la sección \ref{subsection:glissandoo}, son de pago, poco personalizables o están poco integradas en el flujo de trabajo actual de las agrupaciones. Es por ello que este trabajo pretende aportar una alternativa libre que solucione estos inconvenientes, de modo que:
 
 \begin{itemize}
     \item Cada agrupación pueda montar su propio servidor con la aplicación, personálizandola y adaptándola a sus necesidades.
     \item Los gastos por uso de la herramienta solo dependan del servidor que use la agrupación, si usa un servidor dedicado.
     \item Sea usable en todas las plataformas en las que se pueda acceder a un navegador web.
-    \item Esté integrada en una herramienta de mensajería que ya esté en uso como es Telegram, pero añadiendo funcionalidad específica y automática necesaria para la gestión de la agrupación, eximiendo a los administradores y el director de tareas que se pueden automatizar.
+    \item Esté integrada en una herramienta de mensajería que ya esté en uso como es \textbf{Telegram}\footnote{\url{https://telegram.org/}}, pero añadiendo funcionalidad específica y automática necesaria para la gestión de la agrupación, eximiendo a los administradores y el director de tareas que se pueden automatizar.
 \end{itemize}
 
 
@@ -50,20 +50,15 @@ Aunque ya existen herramientas como Glissandoo, que se analiza en este capítulo
 % trabajos previos del cual este es una extensión o de proyectos de 
 % investigación en el que se enmarca, etc.
 
-\section{Trabajos relacionados}
-% Evidencias científicas o revisiones recientes de uso de tecnologías o
-% metodologías para resolver un problema igual o similar al mío. Buscar
-% referencias en fuentes fiables como Google Scholar.
-
 \section{Aplicaciones similares}
 % Descripciones, capturas y tabla comparativa
 % Alternativas: Glissandoo, Whatsapp
 
 Aunque aún la mayoría de agrupaciones usan Whatsapp como herramienta de comunicación sin usar ningún software más que automatice las tareas, en los últimos tiempos ha surgido otra herramienta que da respuesta a sus necesidades:
 
-\subsection{Glissandoo}\label{}
+\subsection{Glissandoo}\label{subsection:glissandoo}
 
-Glissando (\url{https://glissandoo.com/}) es un software creado por la empresa Plausible Technologies, con sede en Valencia. En su página web se define como ``un software que nace con el objetivo de profesionalizar, modernizar y digitalizar las instituciones musicales''. Incorpora numerosas funcionalidades para digitalizar instituciones musicales, tal y como pretende este trabajo. Entre ellas se encuentran:
+Glissando\footnote{\url{https://glissandoo.com/}} es un software creado por la empresa Plausible Technologies, con sede en Valencia. En su página web se define como ``un software que nace con el objetivo de profesionalizar, modernizar y digitalizar las instituciones musicales''. Incorpora numerosas funcionalidades para digitalizar instituciones musicales, tal y como pretende este trabajo. Entre ellas se encuentran:
 
 \begin{itemize}
     \item Organización de ensayos y conciertos. Los miembros pueden ver los ensayos y conciertos en la página de inicio.
@@ -111,11 +106,11 @@ Sin embargo, esta herramienta tiene varias desventajas:
 Mediante \textit{agregación de servicios no especializados} nos referimos al uso de varias herramientas que no están especializadas para este caso de uso, pero que de cierta forma pueden suplir las necesidades:
 
 \begin{itemize}
-    \item Como almacenamiento de partituras, existen servicios como Google Drive, Dropbox o Microsoft OneDrive.
-    \item Para la planificación de eventos y conciertos se puede usar un calendario web como Google Calendar o Microsoft Outlook.
-    \item Para estimar la asistencia se pueden usar herramientas que permiten encuestas de este tipo como Doodle.
-    \item Para controlar la asistencia real se puede usar una hoja de cálculo o herramientas como Alexia.
-    \item Como medio de comunicación se utiliza otro servicio como WhatsApp o Telegram.
+    \item Como almacenamiento de partituras, existen servicios como \textbf{Google Drive}\footnote{\url{https://drive.google.com/}}, \textbf{Dropbox}\footnote{\url{https://www.dropbox.com/}} o \textbf{Microsoft OneDrive}\footnote{\url{https://onedrive.live.com/}}.
+    \item Para la planificación de eventos y conciertos se puede usar un calendario web como \textbf{Google Calendar}\footnote{\url{https://calendar.google.com/}} o \textbf{Microsoft Outlook}\footnote{\url{https://outlook.live.com/}}.
+    \item Para estimar la asistencia se pueden usar herramientas que permiten encuestas de este tipo como \textbf{Doodle}\footnote{\url{https://doodle.com/}}.
+    \item Para controlar la asistencia real se puede usar una hoja de cálculo, por ejemplo en \textbf{Google Sheets}\footnote{\url{https://docs.google.com/spreadsheets/}}.
+    \item Como medio de comunicación se utiliza otro servicio como \textbf{WhatsApp}\footnote{\url{https://www.whatsapp.com/}} o \textbf{Telegram}\footnote{\url{https://telegram.org/}}.
 \end{itemize}
 
 La ventaja de esta aproximación (la mayormente utilizada en la actualidad) es el mayor grado de personalización, ya que los servicios se pueden intercambiar si la funcionalidad o confiabilidad no es la esperada.
@@ -124,5 +119,5 @@ No obstante, las desventajas son numerosas, como ya se ha comentado anteriorment
 \begin{itemize}
     \item Gran carga de trabajo para los administradores.
     \item Redundancia de comunicaciones entre los miembros y los administradores.
-    \item Muchas de estas herramientas requieren de suscripción premium para usar toda la funcionalidad.
+    \item Muchas de estas herramientas requieren de suscripción \textit{premium} para usar toda la funcionalidad.
 \end{itemize}
