@@ -1,70 +1,5 @@
 \chapter{Implementación}
 
-\section{Metodología de trabajo}
-% Ciclo de vida del software, prototipado evolutivo, metodologías
-% ágiles, revisión bibliográfica, experimento o estudio de casos,
-% prueba de concepto, etc.
-
-Se va a usar una metodología ágil usando el \textit{framework} Scrum adaptado a un equipo unipersonal.
-
-
-\subsection{Planificación temporal}
-
-El periodo desde la asignación del trabajo (29 de octubre de 2021) hasta el inicio del primer sprint se dedicará a revisar documentación sobre posibles tecnologías a usar, probándolas siempre que sea posible. Antes del inicio del primer sprint se tendrá:
-
-\begin{itemize}
-    \item Una base del código del proyecto montada y lista para desplegar en un servidor.
-    \item Una decisión de las tecnologías a usar.
-    \item Una decisión sobre las herramientas a usar durante el desarrollo (gestión de tareas, gestión de versiones para el código, gestión de versiones para la documentación).
-\end{itemize}
-
-A partir del 21 de marzo de 2022, el trabajo simultáneo de desarrollo y escritura de la memoria se dividirá en cuatro sprints:
-\begin{itemize}
-    \item Primer sprint: 21 de marzo a 1 de abril
-    \item Segundo sprint: 18 de julio a 29 de julio
-    \item Tercer sprint: 3 de octubre a 12 de octubre
-    \item Cuarto sprint: 17 de octubre a 28 de octubre
-\end{itemize}
-
-El periodo entre el 28 de octubre y la entrega del trabajo se dedicará a la revisión de la memoria y el análisis de uso de la aplicación en un caso de uso real.
-
-
-\section{Presupuesto}
-% Cuánto costaría llevar a cabo este proyecto en la realidad
-
-% Incluir: costes de personal, de equipamiento (hardware y
-% software), otros (desplazamientos, difusión, patentes o
-% registros de propiedad, etc.)
-% Costes de personal: por horas o meses. Incluir gastos de
-% seguros sociales y cuota patronal. Buscar y citar una
-% referencia fiable en la que basaros.
-
-
-\section{Herramientas y tecnologías escogidas}
-
-
-\subsection{Lenguaje de programación}
-Typescript
-
-\subsection{Framework}
-GrammY
-
-\subsection{Base de datos}
-PostgreSQL
-
-\subsection{ORM}
-Prisma
-
-\subsection{IDE}
-JetBrains
-
-% \subsection{Almacenamiento de archivos}
-% Amazon S3
-
-
-
-
-
 
 % Más subsecciones dependiendo de la metodología empleada
 
@@ -79,26 +14,280 @@ JetBrains
 % detalles de implementación o justificar decisiones del diseño o de la
 % tecnología.
 
+\section{Exploración de funcionalidades}
+% https://github.com/daniharo/mi-banda-bot
 
-\section{Primer sprint}
+\subsection{Infraestructura de contenedores}
 
-Analizador de comandos
-Unirse a agrupación,
-Lógica de negocio para los modelos
-Middleware para plantillas
+% docker, docker-compose
 
-
-\section{Segundo sprint}
-
-Middleware para información de usuario/cuenta
-Crear evento, eliminar evento
-Crear agrupación, eliminar agrupación
-Crear membresía, eliminar membresía
-Habilitar/deshabilitar enlace de invitación
-Crear evento, eliminar evento
-
-Contribuciones a GrammY: Prisma Adapter, conversations issue, calendario
+\subsection{Conexión a base de datos}
 
 
+\subsection{Manejo de mensajes de Telegram}
+
+
+\section{Internacionalización}
+
+
+\section{Plantillas: separación MVC}
+
+
+\section{Unirse a un grupo}
+
+
+\section{Crear, mostrar y eliminar agrupaciones}
+
+
+
+\section{Optimización de la autenticación en cada mensaje}
+
+% middleware: useAccount
+
+
+\section{Crear, mostrar y eliminar eventos}
+
+
+\subsection{Selector de fecha}
+
+
+\subsection{Guardar sesión en la base de datos}
+
+% qué se guarda en la sesión: id de usuario, paso dentro de una conversación, etc
+
+% contribución a grammY
+
+% problema: tests
+
+
+\section{Configuración del \textit{linter}}
+
+% ESLint, ESLint-typescript
+
+
+\section{Limitación de errores para el bot}
+% Global error boundary
+
+
+\section{Mejora del flujo de trabajo para depurar}
+% node inspect (commit https://github.com/daniharo/mordente/commit/5a64a8516519d1f21e33a8810252bb9b79a3588b)
+
+
+\section{Respuestas de asistencia prevista}
+% https://github.com/daniharo/mordente/commit/9d2059609cc696405f6f4cbd2b2590ff2878eb98
+
+
+\subsection{Pedir justificación}
+% https://github.com/daniharo/mordente/commit/06efba49a35e562bf23756bc2fa2fdf8d150ca47
+
+\subsection{Notificar administradores}
+% https://github.com/daniharo/mordente/commit/fb7e33e4d485841c9d14a15acff932f66f270476
+
+\section{Asignación de miembros a eventos}
+% https://github.com/daniharo/mordente/commit/9e951c77ee1b2a68ad6096b7ebf269192ff75522
+% https://github.com/daniharo/mordente/commit/77ad84b13aae9dba6c6f44f890fb200695459148
+% https://github.com/daniharo/mordente/commit/b111f68ee919500346a61c1c3d711caed6fd9c17
+
+
+\section{Recordatorio de eventos diarios}
+% https://github.com/daniharo/mordente/commit/33859f0544f298262d72be75aac76bdbc1244d31
+
+\section{Adición y eliminación de administradores}
+% https://github.com/daniharo/mordente/commit/60db0538dcb3f31d9b67ad91915b13a3337088e3
+
+
+
+
+\section{Despliegue de producción}
+
+\subsection{Modificaciones previas en el código}
+% hablar de pm2 https://github.com/daniharo/mordente/commit/0783b132043fc3dc85ce73b547d9b9db8b21bae4
+
+% nuevo docker compose https://github.com/daniharo/mordente/commit/8f5739ae9d013687f010600cbded7c3ec5d5dada
+
+% migración de base de datos manual ahora https://github.com/daniharo/mordente/commit/98f3186d251d2c4da88e101ed11c5155b763ddb0
+
+% compilar TS antes de iniciar https://github.com/daniharo/mordente/commit/3be387e6b5cf21ab101ed26b03c3d6e96892916c
+
+
+
+\subsection{Creación de servidor virtual}
+
+
+\subsection{Solucionando el uso anormal de la CPU}
+
+
+\section{Partituras}
+
+\subsection{Creación del \textit{bucket S3} en Digital Ocean Spaces}
+
+\subsection{Intermediar entre el chat y Digital Ocean Spaces}
+% https://github.com/daniharo/mordente/commit/874484bf377eb738cf7f68f4d1f5fc5c92ab4607
+% https://github.com/daniharo/mordente/commit/782e57b77060d7cb2debf2a0619b20644439e022
+% https://github.com/daniharo/mordente/commit/da63c3b0fc8ca39ebd327965d9037ec885d4cd72
+
+
+\subsection{Parametrizar valores del \textit{bucket}}
+
+% https://github.com/daniharo/mordente/commit/a5532a0454920ef41dd7f4c2bb87c6de1f88bd41
+
+Para que el código se pueda usar con cualquier proveedor de servicios de almacenamiento de objetos, es necesario hacer que los datos de conexión al proveedor sean variables fáciles de cambiar.
+
+Por ello vamos a añadir estos datos de conexión a las variables de entorno. En concreto, los datos que se necesita obtener del proveedor están explicados en la tabla \ref{tab:envS3}.
+
+Si en el futuro se optara por otro proveedor, simplemente tendríamos que cambiar estas variables de entorno.
+
+\begin{table}[]
+    \centering
+    \begin{tabular}{|l|c|}
+        \hline
+        \textbf{Variable de entorno} & \textbf{Significado} \\
+        \hline
+        \texttt{S3\_ENDPOINT} & Dominio en el que se encuentra el \textit{bucket} \\
+        \hline
+        \texttt{S3\_REGION} & Región en la que se aloja el \textit{bucket} \\
+        \hline
+        \texttt{S3\_BUCKET} & Nombre del \textit{bucket} que hemos creado \\
+        \hline
+        \texttt{S3\_KEY} & Clave de acceso al \textit{bucket} \\
+        \hline
+        \texttt{S3\_SECRET} & Clave secreta de acceso al \textit{bucket} \\
+        \hline
+    \end{tabular}
+    \caption{Variables de entorno necesarias para configurar el \textit{bucket S3}.}
+    \label{tab:envS3}
+\end{table}
+
+
+\section{Copias de seguridad de la base de datos}
+
+
+
+
+
+\section{Despliegue Continuo (CD): Automatizando el despliegue del bot a producción}
+
+% https://github.com/daniharo/mordente/commit/8965e0e893ea7ccf87da4947a8ba1ebf462d0c43
+
+% https://github.com/daniharo/mordente/commit/6ade5d3554df9d49b8ece3adc08c54875c597397
+
+
+\section{Configurando la detección automática de vulnerabilidades}
+
+% https://github.com/daniharo/mordente/commit/87541359abe2dc01ab819241ef8b595d729d21e7
+
+
+\section{La función de editar}
+% https://github.com/daniharo/mordente/commit/3e630b1fe45c479f836f21de003e7f6cc7f0bbee
+
+La última funcionalidad que falta para que el bot sea usable es la de \textbf{editar} elementos, ya sean agrupaciones, 
+
+
+\section{Página web: \href{https://mordente.es}{\texttt{mordente.es}}}
+
+Una vez tenemos la aplicación funcionando y lista para poder hacer pruebas con usuarios, es conveniente desarrollar un sitio web donde explicar qué es Mordente, qué hace y cómo funciona. En esta sección se va a describir el proceso que se ha seguido para conseguirlo.
+
+\subsection{Creación del proyecto}
+
+Como venimos haciendo a lo largo del proyecto, hemos creado un repositorio público vacío en GitHub con el nombre de \texttt{mordente-docs}\footnote{\url{https://github.com/daniharo/mordente-docs}}. Seguidamente se ha clonado en el equipo de desarrollo usando el siguiente comando de \texttt{git}:
+
+\begin{verbatim}
+git clone git@github.com:daniharo/mordente-docs.git
+\end{verbatim}
+
+En la sección \ref{subsection:decisionDocumentacion} se ha decidido usar la herramienta \texttt{docusaurus} para desarrollar la página web, por lo tanto seguiremos sus instrucciones\footnote{\url{https://docusaurus.io/docs/installation}} para iniciar el desarrollo. Tras seguir las instrucciones, ya tenemos la estructura preparada para crear el contenido\footnote{\url{https://github.com/daniharo/mordente-docs/commit/1c25316}}.
+
+\subsection{Creación de contenido}
+
+La estructura de código que nos proporciona \texttt{docusaurus} nos permite configurar la estructura, apariencia y contenido de la página web partiendo de una plantilla \textit{responsive} (adaptada a todos los tamaños de pantalla) y accesible.
+
+Aprovecharemos las posibilidades de configuración que nos ofrece \texttt{docusaurus} para cambiar los colores a nuestra paleta, añadir el logotipo y el contenido personalizado.
+
+Algunas de las herramientas usadas durante este paso han sido:
+\begin{itemize}
+    \item \texttt{undraw}\footnote{\url{https://undraw.co/}}: es una extendsa biblioteca de ilustraciones SVG a las cuales se les puede personalizar fácilmente el color, y que representan distintas situaciones o ideas.
+    \item \texttt{favicon-generator}\footnote{\url{https://www.favicon-generator.org/}}: el \texttt{favicon} es el icono que aparece a la izquierda del título de la página en el navegador. El archivo debe ubicarse en la raíz del directorio de la página y llamarse \texttt{favicon.ico}. Esta herramienta nos permite convertir cualquier imagen a un \texttt{favicon} con la medida adecuada.
+    \item Se han usado algunos conocimientos previos de \texttt{react}\footnote{\url{https://reactjs.org/}}, ya que \texttt{docusaurus} está basado en esta biblioteca de interfaces de usuario.
+\end{itemize}
+
+En GitHub se pueden observar los cambios exactos realizados en el código para añadir el contenido de la página web\footnote{\url{https://github.com/daniharo/mordente-docs/compare/fd28973...e8980b0}}.
+
+
+
+\subsection{Alojar en servidor}
+
+Para que la página web esté accesible públicamente, es necesario alojarla en un servidor público. Existen múltiples plataformas que permiten alojar fácilmente contenido estático\footnote{Con \textit{contenido estático} nos referimos a archivos \texttt{HTML}, \texttt{CSS}, imágenes, etc. que se envían directamente al cliente sin necesidad de que haya una lógica en el servidor para calcularlos.} como el que genera \texttt{docusaurus}, pero las más interesantes permiten actualizar automáticamente el contenido del servidor cada vez que hay un \texttt{commit} en la rama principal del repositorio. Algunas de las más conocidas son:
+
+\begin{itemize}
+    \item \textbf{Vercel}\footnote{\url{https://vercel.com/}}: Es la empresa que desarrolla el \textit{framework} \texttt{Next.js}, una de las herramientas más usadas\footnote{\url{https://survey.stackoverflow.co/2022/\#most-popular-technologies-webframe}} por su flexibilidad para crear páginas web requieran de lógica en el servidor o no. Su servicio de alojamiento de páginas web destaca por su facilidad de uso, con una configuración automática e inmediata.
+    \item \textbf{Netlify}\footnote{\url{https://www.netlify.com/}}: Principal competidor de Vercel, ofrece más posibilidades de configuración pero un peor rendimiento.
+    \item \textbf{Github Pages}\footnote{\url{https://pages.github.com/}}: Es un servicio prestado por la forja de repositorios \textbf{GitHub}. Requiere de una configuración más compliacada para automatizar la compilación del código\footnote{\url{https://docusaurus.io/docs/deployment\#deploying-to-github-pages}}.
+    \item \textbf{Cloudflare Pages}\footnote{\url{https://pages.cloudflare.com/}}: Nuevo servicio equivalente a Netlify o Vercel, con una configuración igual de sencilla. Es provisto por Cloudflare, una compañía especializada en prestar servicios de \textit{caché de contenido} y de seguridad.
+\end{itemize}
+
+Se optará por \textbf{Vercel} por la familiaridad del desarrollador de este proyecto con este proveedor por proyectos anteriores y por su facilidad de uso.
+
+Para alojar nuestra página en \textbf{Vercel}, simplemente seguimos la documentación\footnote{\url{https://docusaurus.io/docs/deployment\#deploying-to-vercel}}, tarea que no nos lleva más de unos minutos. Una vez hemos terminado, tenemos la página web en una dirección asignada automáticamente: \url{https://mordente.vercel.app}.
+
+\subsection{Redirecciones}
+
+Para facilitar el acceso al contenido de este trabajo, se va a configurar el servidor de manera que al acceder a ciertas rutas se abra una determinada página de un dominio externo. Lo haremos siguiendo las instrucciones de Vercel para ello\footnote{\url{https://vercel.com/docs/project-configuration\#project-configuration/redirects}}. Las rutas que redireccionaremos están descritas en la tabla \ref{tab:redirecciones}.
+
+\begin{table}[]
+    \centering
+    \begin{tabular}{|l|c|}
+        \hline
+        \textbf{Ruta origen} & \textbf{Redirige permanentemente a} \\
+        \hline
+        \href{https://mordente.es/repo}{\texttt{/repo}} & \multirow{2}{*}{Código del bot} \\ \cline{1-1}
+        \href{https://mordente.es/source}{\texttt{/source}} & \\ \hline
+        \href{https://mordente.es/source/docs}{\texttt{/source/docs}} & Código de la página web \\
+        \hline
+        \href{https://mordente.es/source/memoria}{\texttt{/source/memoria}} & Código \LaTeX{} de la memoria \\
+        \hline
+        \href{https://mordente.es/memoria}{\texttt{/memoria}} & Memoria en formato \texttt{PDF} \\
+        \hline
+        \href{https://mordente.es/try}{\texttt{/try}} & Bot en Telegram \\
+        \hline
+    \end{tabular}
+    \caption{Redirecciones en \href{https://mordente.es}{\texttt{mordente.es}}}
+    \label{tab:redirecciones}
+\end{table}
+
+\subsection{Asignación de dominio}\label{subsection:asignacionDominio}
+
+Registrar un dominio personalizado nos permitirá acceder a la página con una dirección sencilla y fácil de recordar. 
+
+Las empresas encargadas de registrar un dominio son llamadas \textbf{registradores de dominios}. Tras comparar precios entre diversos registradores para dominios \texttt{.es}, en nuestro caso se opta por \textbf{IONOS}\footnote{\url{https://www.ionos.es/dominios/}}, que ofrece el dominio \texttt{mordente.es} por 1,21\texteuro{} el primer año, la mejor oferta entre las encontradas.
+
+Tras hacer el proceso de compra, seguimos las instrucciones\footnote{\url{https://vercel.com/docs/concepts/projects/domains/add-a-domain}} de \textbf{Vercel} para asignar el dominio al proyecto. Esperamos un tiempo aproximado de una hora mientras se propagan los nuevos registros DNS, tras el cual Vercel genera automáticamente el certificado TLS para nuestro dominio\footnote{\url{https://vercel.com/blog/automatic-ssl-with-vercel-lets-encrypt}} y podemos acceder sin problemas a \url{https://mordente.es}.
+
+El último paso es modificar la configuración de \texttt{docusaurus} para ajustar correctamente el nuevo dominio principal\footnote{\url{https://github.com/daniharo/mordente-docs/commit/c2e2f8e}}.
+
+\subsection{Probando otros proveedores}
+
+Durante la realización de un proyecto personal paralelo\footnote{Aplicación usando ingeniería inversa para consultar en tiempo real los tiempos de paso del Metropolitano de Granada: \url{https://metrogranada.pages.dev}. Código en \url{https://github.com/daniharo/Metro-Granada-Webapp}.} se ha comprobado cómo \textbf{Cloudflare Pages}, siendo un proveedor muy parecido a \textbf{Vercel}, proporciona un menor tiempo de respuesta (aproximadamente la mitad) a la hora de alojar un servidor \texttt{Next.js}\footnote{\url{https://nextjs.org/}} que incluye \textit{Rutas API Edge}\footnote{\url{https://nextjs.org/docs/api-routes/edge-api-routes}}.
+
+
+Es por esto que se ha querido comprobar si para sitios puramente estáticos como el que hemos creado en esta sección, \textbf{Cloudflare Pages} es capaz también de dar un mayor rendimiento.
+
+Para ello, se han seguido las instrucciones correspondientes, primero para alojar el contenido \footnote{\url{https://developers.cloudflare.com/pages/framework-guides/deploy-a-docusaurus-site/}} y después para asignar el dominio que creamos en la sección \ref{subsection:asignacionDominio}\footnote{\url{https://developers.cloudflare.com/pages/platform/custom-domains/}}. Por último se han añadido las redirecciones en el formato requerido por Cloudflare\footnote{\url{https://developers.cloudflare.com/pages/platform/redirects/}} (y que coincide con \textbf{Netlify}\footnote{\url{https://docs.netlify.com/routing/redirects/}}).
+
+
+\subsubsection{Conclusiones del cambio de proveedor}
+
+Tras seguir las instrucciones, hemos podido comprobar que aunque por culpa de una configuración por defecto incorrecta\footnote{\url{https://stackoverflow.com/a/74341851/12210701}} parecía que habíamos empeorado el rendimiento, tras solucionar la configuración sí que se ha mejorado el tiempo de respuesta con respecto a Vercel, aunque en una proporción despreciable (unos 120ms en Cloudflare frente a 140ms en Vercel).
+
+Sin embargo, estas mediciones se hicieron por la noche, mientras la mayoría mediciones hechas durante el día indican que \textbf{Cloudflare} necesita un mayor tiempo para entregar la web: unos 250ms, frente a 140ms en Vercel.
+
+Se ha detectado que el motivo es que, para reducir la carga de algunos centros de datos, algunas peticiones a páginas que están en el plan gratuito se enrutan a centros de datos lejanos\footnote{\url{https://community.cloudflare.com/t/peering-why-dont-i-reach-the-closest-datacenter-to-me/76479}}. En nuestro caso, hemos visto peticiones dirigidas a centros de datos en India o Estados Unidos, mientras que \textbf{Vercel} enruta todas las peticiones a Frankfurt (Alemania).
+
+Es por esto que se ha decidido revertir el cambio de proveedor.
+
+
+\section{Creación de dirección de email}
+
+El proveedor de DNS utilizado para \texttt{mordente.es} nos permite obtener una dirección de correo electrónico gratuita con 2GB de almacenamiento. Por tanto, se ha creado una dirección 
+de soporte (\texttt{soporte@mordente.es}) para los usuarios que puedan tener alguna consulta.
 
 % cuatrimestre 15 semanas
