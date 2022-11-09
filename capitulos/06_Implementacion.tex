@@ -65,7 +65,7 @@
 % ESLint, ESLint-typescript
 
 
-\section{Limitación de errores para el bot}
+\section{Limitación de errores para el bot}\label{section:errorBoundary}
 % Global error boundary
 
 
@@ -85,49 +85,182 @@
 
 \section{Asignación de miembros a eventos}
 % https://github.com/daniharo/mordente/commit/9e951c77ee1b2a68ad6096b7ebf269192ff75522
+
 % https://github.com/daniharo/mordente/commit/77ad84b13aae9dba6c6f44f890fb200695459148
 % https://github.com/daniharo/mordente/commit/b111f68ee919500346a61c1c3d711caed6fd9c17
+Ahora haremos que los eventos puedan ser asignados a usuarios concretos.
 
+Durante la creación de un evento, preguntaremos a un usuario si quiere asignarlo a todos los usuarios o si asignará manualmente más tarde\footnote{\textit{Commit:} \url{https://github.com/daniharo/mordente/commit/9e951c77}}. Haremos también que los usuarios solo puedan ver los eventos que tienen asignados\footnote{\textit{Commit:} \url{https://github.com/daniharo/mordente/commit/77ad84b1}}. Por último, implementaremos un menú paginado que permita a los administradores elegir exactamente qué miembros estarán asignados a cada evento\footnote{\textit{Commit:} \url{https://github.com/daniharo/mordente/commit/b111f68e}}.
 
 \section{Recordatorio de eventos diarios}
 % https://github.com/daniharo/mordente/commit/33859f0544f298262d72be75aac76bdbc1244d31
 
+La historia de usuario relativa a los recordatorios diarios de eventos es la única que no dispara una petición al bot sino que dispara el bot por sí mismo cada cierto tiempo.
+
+Es por ello que debemos configurar una tarea \texttt{cron} que se ejecute cada día para enviar los recordatorios. En esta tarea, se consultan a la base de datos los eventos que tienen lugar hoy y se envía un mensaje a cada usuario que tiene eventos hoy con la información de los eventos correspondientes\footnote{\textit{Commit:} \url{https://github.com/daniharo/mordente/commit/33859f05}}.
+
+
+
+
 \section{Adición y eliminación de administradores}
 % https://github.com/daniharo/mordente/commit/60db0538dcb3f31d9b67ad91915b13a3337088e3
+
+Para añadir y eliminar administradores, ofereceremos a los ya administradores, en el menú de membresía de los demás usuarios, la opción \textbf{Hacer admin} o \textbf{Quitar de admin}.
+
+Para ello implementamos las funciones correspondientes al modelo y los botones correspondientes en el menú reseñado\footnote{\textit{Commit:} \url{https://github.com/daniharo/mordente/commit/60db0538}}.
 
 
 
 
 \section{Despliegue de producción}
 
+Nos encontramos en un punto donde faltan muy pocas historias de usuario por implementar, por lo cual va siendo conveniente que el bot esté disponible de forma continua en un entorno de producción.
+
 \subsection{Modificaciones previas en el código}
+
+Antes de proceder a configurar un servidor de producción con nuestro código, es necesario modificar ciertas partes del código.
+
+\subsubsection{PM2: evitando caídas}
 % hablar de pm2 https://github.com/daniharo/mordente/commit/0783b132043fc3dc85ce73b547d9b9db8b21bae4
 
+Aunque en la sección \ref{section:errorBoundary} hayamos implementado un método que capta los errores de forma que se responde al usuario con un error en lugar lanzar una excepción que pare la ejecución del bot, en el entorno producción será necesario dar un paso más.
+
+\textbf{PM2}\footnote{\url{https://pm2.keymetrics.io/}} es un gestor de procesos para \texttt{Node.js} que, entre otras funcionalidades, permite configurar nuestro programa de \texttt{Node.js} como un demonio. De esta forma, si en algún momento el bot se cae por alguna excepción, se volverá a levantar automáticamente.
+
+Es por ello que se ha decidido añadir \textbf{PM2} como dependencia e implementar su respectiva configuración\footnote{\textit{Commit:} \url{https://github.com/daniharo/mordente/commit/0783b132}}.
+
+\subsubsection{Modificaciones en los contenedores de \texttt{docker}}
 % nuevo docker compose https://github.com/daniharo/mordente/commit/8f5739ae9d013687f010600cbded7c3ec5d5dada
 
+En el entorno de desarrollo, hay varios contenedores funcionando que tienen puertos TCP expuestos hacia el exterior:
+
+\begin{itemize}
+    \item La base de datos tiene expuesto el puerto \texttt{5432} para poder depurar en tiempo real la base de datos de manera gráfica con \path{prisma studio}\footnote{\url{https://www.prisma.io/studio}}.
+    \item El bot expone el puerto \texttt{9200} para poder depurar la ejecución del bot\footnote{\url{https://nodejs.org/en/docs/guides/debugging-getting-started/}}.
+\end{itemize}
+
+En un entorno de producción queremos que los contenedores estén totalmente aislados. Para ello se han modificado los archivos \texttt{docker-compose}, de manera que ahora tenemos tres\footnote{\textit{Commit:} \url{https://github.com/daniharo/mordente/commit/8f5739ae}}:
+
+\begin{itemize}
+    \item \texttt{docker-compose.yml}: Es el archivo base que usarán todos los entornos.
+    \item \texttt{docker-compose.override.yml}: Añade los puertos a exponer en el entorno de desarrollo.
+    \item \texttt{docker-compose.prod.yml}: Configura el bot para el entorno de producción ajustando la variable de entorno \texttt{NODE\_ENV} a \texttt{"production"}.
+\end{itemize}
+
+
+\subsubsection{Migraciones de la base de datos}
 % migración de base de datos manual ahora https://github.com/daniharo/mordente/commit/98f3186d251d2c4da88e101ed11c5155b763ddb0
 
+Hasta ahora las migraciones de la base de datos\footnote{Las \textbf{migraciones} ajustan la base de datos a cambios en el esquema SQL.} se realizaban de forma automática cada vez que se encendía el bot con \path{docker compose up}.
+
+A partir de ahora, querremos que las migraciones se apliquen de forma manual cuando se despliegue código a producción que incluya cambios en el esquema. Para ello, añadimos como \textit{scripts} los comandos necesarios para realizar las migraciones\footnote{\textit{Commit:} \url{https://github.com/daniharo/mordente/commit/98f3186d}}.
+
+
+\subsubsection{Compilación del código TypeScript a JavaScript}
 % compilar TS antes de iniciar https://github.com/daniharo/mordente/commit/3be387e6b5cf21ab101ed26b03c3d6e96892916c
 
+El código que hemos escrito en el lenguaje \textbf{TypeScript} debe ser \textbf{transpilado}\footnote{Transpilar código fuente significa transformarlo desde un lenguaje de programación a otro con un nivel similar de abstracción\cite{whatIsTranspiler}.} al lenguaje \textbf{JavaScript} para que \texttt{Node.js} pueda leerlo.
+
+Idealmente debemos efectuar esta transpilación mientras construimos la imagen de \texttt{docker}, mientras actualmente lo estamos haciendo al iniciar la ejecución del bot. Por ello realizaremos los cambios oportunos en el código para corregirlo\footnote{\textit{Commit:} \url{https://github.com/daniharo/mordente/commit/3be387e6}}.
 
 
 \subsection{Creación de servidor virtual}
 
+Ya tenemos el código listo para desplegarlo en un servidor de producción que esté encendido las 24 horas del día.
+
+Tal y como hemos decidido durante el \textbf{Diseño Técnico} en la sección \ref{subsection:elegirCloud}, procedemos a crear un servidor virtual en la plataforma de \textbf{DigitalOcean}. Para ello empezamos registrándonos en su página web\footnote{\url{https://cloud.digitalocean.com}} y creando un nuevo proyecto llamado \texttt{mordente}.
+
+Los pasos para crear el servidor han sido los siguientes:
+
+\begin{enumerate}
+    \item Pulsar \textbf{Create} y \textbf{Droplets}. Accederemos a la pantalla de creación de Droplets.
+    \item Seleccionamos la pestaña \textbf{Marketplace}, donde podremos encontrar múltiples plantillas preconfiguradas para necesidades comunes.
+    \item Buscamos \texttt{Docker} dentro del \textbf{Marketplace}, y seleccionamos el resultado principal.
+    \item Ajustamos la configuración para usar el plan más económico y ubicar el servidor en Frankfurt, la región con menor latencia desde Granada.
+    \item Añadimos la clave pública SSH de nuestro equipo para que la autenticación solo pueda realizarse mediante esta.
+\end{enumerate}
+
+Una vez tenemos el servidor creado, los pasos a ejecutar en el servidor para encender el bot son:
+
+\begin{verbatim}
+# Generar clave privada y pública
+ssh-keygen
+
+# Abrir la clave pública para añadirla en GitHub
+# (https://github.com/settings/keys)
+cat .ssh/id_ed25519.pub
+
+# Crear carpeta para repositorios y abrirla
+mkdir repos && cd repos
+
+# Clonar el repositorio de GitHub
+git clone git@github.com:daniharo/mordente.git
+
+# Ejecutar el bot
+docker compose -f docker-compose.yml -f docker-compose.prod.yml up
+
+# Ejecutar las migraciones de la base de datos
+docker compose exec app yarn run migrate:prod
+\end{verbatim}
+
+Tras ejecutar estos pasos, ya tenemos el bot funcionando en el entorno de producción.
 
 \subsection{Solucionando el uso anormal de la CPU}
 
+Tras una de las modificaciones en el código, se ha comprobado que el la carga mínima de la CPU es constantemente entre el 17 y 18\%. Aunque no sea una carga muy alta, es un valor que no tiene sentido ya que la carga mientras no hay peticiones de los usuarios debe ser muy próxima a 0.
 
-\section{Partituras}
+Tras investigar el problema, se ha descubierto que tiene origen en una comprobación de estado de la base de datos que se estaba haciendo de forma periódica (cada 0.5 segundos) cuando en realidad solo queríamos que se ejecutara una sola vez al encender el bot. Sin embargo, actualmente \textbf{Docker} no permite configurar esta comprobación de manera que se ejecute una vez inmediatamente al ejecutar el bot y después cada minuto, como se ha comprobado por un \textit{issue} abierto en \textbf{GitHub}\footnote{\url{https://github.com/moby/moby/issues/33410}}.
 
-\subsection{Creación del \textit{bucket S3} en Digital Ocean Spaces}
+Por esto se ha decidido eliminar la comprobación completamente hasta que los cambios que el equipo de Docker ya tiene preparados\footnote{\url{https://github.com/moby/moby/pull/40894}} sean publicados.
 
-\subsection{Intermediar entre el chat y Digital Ocean Spaces}
-% https://github.com/daniharo/mordente/commit/874484bf377eb738cf7f68f4d1f5fc5c92ab4607
-% https://github.com/daniharo/mordente/commit/782e57b77060d7cb2debf2a0619b20644439e022
+\section{Obras}
+% https://github.com/daniharo/mordente/commit/da63c3b0
+
+La última \textbf{épica} de historias de usuario que nos queda por comenzar a implementar es la relacionada con las \textbf{obras}: creación, visualización y eliminación. Sin embargo, hay una historia de usuario especial: se requiere gestionar archivos \texttt{PDF} de los usuarios, las partituras.
+
+
+\subsection{Almacenando partituras: creación del \textit{bucket S3}}\label{subsection:crearBucket}
+
+Con respecto al almacenamiento de las partituras, vamos a usar una solución estándar en la industria como son los \textit{buckets S3}. Un servicio de este tipo nos permite almacenar gran cantidad de ficheros de forma simple y referenciados por una clave: esto se conoce como \textbf{almacenamiento de objetos}. 
+
+Como estamos usando el proveedor \textbf{Digital Ocean} que nos proporciona crédito gratuito, crearemos el \textit{bucket} en su propio servicio de almacenamiento de objetos, llamado \textbf{Digital Ocean Spaces}. Este proveedor llama a los \textit{buckets} \textbf{espacios}, pero al ser totalmente equivalentes y compartir la misma API, en este trabajo los denonimaremos con el nombre estandarizado de \textbf{bucket}.
+
+El proceso de creación del \textit{bucket} para este proveedor es muy sencillo:
+
+\begin{enumerate}
+    \item Accedemos al panel de administración de \textbf{Digital Ocean}.
+    \item Hacemos clic en \textbf{Create} y en \textbf{Spaces}.
+    \item Dejamos la configuración por defecto ya que es adecuada a nuestro proyecto.
+    \item Recibimos la confirmación de que el \textit{bucket} ya ha sido creado.
+\end{enumerate}
+
+\subsection{Intermediando entre el chat y Digital Ocean Spaces}
+% https://github.com/daniharo/mordente/compare/1f448ef1...782e57b7
 % https://github.com/daniharo/mordente/commit/da63c3b0fc8ca39ebd327965d9037ec885d4cd72
 
+Una vez que tenemos el \textit{bucket} creado, solo necesitamos implementar la intermediación entre los usuarios y el \textit{bucket} para que puedan recibir y enviar las partituras dentro del mismo chat. Para ello, añadimos los paquetes \path{@aws-sdk/client-s3} y \path{@aws-sdk/s3-request-presigner} como dependencia, creados por \textbf{Amazon Web Services} y totalmente compatibles con cualquier servicio de almacenamiento de objetos S3 como el que usamos nosotros, \textbf{Digital Ocean Spaces}. También añadimos la dependencia \path{@grammyjs/files} que nos ayudará a manejar archivos que el bot envía o recibe.
 
-\subsection{Parametrizar valores del \textit{bucket}}
+\subsubsection{Pidiendo la partitura}
+
+Para crear la obra en nuestra base de datos, implementamos la conversación \texttt{createSongConversation} que, tras preguntar por el nombre, pedirá al usuario que envíe el archivo de la partitura.
+
+\subsubsection{Recibiendo partituras}
+
+Cuando el bot recibe la partitura que ha enviado el usuario, la descarga en una ruta temporal\footnote{\url{https://grammy.dev/guide/files.html\#receiving-files}} y conecta con el \textit{bucket} para enviarle el archivo a la ruta \path{<id_agrupación>/<id_obra>/<nombre_archivo>.pdf} con la función \texttt{uploadFile}. Esta ruta nos permitirá asegurar que podemos mantener los nombres de los archivos sin que puedan colisionar entre sí.
+
+\subsubsection{Enviando partituras}
+
+Por defecto, todos los objetos que tenemos almacenados tienen acceso privado, es decir, solo el dueño del \textit{bucket} puede acceder a ellos. Por tanto, cuando un usuario pide una partitura, primero debemos generar una URL que está firmada por el dueño del \textit{bucket} y que permite el acceso durante un tiempo especificado a otros usuarios\footnote{\url{https://docs.aws.amazon.com/AmazonS3/latest/userguide/ShareObjectPreSignedURL.html}}. Esta URL temporal se enviará a la API de Telegram para enviar el archivo dentro del chat, mediante el método \texttt{replyWithDocument}\footnote{\url{https://grammy.dev/guide/files.html\#sending-files}}.
+
+Los cambios en el código que implementan la creación de partituras y la comunicación con el \textit{bucket} están disponibles en \textbf{GitHub}\footnote{\textit{Commit:} \url{https://github.com/daniharo/mordente/compare/1f448ef1...782e57b7}}.
+
+\subsection{Lógica común con agrupaciones y eventos}
+
+Ya se pueden crear obras, por lo que ahora necesitamos necesitamos implementar la plantillas necesarias para visualizar la lista de obras (\texttt{song-list.pug}), el menú de la lista de obras (\texttt{songListMenu}) y el menú para el detalle de una obra (\texttt{songMenu})\footnote{\textit{Commit:} \url{https://github.com/daniharo/mordente/commit/da63c3b0}}. No se ha implementado una plantilla para el detalle de una obra ya que solo vamos a utilizar su nombre, por lo que una cadena de texto como respuesta es suficiente.
+
+La implementación de estas funcionalidades se ha realizado siguiendo los pasos que se dieron tanto con las agrupaciones como con los eventos.
+
+\subsection{Parametrizando los valores del \textit{bucket}}
 
 % https://github.com/daniharo/mordente/commit/a5532a0454920ef41dd7f4c2bb87c6de1f88bd41
 
@@ -161,6 +294,48 @@ Si en el futuro se optara por otro proveedor, simplemente tendríamos que cambia
 
 \section{Copias de seguridad de la base de datos}
 
+% https://github.com/daniharo/mordente/compare/c4387aa8...2940907d
+
+Todo sistema que pretenda ser \textbf{fiable} para los usuarios debe implementar un sistema de modo que si los datos se corrompen accidentalmente, la pérdida de datos esté controlada y no sea ilimitada: por ejemplo, que se pueda recuperar una versión anterior de una fecha concreta.
+
+Esto lo podemos solucionar fácilmente añadiendo un nuevo servicio a la infraestructura montada en \texttt{docker compose}.
+
+Haciendo una búsqueda, encontramos que la imagen de \texttt{docker} \path{eeshugerman/postgres-backup-s3} tiene lo que necesitamos: realiza una copia de seguridad en un \textit{bucket} de S3 (recordemos que hemos creado uno en la sección \ref{subsection:crearBucket}) con la configuración dada.
+
+Las variables de configuración que le tenemos que proporcionar a este servicio son todas las relacionadas con el \textit{bucket S3}, explicadas en la tabla \ref{tab:envS3}, las relacionadas con el acceso a la base de datos, y las relativas a la copia de seguridad que se detallan en la tabla \ref{tab:envBackup}.
+
+\begin{table}[]
+    \centering
+    \begin{tabular}{|l|c|}
+        \hline
+        \textbf{Variable de entorno} & \textbf{Significado} \\
+        \hline
+        \texttt{SCHEDULE} & Cada cuánto tiempo se realizará la copia \\
+        \hline
+        \texttt{BACKUP\_KEEP\_DAYS} & \makecell{Cuántos días queremos que se \\ mantengan las copias de seguridad} \\
+        \hline
+        \texttt{S3\_PREFIX} & Prefijo para guardar las copias en el \textit{bucket} \\
+        \hline
+    \end{tabular}
+    \caption{Variables de entorno necesarias para configurar las copias de seguridad.}
+    \label{tab:envBackup}
+\end{table}
+
+Tras añadirlo\footnote{\url{https://github.com/daniharo/mordente/compare/c4387aa8...2940907d}} comprobamos que siempre se mantienen 8 días de copias de seguridad, tal y como se puede comprobar en las figuras \ref{fig:backup1} y \ref{fig:backup2}. Es por esto que comprobamos que a la variable de entorno \texttt{BACKUP\_KEEP\_DAYS} realmente hay que sumarle 1 ya que especifica cuántas copias \textbf{anteriores} a la que se está creando en ese momento queremos mantener.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.75\textwidth]{imagenes/implementacion/backup_antes_de_borrado_automatico.png}
+\caption{Archivos en el \textit{bucket S3} antes de superar el máximo de días configurado}
+\label{fig:backup1}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.75\textwidth]{imagenes/implementacion/backup_despues_borrado_automatico.png}
+\caption{Archivos en el \textit{bucket S3} tras superar el máximo de días configurado}
+\label{fig:backup2}
+\end{figure}
 
 
 
@@ -171,16 +346,70 @@ Si en el futuro se optara por otro proveedor, simplemente tendríamos que cambia
 
 % https://github.com/daniharo/mordente/commit/6ade5d3554df9d49b8ece3adc08c54875c597397
 
+Cuando cambiamos el código del proyecto, para actualizar el código que tenemos subido en el servidor de producción tenemos que seguir los siguientes pasos:
+
+\begin{enumerate}
+    \item Acceder mediante \texttt{ssh} al servidor.
+    \item Actualizar el código con \texttt{git pull}.
+    \item Reconstruir la imagen de \texttt{docker} usando el comando \texttt{docker compose up --build}.
+\end{enumerate}
+
+Dado que estos pasos se van a seguir de formar repetitiva cada vez que 
+
+Es aquí cuando entra en juego el \textbf{Despliegue Continuo (CD)}: es una técnica que consiste en desplegar automáticamente la aplicación a producción cuando se realizan cambios (\textit{commits}) en el código\cite{Shahin_2017}. 
+% https://arxiv.org/pdf/1703.07019.pdf
+
+\textbf{GitHub} permite emplear esta técnica fácilmente mediante el uso de las llamadas \textbf{Github Actions}\footnote{\url{https://github.com/features/actions}}: mediante el añadido de ciertos archivos especiales al repositorio, \textbf{GitHub} ejecuta las acciones especificadas en los supuestos que configuremos.
+
+En nuestro caso, queremos que cuando haya nuevo código en \textit{GitHub} para la rama \texttt{main} se ejecuten automáticamente los pasos reseñados en el comienzo de esta sección. Para ello, añadimos un archivo en la ruta \path{.github/workflows/deploy.yml}, en el cual especificamos cuándo queremos que se ejecute (en los \texttt{git push} a \texttt{main}), qué pasos hay que seguir, además de otras configuraciones que se pueden ver en el \textit{commit} correspondiente\footnote{\url{https://github.com/daniharo/mordente/commit/8965e0e8}}.
+
+A partir de este momento, tal y como se puede ver en la figura \ref{fig:marcaDeploy}, a la derecha de cada \textit{commit} en \textbf{GitHub} aparece un símbolo a modo de marca de verificación en color verde, indicando que el despliegue se ha completado sin problemas. Al hacer clic aparece un botón de \textbf{Detalles} que nos permite consultar cómo se ha llevado a cabo el despliegue\footnote{Ejemplo: \url{https://github.com/daniharo/mordente/actions/runs/3416143998/jobs/5685987409}}.
+
+Los datos para el acceso mediante \texttt{ssh} al servidor se almacenan cifrados como \texttt{Environment secrets}\footnote{\url{https://docs.github.com/en/actions/security-guides/encrypted-secrets}}, de modo que en ningún momento nadie más que el creador del proyecto tiene acceso a ellos. Además, solo los usuarios con permisos de escritura en la rama \texttt{main} pueden disparar un nuevo despliegue.
+
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.75\textwidth]{imagenes/implementacion/marcaDeploy.png}
+\caption{Marca de verificación del \textbf{Despliegue Continuo}}
+\label{fig:marcaDeploy}
+\end{figure}
+
+Más tarde se ha implementado una configuración para que al modificar ciertos archivos como el \texttt{README.md} no se provoque un despliegue\footnote{\url{https://github.com/daniharo/mordente/commit/6ade5d35}}.
+
 
 \section{Configurando la detección automática de vulnerabilidades}
 
 % https://github.com/daniharo/mordente/commit/87541359abe2dc01ab819241ef8b595d729d21e7
 
+Se ha detectado que una tarea frecuente durante el desarrollo de este proyecto ha sido revisar periódicamente de forma manual si alguna de las dependencias\footnote{Las dependencias del bot se especifican en el archivo \texttt{package.json}: \url{https://github.com/daniharo/mordente/blob/main/package.json}} usadas ha sido actualizada por haberse detectado alguna vulnerabilidad o por incorporar nuevas funcionalidades.
+
+Es por ello que se ha configurado una herramienta automática que comprueba diariamente las dependencias y crea un \textit{Pull Request} para cada actualización. Esta herramienta la proporciona \textit{GitHub}, y su nombre es \textit{Dependabot}.
+
+Para configurarla se ha añadido un archivo en la ruta \path{/.github/dependabot.yml}\footnote{\url{https://github.com/daniharo/mordente/commit/8754135}} especificando el intervalo entre detecciones (en nuestro caso cada día o \texttt{daily}), la ruta donde se encuentra el \texttt{package.json} con las dependencias y en qué rama queremos que se hagan los \textit{Pull Request} (\texttt{develop} ya que \textit{main} es la rama de producción).
+
+Una vez configurado, comprobamos que cuando hay actualizaciones disponibles obtenemos las notificaciones correspondientes indicándolo\footnote{Ejemplo: \url{https://github.com/daniharo/mordente/pull/25}}.
 
 \section{La función de editar}
 % https://github.com/daniharo/mordente/commit/3e630b1fe45c479f836f21de003e7f6cc7f0bbee
 
-La última funcionalidad que falta para que el bot sea usable es la de \textbf{editar} elementos, ya sean agrupaciones, 
+La última funcionalidad que falta para que el bot sea usable es la de \textbf{editar} elementos, ya sean agrupaciones, eventos u obras. 
+
+Dado que el tiempo restante para terminar el proyecto es limitado, se ha decidido implementar solo la edición de agrupaciones de forma que la edición de eventos y obras estaría preparada, solo pendiente de readaptar el código ya implementado.
+
+El flujo del usuario será:
+\begin{enumerate}
+    \item Abrir el detalle de la agrupación.
+    \item Pulsar el botón de ``Editar'' debajo del detalle, que solo aparecerá si es usuario administrador.
+    \item Seleccionar en el menú qué atributo quiere editar.
+    \item Responder al bot con el nuevo valor.
+    \item Finalmente el usuario recibe una confirmación de que la agrupación ha sido modificada con éxito.
+\end{enumerate}
+
+\sloppy
+Para ello, implementamos el menú para seleccionar qué atributo vamos a editar (\texttt{editEnsembleMenu}) y una nueva conversación para cada atributo que se puede editar: \texttt{editEnsembleNameConversation}, \texttt{editEnsembleDescriptionConversation}...
+
+Los cambios en el código se pueden ver en el repositorio\footnote{\url{https://github.com/daniharo/mordente/commit/3e630b1}}.
 
 
 \section{Página web: \href{https://mordente.es}{\texttt{mordente.es}}}
