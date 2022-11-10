@@ -29,59 +29,171 @@
 
 \section{Internacionalización}
 
+Si la aplicación crece, es probable que la terminen usando usuarios que hablan otro idioma, ya sea otra lengua cooficial de nuestro país (como el catalán o el gallego) o una lengua foránea.
+
+Vamos a dejar el código preparado para que, si esto ocurre, solo tengamos que añadir las traducciones para el idioma correspondiente.
+
+Para ello, añadimos el paquete \path{@grammyjs/fluent}
+
 
 \section{Plantillas: separación MVC}
 
+El patrón \textbf{Modelo-Vista-Controlador} 
 
 \section{Unirse a un grupo}
 
+Cuando el bot se inicia, presentará a los usuarios dos opciones rápidas: crear una nueva agrupación o unirse a una ya existente.
+
+Dado que la creación de la agrupación requiere iniciar una conversación con el usuario, implementaremos primero la funcionalidad de unirse, que solo requerirá de un comando \texttt{/start} por parte del usuario acompañado de un código de invitación, que de momento será el ID de la agrupación.
+
+Para implementar esta funcionalidad, vamos a usar un truco: por ahora crearemos las agrupaciones en la base de datos de forma manual, mediante la interfaz que nos proporciona \texttt{prisma studio}\footnote{\url{https://www.prisma.io/studio}}.
+
+Añadimos por tanto el menú \texttt{startMenu} que da la bienvenida a los usuarios y une al usuario a una agrupación si el comando viene acompañado de un código\footnote{\textit{Commit:} \url{https://github.com/daniharo/mordente/commit/5ded357c}}. Esto es posible gracias a la característica \textbf{Deep Linking}\footnote{\url{https://core.telegram.org/bots/features\#deep-linking}} de la \textbf{API para Bots de Telegram}.
+
 
 \section{Crear, mostrar y eliminar agrupaciones}
+Todas las funcionalidades del bot dependen del hecho de que existan agrupaciones creadas en la base de datos por administradores, a las cuales se podrán unir los miembros.
+
+Por ello esta será la próxima tanda de historias de usuario a implementar.
+
+Permitiremos crear una agrupación utilizando el comando \texttt{/create}\footnote{\textit{Commit:} \url{https://github.com/daniharo/mordente/commit/82fa3897}} o desde el menú de inicio del bot, que se obtiene con el comando \texttt{/start}\footnote{\textit{Commit:} \url{https://github.com/daniharo/mordente/commit/8cfd020f}}.
+
+Además, añadimos la vista (plantilla) necesaria para ver el detalle de una agrupación, \texttt{ensemble-detail.pug}\footnote{\textit{Commit:} \url{https://github.com/daniharo/mordente/commit/b65de583}}. Permitiremos también al usuario cancelar la conversación para crear la agrupación en cualquier momento, mediante un comando \texttt{/cancel}\footnote{\textit{Commit:} \url{https://github.com/daniharo/mordente/commit/90ddedfb}}.
 
 
+\section{Optimización de la autenticación en cada mensaje}\label{section:useAccount}
+% https://github.com/daniharo/mordente/compare/be269acf...331168c6
 
-\section{Optimización de la autenticación en cada mensaje}
+En la práctica totalidad de los mensajes que recibe el bot necesitamos comprobar cuál es el ID de ese usuario en nuestra base de datos. Esto es así porque, en vistas a futuro, hemos decidido que el ID del usuario en Telegram no sea el ID del usuario en nuestra base de datos, de manera que nuestra aplicación no dependa totalmente de Telegram.
 
-% middleware: useAccount
+Hacer una consulta a la base de datos en todas las funciones que manejan mensajes es repetitivo e ineficiente, por lo que se ha decidido implementar un \textit{middleware} encargado de:
 
+\begin{itemize}
+    \item Consultar si tenemos el ID de ese usuario en la sesión\footnote{\url{https://grammy.dev/plugins/session.html}} actual.
+    \item Si no lo tenemos, comprobar si existe en la base de datos.
+    \begin{itemize}
+        \item Si existe en la base de datos pero hace demasiado tiempo de la última actualizacion de nuestra base de datos, actualizamos y guardamos el ID en la sesión.
+        \item Si existe en la base de datos y está actualizado, solo guardamos el ID en la sesión.
+        \item Si no existe en la base de datos, lo añadimos (creamos una cuenta) guardando el ID obtenido en la sesión.
+    \end{itemize}
+    \item Finalmente, ejecutamos \texttt{ctx.userId = ctx.session.userId} para que todos los manejadores de mensajes puedan acceder al ID fácilmente.
+\end{itemize}
+
+
+Una vez está implementado, eliminamos todas las consultas a la base de datos en el código para sustituirlas por \texttt{ctx.userId}\footnote{\textit{Commits:} \url{https://github.com/daniharo/mordente/compare/be269acf...331168c6}}.
 
 \section{Crear, mostrar y eliminar eventos}
 
+Una de las funcionalidades más centrales de este proyecto es la de gestionar \textbf{eventos}.
 
-\subsection{Selector de fecha}
+Teniendo la funcionalidad de crear, ver y eliminar agrupaciones implementada, la funcionalidad relacionada con los eventos solo requiere adaptar el código anterior a las características de los eventos. Necesitaremos una conversación para crear los eventos (\texttt{createEventConversation}\footnote{\textit{Commit:} \url{https://github.com/daniharo/mordente/commit/65979e02}}), las plantillas correspondientes al detalle del evento (\texttt{event-detail.pug}) y a la lista de eventos (\texttt{events-summary.pug}) y los menús para la lista de eventos (\texttt{eventListMenu}) y el detalle de evento (\texttt{eventMenu})\footnote{\textit{Commits:} \url{https://github.com/daniharo/mordente/compare/77b0fb44...d820211d}}.
 
+
+
+\subsection{Selector de fecha\footnote{Posteriormente durante el desarrollo del proyecto se ha detectado que este selector de fecha interfiería con una nueva versión de la dependencia \texttt{grammy-conversations}, la cual necesitábamos actualizar. Solucionar este problema en el selector de fecha demoraría demasiado el desarrollo, por lo que se ha optado por sustituirlo temporalmente por mensajes de texto del formato \texttt{DD/MM/YYYY} para la fecha y \texttt{HH:MM} para la hora.}}
+
+Dado que uno de los atributos de cada evento es la fecha y hora de inicio y la fecha y hora de fin, debemos otorgar al usuario la posibilidad de responder al bot fácilmente cuando se les pide estos datos.
+
+Una forma muy intuitiva de introducir una fecha es proporcionar al usuario un calendario donde pulsar para seleccionarla.
+
+Implementar un calendario dentro de Telegram presenta numerosas complicaciones técnicas, sin embargo hemos conseguido implementarlo y publicarlo para que el resto de la comunidad pueda mejorar este código y usarlo en sus proyectos\footnote{\url{https://www.npmjs.com/package/grammy-calendar}}.
+
+En la URL \url{https://mordente.es/video/calendar.mp4} se puede ver un vídeo corto mostrando el funcionamiento de este calendario.
 
 \subsection{Guardar sesión en la base de datos}
 
 % qué se guarda en la sesión: id de usuario, paso dentro de una conversación, etc
 
+Uno de los problemas que hemos detectado durante la implementación de esta funcionalidad es que hasta ahora la \textbf{sesión del usuario} se está guardando en la memoria principal del sistema. La \textbf{sesión del usuario} guarda información como:
+
+\begin{itemize}
+    \item ID del usuario que nos ha enviado un mensaje, por la implementación de la sección \ref{section:useAccount}.
+    \item Paso en el que se encuentra dentro de una conversación para crear o eliminar una agrupación, un evento...
+    \item ID del elemento que se encuentra editando en un determinado momento.
+\end{itemize}
+
+En el caso de que se reinicie el bot momentáneamente, no queremos que el bot pierda todo el contexto que se encontraba manejando. Por ejemplo, mientras un usuario crea un evento, si ha llegado a la mitad de la conversación pero reiniciamos el bot, debe volver a empezar. Por esto, vamos a hacer uso de una de las posibilidades que nos ofrece \textbf{grammY}: guardar la sesión en la base de datos.
+
 % contribución a grammY
+
+El \textit{framework} \textbf{grammY} ofrece diversos \textbf{adaptadores} sesión-base de datos que permiten guardar la sesión en la base de datos de forma transparente para el desarrollador. Sin embargo, no hay ningún adaptador para el ORM que estamos utilizando, \texttt{prisma}, tal y como hemos encontrado en un \textit{issue} de GitHub\footnote{\url{https://github.com/grammyjs/storages/issues/80}}.
+
+La solución pasa por contribuir a la comunidad del software libre con la implementación de este adaptador. Por ello, nos ponemos manos a la obra y, una vez el trabajo está hecho, hacemos la petición de integrar el adaptador en el repositorio de adaptadores\footnote{\textit{Pull Request:}  \url{https://github.com/grammyjs/storages/pull/108}}, no sin encontrar dificultades durante el proceso.
 
 % problema: tests
 
+Los mayores problemas en este paso han sido para hacer funcionar los tests, tal y como se puede ver en el \textit{Pull Request}, aunque finalmente hemos conseguido hacerlos funcionar.
+
+Tras publicar el adaptador, el creador de \textbf{grammY} ha compartido con la comunidad un agradecimiento al autor de este proyecto por esta contribución\footnote{Mensaje en canal de Telegram: \url{https://t.me/grammyjs_news/35}}.
 
 \section{Configuración del \textit{linter}}
 
 % ESLint, ESLint-typescript
 
+El motivo por el que estamos usando el lenguaje \textbf{TypeScript} en lugar de \textbf{JavaScript} en este proyecto es porque el \textbf{tipado estático} evita gran parte de los errores que se puedan dar al ejecutar el programa por despistes del programador, además de mejorar el autocompletado que proporciona el IDE.
+
+Sin embargo, se puede dar un paso más en la dirección de evitar errores que se dan durante la ejecución: un \textit{linter} es un programa que ``revisa y observa el código en busca de errores que le puedan afectar''\cite{whatIsLinter}. Algunos de los errores que puede detectar son\cite{whatIsLinter}:
+
+\begin{itemize}
+    \item Código poco intuitivo o \textbf{difícil de mantener}.
+    \item Uso de \textbf{malas prácticas}.
+    \item \textbf{Estilos} de código \textbf{inconsistentes}.
+\end{itemize}
+
+Además, nos proporciona la posibilidad de solucionar automáticamente muchos de los errores que detecta.
+
+El \textit{linter} más conocido para \textbf{JavaScript} y \textbf{TypeScript} es \textbf{ESLint}\footnote{\url{https://eslint.org/}}. Por ello hemos decidido configurar \textbf{ESLint} en el proyecto\footnote{Cambios en el código: \url{https://github.com/daniharo/mordente/compare/a1f07349...0e8f3aaa}} de manera que esté integrado con \textbf{TypeScript} y solucionar todos los problemas que nos ha detectado tras la configuración\footnote{\textit{Commit:} \url{https://github.com/daniharo/mordente/commit/100b60b2}}.
 
 \section{Limitación de errores para el bot}\label{section:errorBoundary}
-% Global error boundary
+% https://github.com/daniharo/mordente/commit/0299185c
+
+Hemos detectado que cuando el programa lanza una excepción en cualquier punto, la ejecución termina por lo que el bot deja completamente de funcionar.
+
+El \textit{framework} usado para crear el bot, \textbf{grammY}, nos permite \textit{vallar} los errores, lo que se conoce como \textbf{error boundary}. Mediante esta técnica, podemos asignar para cada tipo de mensaje que le pueda llegar al bot qué queremos que pase cuando se lance una excepción
+
+En nuestro caso aplicaremos esta técnica en el nivel más alto de la aplicación, de manera que todos los errores pasen por este manejador de errores. Solo tenemos que añadir el código\footnote{\textit{Commit:} \url{https://github.com/daniharo/mordente/commit/0299185c}}:
+
+\begin{verbatim}
+bot.catch(error => {
+    // Qué queremos hacer con el error. 
+    // En nuestro caso, mostraremos el mensaje de error
+    // en la consola.
+    ...
+    console.error(`Error handling update ${update_id}:`);
+    ...
+})
+\end{verbatim}
 
 
 \section{Mejora del flujo de trabajo para depurar}
 % node inspect (commit https://github.com/daniharo/mordente/commit/5a64a8516519d1f21e33a8810252bb9b79a3588b)
 
+Durante el desarrollo, es muy frecuente encontrar problemas y errores cuyo origen resulta difícil de averiguar. Por ello habitualmente recurrimos a escribir una salida en la consola que indique el valor de ciertas variables cuando el bot recibe un mensaje. Sin embargo esta es una forma poco eficiente de depuración ya que nos proporciona información limitada.
+
+\texttt{Node.js} proporciona una forma de depurar que expone en un puerto toda la información de la ejecución actual del programa para que, utilizando una herramienta externa (como IntelliJ\cite{debugIntelliJ} o Chrome\cite{debugChrome}), podamos depurar de forma eficiente la ejecución del programa.
+
+Para ello, modificamos el archivo \path{docker-compose.yml} convenientemente para exponer el puerto \texttt{9200} al sistema y configuramos \texttt{node} para que registre la información de depuración en ese puerto\footnote{\textit{Commit:} \url{https://github.com/daniharo/mordente/commit/5a64a851}}.
+
 
 \section{Respuestas de asistencia prevista}
 % https://github.com/daniharo/mordente/commit/9d2059609cc696405f6f4cbd2b2590ff2878eb98
+
+Una de las funcionalidades más interesantes de nuestro bot será la gestión de la asistencia prevista: los miembros avisan si podrán ir o no a los eventos y los administradores obtienen esta información.
+
+Para ello, lo primero que haremos será permitir a los usuarios responder si asistirán o no a un evento, añadiendo los correspondientes botones al menú del detalle de un evento\footnote{\textit{Commit:} \url{https://github.com/daniharo/mordente/commit/9d205960}}.
 
 
 \subsection{Pedir justificación}
 % https://github.com/daniharo/mordente/commit/06efba49a35e562bf23756bc2fa2fdf8d150ca47
 
+También es conveniente que los miembros opcionalmente puedan justificar su ausencia a un determinado evento, por lo cual si expresan que no asistirán, iniciaremos una conversación (\texttt{attendanceConversation}) para preguntar al miembro por qué no podrá asistir, acompañando la pregunta de un botón de \texttt{Saltar} dado que esta justificación será opcional\footnote{\textit{Commit:} \url{https://github.com/daniharo/mordente/commit/06efba49}}.
+
 \subsection{Notificar administradores}
 % https://github.com/daniharo/mordente/commit/fb7e33e4d485841c9d14a15acff932f66f270476
+
+Los administradores deben ser notificados inmediatamente cuando un miembro responde sobre su asistencia.
+
+Tan pronto como el bot reciba la respuesta de un miembro, se se comunicará con todos los administradores de la agrupación para informar de ello\footnote{\textit{Commit:} \url{https://github.com/daniharo/mordente/commit/fb7e33e4}}.
 
 \section{Asignación de miembros a eventos}
 % https://github.com/daniharo/mordente/commit/9e951c77ee1b2a68ad6096b7ebf269192ff75522
@@ -90,7 +202,9 @@
 % https://github.com/daniharo/mordente/commit/b111f68ee919500346a61c1c3d711caed6fd9c17
 Ahora haremos que los eventos puedan ser asignados a usuarios concretos.
 
-Durante la creación de un evento, preguntaremos a un usuario si quiere asignarlo a todos los usuarios o si asignará manualmente más tarde\footnote{\textit{Commit:} \url{https://github.com/daniharo/mordente/commit/9e951c77}}. Haremos también que los usuarios solo puedan ver los eventos que tienen asignados\footnote{\textit{Commit:} \url{https://github.com/daniharo/mordente/commit/77ad84b1}}. Por último, implementaremos un menú paginado que permita a los administradores elegir exactamente qué miembros estarán asignados a cada evento\footnote{\textit{Commit:} \url{https://github.com/daniharo/mordente/commit/b111f68e}}.
+Durante la creación de un evento, preguntaremos a un usuario si quiere asignarlo a todos los usuarios o si asignará manualmente más tarde\footnote{\textit{Commit:} \url{https://github.com/daniharo/mordente/commit/9e951c77}}. Haremos también que los usuarios solo puedan ver los eventos que tienen asignados\footnote{\textit{Commit:} \url{https://github.com/daniharo/mordente/commit/77ad84b1}}.
+
+Por último, implementaremos un menú paginado que permita a los administradores elegir exactamente qué miembros estarán asignados a cada evento\footnote{\textit{Commit:} \url{https://github.com/daniharo/mordente/commit/b111f68e}}. Para la paginación guardaremos en la sesión del usuario en qué página se encuentra en cada momento.
 
 \section{Recordatorio de eventos diarios}
 % https://github.com/daniharo/mordente/commit/33859f0544f298262d72be75aac76bdbc1244d31
@@ -207,11 +321,20 @@ Tras ejecutar estos pasos, ya tenemos el bot funcionando en el entorno de produc
 
 \subsection{Solucionando el uso anormal de la CPU}
 
-Tras una de las modificaciones en el código, se ha comprobado que el la carga mínima de la CPU es constantemente entre el 17 y 18\%. Aunque no sea una carga muy alta, es un valor que no tiene sentido ya que la carga mientras no hay peticiones de los usuarios debe ser muy próxima a 0.
+Tras una de las modificaciones en el código, se ha comprobado que el la carga mínima de la CPU es constantemente entre el 16 y 17\%. Aunque no sea una carga muy alta, es un valor que no tiene sentido ya que la carga mientras no hay peticiones de los usuarios debe ser muy próxima a 0.
 
-Tras investigar el problema, se ha descubierto que tiene origen en una comprobación de estado de la base de datos que se estaba haciendo de forma periódica (cada 0.5 segundos) cuando en realidad solo queríamos que se ejecutara una sola vez al encender el bot. Sin embargo, actualmente \textbf{Docker} no permite configurar esta comprobación de manera que se ejecute una vez inmediatamente al ejecutar el bot y después cada minuto, como se ha comprobado por un \textit{issue} abierto en \textbf{GitHub}\footnote{\url{https://github.com/moby/moby/issues/33410}}.
+Tras investigar el problema, se ha descubierto que tiene origen en una comprobación de estado (\texttt{HEALTHCHECK}) de la base de datos que se estaba haciendo de forma periódica (cada 0.5 segundos) cuando en realidad solo queríamos que se ejecutara una sola vez al encender el bot. Sin embargo, actualmente \textbf{Docker} no permite configurar esta comprobación de manera que se ejecute una vez inmediatamente al ejecutar el bot y después cada minuto, como se ha comprobado por un \textit{issue} abierto en \textbf{GitHub}\footnote{\url{https://github.com/moby/moby/issues/33410}}.
 
 Por esto se ha decidido eliminar la comprobación completamente hasta que los cambios que el equipo de Docker ya tiene preparados\footnote{\url{https://github.com/moby/moby/pull/40894}} sean publicados.
+
+En la figura \ref{fig:usoCPUProd} se puede observar cómo el uso de la CPU era cercano a 0 antes de realizar el cambio en el código, aumentó al 16\% cuando hicimos incluimos el \texttt{HEALTHCHECK} y volvió a normalizarse cuando revertimos el cambio.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{imagenes/implementacion/carga_cpu_docker_health_check.png}
+\caption{Gráfico de carga de la CPU}
+\label{fig:usoCPUProd}
+\end{figure}
 
 \section{Obras}
 % https://github.com/daniharo/mordente/commit/da63c3b0
