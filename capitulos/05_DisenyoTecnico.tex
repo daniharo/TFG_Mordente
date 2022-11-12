@@ -1,10 +1,87 @@
 \chapter{Diseño técnico}
 
+
+
 \section{Listado de historias de usuario (Backlog)}
+
+Para extraer las historias de usuario se ha usado la aplicación \textbf{Jira}\footnote{\url{https://www.atlassian.com/software/jira}}, de la compañía \textbf{Atlassian}. Por consistencia y aunque puedan parecer desordenados, los identificadores de las épicas y de las historias que aparecen en esta sección son los que se han obtenido en dicha herramienta.
+
+\begin{enumerate}
+    \item[MTB-1.] Gestión de agrupaciones.
+        \begin{enumerate}
+            \item[MTB-8.] Como administrador de una agrupación, quiero crear una nueva agrupación.
+            \item[MTB-9.] Como administrador de una agrupación, quiero eliminar mi agrupación.
+            \item[MTB-10.] Como administrador de una agrupación, quiero editar mi agrupación.
+        \end{enumerate}
+    \item[MTB-2.] Gestión de membresías.
+        \begin{enumerate}
+            \item[MTB-11.] Como administrador de una agrupación, quiero añadir miembros a mi agrupación.
+            \item[MTB-13.] Como usuario, quiero unirme a una agrupación.
+            \item[MTB-12.] Como administrador de una agrupación, quiero eliminar miembros de la agrupación.
+            \item[MTB-14.] Como miembro, quiero salirme de una agrupación.
+            \item[MTB-15.] Como miembro, quiero seleccionar qué instrumento toco en la agrupación.
+        \end{enumerate}
+    \item[MTB-4.] Gestión de eventos.
+        \begin{enumerate}
+            \item[MTB-16.] Como administrador de una agrupación, quiero añadir un evento.
+            \item[MTB-35.] Como administrador de una agrupación, quiero configurar qué miembros están invitados a un evento.
+            \item[MTB-17.] Como administrador de una agrupación, quiero editar los datos de un evento.
+            \item[MTB-18.] Como administrador de una agrupación, quiero eliminar un evento.
+            \item[MTB-19.] Como miembro, quiero ver la lista de eventos a los que estoy invitado.
+            \item[MTB-20.] Como miembro, quiero ver los detalles de un evento.
+            \item[MTB-36.] Como administrador, quiero publicar un evento.
+            \item[MTB-37.] Como miembro, quiero posponer un evento.
+        \end{enumerate}
+    \item[MTB-5.] Notificaciones.
+        \begin{enumerate}
+            \item[MTB-58.] Como administrador, quiero ser notificado cuando un miembro registra su asistencia prevista a un evento.
+            \item[MTB-26.] Como miembro, quiero ser notificado cuando soy invitado a un evento.
+            \item[MTB-27.] Como miembro, quiero ser notificado cuando se modifica un evento.
+            \item[MTB-28.] Como miembro, quiero ser notificado cuando se pospone un evento.
+            \item[MTB-55.] Como miembro, quiero ser notificado cuando se añada nuevo repertorio.
+            \item[MTB-47.] Como miembro, quiero seleccionar qué notificaciones recibo.
+        \end{enumerate}
+    \item[MTB-21.] Gestión de asistencia.
+        \begin{enumerate}
+            \item[MTB-22.] Como miembro, quiero registrar mi asistencia prevista a un evento.
+            \item[MTB-23.] Como miembro, quiero justificar mi ausencia a un evento.
+            \item[MTB-24.] Como administrador, quiero ver qué miembros asistirán a un evento.
+            \item[MTB-25.] Como administrador, quiero registrar la asistencia real a un evento.
+            \item[MTB-48.] Como administrador, quiero ver un resumen de la asistencia a un evento.
+        \end{enumerate}
+    \item[MTB-6.] Recordatorios.
+        \begin{enumerate}
+            \item[MTB-32.] Como miembro, quiero recibir recordatorios de los eventos próximos.
+        \end{enumerate}
+    \item[MTB-29.] Gestión de administradores.
+        \begin{enumerate}
+            \item[MTB-30.] Como administrador, quiero hacer que un miembro sea administrador.
+            \item[MTB-31.] Como administrador, quiero quitarle a un miembro los permisos de administrador.
+            \item[MTB-33.] Como administrador, quiero especificar mi rol como administrador.
+        \end{enumerate}
+    \item[MTB-3.] Gestión de repertorio.
+        \begin{enumerate}
+            \item[MTB-34.] Como administrador, quiero añadir repertorio a mi agrupación.
+            \item[MTB-45.] Como administrador, quiero editar una obra.
+            \item[MTB-46.] Como administrador, quiero eliminar una obra.
+            \item[MTB-43.] Como administrador, quiero añadir la partitura de una obra.
+            \item[MTB-44.] Como administrador, quiero eliminar la partitura de una obra.
+            \item[MTB-49.] Como administrador, quiero añadir un \textit{tag} a una obra.
+            \item[MTB-50.] Como administrador, quiero eliminar un \textit{tag} de una obra.
+            \item[MTB-56.] Como miembro, quiero descargar las partituras.
+        \end{enumerate}
+    \item[MTB-59.] Registro de errores.
+        \begin{enumerate}
+            \item[MTB-60.] Como administrador de sistemas, quiero tener una vista centralizada de los errores que se hayan registrado en la aplicación.
+        \end{enumerate}
+\end{enumerate}
+
 
 \section{Historias de usuario}
 
 \section{Metodologías y tecnologías de base que podrían usarse}\label{section:metodologias}
+
+En esta sección haremos una reflexión y análisis sobre las herramientas que usaremos durante el desarrollo, de forma que pueda existir una formación en el uso de estas tecnologías previa al inicio del desarrollo del proyecto.
 
 \subsection{Lenguaje de programación}
 Se plantean los siguientes lenguajes de alto nivel, que disponen de frameworks implementados para crear un bot de Telegram:
@@ -39,6 +116,11 @@ Comunidad \footnote{Preguntas totales en stackoverflow: \url{https://stackoverfl
 \caption{Comparación de lenguajes de programación}\label{tab:comparacionLenguajes}
 \end{table}
 
+\subsubsection{Decisión}
+
+Por el menor tiempo necesario para la formación del desarrollador en los lenguajes \textbf{JavaScript} y \textbf{TypeScript}, se elegirá uno de estos.
+
+\textbf{TypeScript} es de gran ayuda cuando se desarrolla una aplicación compleja y con un solo desarrollador: puede acelerar el desarrollo gracias al autocompletado y evita la mayor parte de los errores en tiempo de ejecución, reduciendo el tiempo necesario para pruebas. Es el lenguaje que usaremos en el proyecto.
 
 \subsection{Framework para el desarrollo del bot}\label{subsection:elegirFramework}
 
@@ -74,6 +156,23 @@ Popularidad\footnote{Estrellas en GitHub a 7 de octubre de 2022} & 6.1k & 663 & 
 \caption{Comparación de frameworks para creación de bots de Telegram}\label{tab:comparacionFrameworks}
 \end{table}
 
+\subsubsection{Decisión}
+En base a la decisión anterior sobre el lenguaje de programación, eligiremos \texttt{telegraf}, \texttt{grammY} o \texttt{node-telegram-bot-api}.
+
+Lo primero que consideraremos es el nivel de abstracción de estas librerías. \texttt{Telegraf} y \texttt{grammY} aportan un mayor nivel de abstracción gracias a implementar una arquitectura basada en \texttt{middleware}, muy conveniente para bots complejos.
+
+Una vez sopesado esto, el punto que más pesa es la documentación: mientras \texttt{grammY} aporta una documentación completa y con guías para cada uno de los problemas que se pueden encontrar desarrollando un bot de Telegram, \texttt{telegraf} \textbf{no tiene} ninguna documentación más allá de la autogenerada por los comentarios en su código. Dado que no tenemos ninguna experiencia con ninguna de las herramientas, utilizaremos \texttt{grammY} para asegurarnos que la formación pueda llevarse a cabo sin problemas.
+
+\subsection{ORM: \textit{Object-relational mapper}}
+
+Un \textbf{ORM} es una biblioteca que nos permite 
+
+\begin{itemize}
+    \item TypeORM
+    \item Sequelize
+    \item Prisma
+\end{itemize}
+
 \subsection{Base de datos}
 
 La base de datos es ``una colección compartida de datos lógicamente relacionados, junto con una descripción de estos datos, que están diseñados para satisfacer las necesidades de información de una organización''.\cite{alma991009264529704990}
@@ -98,26 +197,18 @@ Se analizan alternativas para bases de datos relacionales, basadas en el concept
     \end{itemize}
 \end{itemize}
 
-
-% Puesto que las diferencias son pequeñas entre las opciones de base de datos relacional y la documentación de Prisma está mayormente basada en PostgreSQL, se escoge esta opción.
-
-%\subsection{ORM}
-%\begin{itemize}
-%    \item TypeORM
-%    \item Sequelize
-%    \item Prisma
-%\end{itemize}
+Puesto que las diferencias son pequeñas entre las opciones de base de datos relacional y la documentación de \textbf{Prisma} está mayormente basada en PostgreSQL, se escoge esta opción.
 
 \subsection{Servidor virtual}\label{subsection:elegirCloud}
 Entre los proveedores que ofrecen servicios gratuitos en la nube se encuentran:
 
 \begin{itemize}
-    \item DigitalOcean
-    \item Heroku
-    \item Microsoft Azure
+    \item \textbf{DigitalOcean}
+    \item \textbf{Heroku}
+    \item \textbf{Microsoft Azure}, \textbf{Amazon Web Services} o \textbf{Google Cloud} son plataformas usadas por grandes empresas, con configuraciones muy completas y con gran variedad de servicios. Solo Azure ofrece un plan gratuito.
 \end{itemize}
 
-
+Hemos probado a configurar el plan gratuito de \textbf{Microsoft Azure} para crear un servidor, pero hemos encontrado numerosos errores y un panel de configuración caótico y lleno de opciones que no necesitamos, por lo que optaremos por \textbf{DigitalOcean}.
 
 
 \subsection{Almacenamiento de archivos}
@@ -152,7 +243,11 @@ Entre los proveedores que ofrecen servicios gratuitos en la nube se encuentran:
 
 Teniendo claros los requisitos del sistema, podemos analizar la información que necesitaremos representar en la base de datos.
 
-Se propone el modelo de la figura \ref{fig:modeloBaseDatos}, con un total de 11 tablas. La tabla \texttt{Session} se queda aislada ya que será utilizada para guardar las sesiones de los usuarios, y la tabla debe tener un esquema específico para poder usarla automáticamente con el adaptador como se explicará en la sección \ref{subsection:adaptadorPrisma}.
+Se propone el modelo relacional de la figura \ref{fig:modeloBaseDatos}, con un total de 11 tablas. La tabla \texttt{Session} se queda aislada ya que será utilizada para guardar las sesiones de los usuarios, y la tabla debe tener un esquema específico para poder usarla automáticamente con el adaptador como se explicará en la sección \ref{subsection:adaptadorPrisma}.
+
+Este modelo es el necesario para implementar todas las historias de usuario que se han extraído, incluidas las que se plantean como tareas futuras a la entrega de este trabajo.
+
+El diagrama se ha realizado con la herramienta \url{https://dbdiagram.io/}.
 
 \begin{figure}[h]
 \centering
