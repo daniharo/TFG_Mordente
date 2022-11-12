@@ -1,5 +1,9 @@
 \chapter{Implementación}
 
+En esta sección vamos a ahondar en ciertos detalles sobre \textbf{cómo se ha construido} este proyecto.
+
+Las secciones están ordenadas de forma cronológica y a modo de relato, de forma que empezaremos explorando las funcionalidades que podemos aprovechar de las herramientas a usar y terminaremos creando la página web de promoción cuando la aplicación ya esté funcionando.
+
 
 % Más subsecciones dependiendo de la metodología empleada
 
@@ -17,15 +21,109 @@
 \section{Exploración de funcionalidades}
 % https://github.com/daniharo/mi-banda-bot
 
-\subsection{Infraestructura de contenedores}
+Comenzaremos la implementación del bot con un pequeño bot de prueba que nos permita descubrir cuál será el flujo de trabajo con las herramientas de programación que hemos escogido en la sección \ref{section:metodologias}. Estos son los pasos que daremos con este primer bot:
 
+\begin{enumerate}
+    \item Responder de manera básica básica a los mensajes recibidos, con un \texttt{!`Hola! Mensaje recibido.}
+    \item Conectarse a una base de datos sencilla de una sola tabla, que guarda palabras.
+    \item Listar palabras y eliminar palabras en la base de datos de forma global.
+    \item Asignar las palabras a usuarios concretos para que solo puedan ver y eliminar las suyas.
+\end{enumerate}
+
+\subsection{Infraestructura de contenedores}
 % docker, docker-compose
+
+Para comenzar a desarrollar, primero crearemos los archivos que configuren los contenedores de \texttt{Docker}. Estos archivos nos permitirán levantar el bot en cualquier dispositivo fácilmente, solo ejecutando el comando \path{docker compose up}. Tal y como hemos explicado en la sección \ref{subsection:arquitecturaServicios}, en el entorno de desarrollo tendremos solo dos contenedores:
+
+\begin{itemize}
+    \item El contenedor \texttt{app} será el encargado de ejecutar el bot en \texttt{Node.js}. 
+    \item El contenedor \texttt{postgres} contendrá la base de datos de \texttt{PostgreSQL}. Haremos que este contenedor exponga el puerto 5432 al sistema para poder depurar la base de datos.
+\end{itemize}
+
+Tendremos que añadir también dos volúmenes\footnote{\url{https://docs.docker.com/storage/volumes/}}:
+
+\begin{itemize}
+    \item Uno que hará que el código que estamos desarrollando se encuentre actualice en tiempo real dentro del contenedor sin tener que reconstruir la imagen.
+    \item El otro estará asociado a la base de datos de forma que los datos guardados se almacenen de forma persistente.
+\end{itemize}
+
+El archivo \texttt{docker-compose.yml} resultante con contenedores y volúmenes se puede consultar en GitHub\footnote{\url{https://github.com/daniharo/mi-banda-bot/blob/98a0662b/docker-compose.yml}}.
 
 \subsection{Conexión a base de datos}
 
+El \textbf{ORM} (\textit{Object--relational mapper}) \texttt{prisma} nos ayudará a conectar con la base de datos de manera segura y aprovechando las ventajas del tipado estático que proporciona \textbf{TypeScript}: convierte los registros de la base de datos en objetos del lenguaje de programación que estamos usando y viceversa.
+
+La configuración de \texttt{prisma} se realiza a través del esquema de la base de datos en el archivo \texttt{schema.prisma}\footnote{\url{https://github.com/daniharo/mi-banda-bot/blob/main/prisma/schema.prisma}}. El esquema se define en un lenguaje propio en un nivel de abstracción superior sobre SQL y que permite usar el mismo modelo intercambiando diferentes proveedores (PostgreSQL, MySQL o incluso proveedores No-SQL como MongoDB).
+
+En esta primera parte, el esquema solo contendrá una tabla \texttt{Word}, de modo que en \texttt{schema.prisma} solo tendremos que configurar esa tabla, indicar que el proveedor es \texttt{PostgreSQL} y la URL de conexión\footnote{Archivo \texttt{schema.prisma}: \url{https://github.com/daniharo/mi-banda-bot/blob/main/prisma/schema.prisma}}.
+
+Ejecutando el siguiente comando, \texttt{prisma} crea el código necesario para hacer todas las consultas a la base de datos, es decir, el \textbf{Cliente Prisma}:
+
+\begin{verbatim}
+prisma generate
+\end{verbatim}
+
+Ejecutaremos este comando cada vez que hagamos cambios en el esquema para generar un nuevo cliente.
+
+Para usarlo desde \textbf{TypeScript}, solo necesitamos crear un archivo \\ \texttt{PrismaClient.ts} con el siguiente código:
+
+\begin{verbatim}
+import { PrismaClient } from "@prisma/client";
+
+const prisma = new PrismaClient();
+
+export default prisma;
+\end{verbatim}
+
+El objeto \texttt{prisma} contiene una clave para cada tabla de la base de datos, de manera que las consultas a la base de datos serían tan sencillas como:
+
+\begin{verbatim}
+// Consultar todas las palabras:
+const words = await prisma.word.findAll();
+
+// Eliminar palabras que contengan "palabra":
+const deletedWord = await prisma.word.deleteMany({
+  where: { word: { contains: "palabra" } }
+});
+
+// Modificar todas las palabras que comienzan por "foo":
+const updatedWord = await prisma.word.updateMany({
+  where: { word: { startsWith: "foo" } },
+  data: { word: "nuevaPalabra" }
+});
+\end{verbatim}
+
+La mayor ventaja que tenemos es que \texttt{prisma} es totalmente \textit{type-safe}: se obtiene un error directamente en el editor de código ante cualquier operación inválida. Por ejemplo, si intentamos crear un registro sin añadir un campo obligatorio, veremos esa línea subrayada de color rojo y \textbf{TypeScript} nos pedirá solucionarlo antes de poder ejecutar el programa.
 
 \subsection{Manejo de mensajes de Telegram}
 
+La lógica que nos permite implelmentar \texttt{grammY}, la biblioteca que hemos escogido en la sección \ref{subsection:elegirFramework} para comunicarnos con la API de Telegram, es la siguiente:
+
+\begin{itemize}
+    \item Cada mensaje entrante pasa por una cadena de funciones llamadas \textbf{middleware}. A cada \textbf{middleware} le podemos dar una responsabilidad distinta:
+    \begin{itemize}
+        \item \textbf{Modificar} el objeto \texttt{ctx} que va recorriendo todos los \texttt{middleware} y que contiene toda la información del mensaje entrante para añadir información adicional. En este caso, debe llamar a \texttt{next()} para que el mensaje siga recorriendo el resto de \texttt{middleware}.
+        \item \textbf{Manejar} el mensaje respondiendo, actualizando la base de datos, o con cualquier tarea que se necesite. En este caso no se llama a \texttt{next()} ya que el recorrido del mensaje terminaría ahí.
+    \end{itemize}
+    \item El \texttt{middleware} se instala en el bot mediante métodos como \texttt{.use}, \texttt{.on} o \texttt{.command}:
+    \begin{itemize}
+        \item \texttt{.use} nos permite instalar \texttt{middleware} que se ejecuta siempre.
+        \item \texttt{.on} nos permite usar filtros sencillos como \texttt{.on("message")}, en este caso para que ese \texttt{middleware} solo maneje mensajes y no otros eventos como pulsaciones en menús.
+        \item \texttt{.command} maneja mensajes que incluyan el comando especificado como primer argumento. Por ejemplo, \texttt{.command(``/about'')} se encargaría de responder al comando \texttt{/about}.
+    \end{itemize}
+\end{itemize}
+
+Para esta primera prueba, vamos a instalar solo estas funciones de \\ \texttt{middleware}:
+
+\begin{itemize}
+    \item \texttt{.command(``start'')} responderá al inicio del bot con un \texttt{``Hey!''}.
+    \item \texttt{.command(``list'')} responderá con la lista actual de palabras.
+    \item \texttt{.command(``add'')} añadirá la palabra especificada en el mensaje.
+    \item \texttt{.command(``delete'')} eliminará la palabra que se concrete.
+    \item \texttt{.on(``message'')} estará al final y responderá a todos los mensajes que no sean manejados por el \texttt{middleware} anterior con un \texttt{``Lo siento, no sé de qué me hablas''}.
+\end{itemize}
+
+El código de este primer bot de prueba está disponible en GitHub\footnote{\url{https://github.com/daniharo/mi-banda-bot/blob/main/src/app.ts}}.
 
 \section{Internacionalización}
 
@@ -33,12 +131,43 @@ Si la aplicación crece, es probable que la terminen usando usuarios que hablan 
 
 Vamos a dejar el código preparado para que, si esto ocurre, solo tengamos que añadir las traducciones para el idioma correspondiente.
 
-Para ello, añadimos el paquete \path{@grammyjs/fluent}
+Para ello, añadimos el paquete \path{@grammyjs/fluent}\footnote{\url{https://www.npmjs.com/package/@grammyjs/fluent}}. Este paquete nos permitirá usar la sintaxis del \textbf{Proyecto Fluent}\footnote{\url{https://projectfluent.org/}} de \textbf{Mozilla} para crear las traducciones. Para añadirlo, solo tenemos que ejecutar siguiente comando, el mismo que utilizaremos con todas las dependencias que añadamos:
 
+\begin{verbatim}
+yarn add @grammyjs/fluent
+\end{verbatim}
 
-\section{Plantillas: separación MVC}
+Incluiremos en el archivo \path{src/locales/es.ftl}\footnote{\url{https://github.com/daniharo/mordente/blob/main/src/locales/es.ftl}} las cadenas de texto que necesitemos usar en el bot.
 
-El patrón \textbf{Modelo-Vista-Controlador} 
+Para agilizar el desarrollo, dejaremos en línea dentro del código las cadenas de texto cortas y que no ocupen más de una línea. Convertir estas cadenas en traducciones es una tarea mecánica que se puede posponer al momento en el que tengamos un prototipo funcional con el que hacer las pruebas de usabilidad.
+
+\section{Separación MVC: Plantillas}
+
+El patrón arquitectónico \textbf{Modelo-Vista-Controlador} se usa comúnmente para desarrollar interfaces de usuario dividiendo la lógica en tres elementos conectados\cite{whatIsMVC}. Esto permite hacer una mejor \textbf{división del código}.
+
+Dado que no existe ningún \textit{framework opinionado}\footnote{Con \textit{opinionado} nos referimos a aquel marco de trabajo en el que se manifiestan claramente qué técnicas y procesos se deben seguir para su uso: su documentación especifica \textbf{cómo} proceder y no solo \textbf{qué} se puede hacer.} para desarrollar bots de Telegram que siga este patrón (sí existen para desarrollo web, por ejemplo \textbf{Symphony}\footnote{\url{https://symfony.com/}} para PHP), vamos a estructurar el código de la siguiente forma:
+
+\begin{itemize}
+    \item \textbf{Modelo:} En la ruta \path{src/models/} implementaremos toda la comunicación directa con al base de datos: consultas, eliminaciones y modificaciones, en un archivo distinto para cada modelo.
+    \item \textbf{Vista:} Las vistas estarán compuestas por:
+    \begin{itemize}
+        \item \textbf{Menús} en línea que aparecen debajo de un mensaje enviado por el bot, se encontrarán en la ruta \path{src/menus/}.
+        \item \textbf{Conversaciones} que mantiene el bot con un usuario, en la ruta \path{src/conversations/}.
+        \item \textbf{Plantillas} complejas de mensajes que debe enviar el bot sustituyendo ciertas variables o recorriendo un vector de elementos. Usaremoe el motor de plantillas \texttt{Pug.js}\footnote{\url{https://pugjs.org/api/getting-started.html}} y guardaremos las plantillas en la ruta \path{src/templates/}.
+    \end{itemize}
+    \item \textbf{Controlador:} Los manejadores de mensajes serán las funciones que actúen de controlador. Estos se pueden escribir a modo de \texttt{Composer} o de \texttt{Middleware}, por lo que tendremos las carpetas \path{/src/composers/} y \path{/src/middleware/}. El archivo \path{app.ts} se encargará de iniciar la cadena de llamadas a todos los controladores.
+\end{itemize}
+
+En la figura \ref{fig:mvc} se representa visualmente la separación de responsabilidades.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{imagenes/implementacion/mvc.png}
+\caption{Separación Modelo-Vista-Controlador}
+\label{fig:mvc}
+\end{figure}
+
+Hasta ahora tenemos todos los elementos que se han explicado, excepto las plantillas. Tras instalar el motor de plantillas con \path{yarn add pug}, deberemos asegurarnos de que las plantillas se compilan cuando se inicia el bot\footnote{\textit{Commit:} \url{https://github.com/daniharo/mordente/commit/107f7e50}}.
 
 \section{Unirse a un grupo}
 
@@ -100,7 +229,7 @@ Implementar un calendario dentro de Telegram presenta numerosas complicaciones t
 
 En la URL \url{https://mordente.es/video/calendar.mp4} se puede ver un vídeo corto mostrando el funcionamiento de este calendario.
 
-\subsection{Guardar sesión en la base de datos}
+\subsection{Guardar sesión en la base de datos}\label{subsection:adaptadorPrisma}
 
 % qué se guarda en la sesión: id de usuario, paso dentro de una conversación, etc
 
@@ -641,5 +770,51 @@ Es por esto que se ha decidido revertir el cambio de proveedor.
 
 El proveedor de DNS utilizado para \texttt{mordente.es} nos permite obtener una dirección de correo electrónico gratuita con 2GB de almacenamiento. Por tanto, se ha creado una dirección 
 de soporte (\texttt{soporte@mordente.es}) para los usuarios que puedan tener alguna consulta.
+
+\section{Registro remoto de errores}
+
+Por último, vamos a configurar el servicio \textbf{Sentry} para poder obtener en tiempo real registros de los errores que se estén produciendo en la aplicación.
+
+Seguimos los siguientes pasos:
+
+\begin{enumerate}
+    \item Creamos una cuenta gratuita en \url{https://sentry.io/signup/}.
+    \item Creamos un nuevo proyecto para la plataforma \texttt{Node.js} (figura \ref{fig:sentryCreandoProyecto}).
+    \item Añadimos las dependencias \path{@sentry/node} y \path{@sentry/tracing} a nuestro proyecto con \texttt{yarn add}.
+    \item Copiamos el código generado en la página web (figura \ref{fig:sentryCodigoGenerado}) a nuestro código en el archivo \path{src/Sentry.ts}.
+    \item Configuramos \textbf{Sentry} para que en los registros aparezca información de qué usuario ha manifestado el error y qué mensaje estábamos manejando. Crearemos un nuevo \texttt{middleware} llamado \texttt{useSentry} para ello.
+\end{enumerate}
+
+Tras la configuación\footnote{\textit{Commit:} \url{https://github.com/daniharo/mordente/commit/1753061f}}, la página de \textbf{Sentry} nos indica que está esperando al primer error, como se puede ver en la figura \ref{fig:sentryEsperandoLog}. Introducimos una llamada a una función que no existe, \texttt{foo()}, para comprobar que el error se registra correctamente.
+
+En la página del proyecto en \textbf{Sentry} podemos observar que los registros se guardan y podemos ver la información correspondiente, como se muestra en la figura \ref{fig:sentryLog}.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.75\textwidth]{imagenes/implementacion/sentry_creando_proyecto.png}
+\caption{Creando el proyecto de \textbf{Sentry}}
+\label{fig:sentryCreandoProyecto}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.75\textwidth]{imagenes/implementacion/sentry_codigo_generado.png}
+\caption{Código generado por \textbf{Sentry} para incluir en un proyecto}
+\label{fig:sentryCodigoGenerado}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.75\textwidth]{imagenes/implementacion/sentry_esperando_log.png}
+\caption{Esperando al primer log de \textbf{Sentry}}
+\label{fig:sentryEsperandoLog}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.75\textwidth]{imagenes/implementacion/sentry_log.png}
+\caption{Registro de un error en \textbf{Sentry}}
+\label{fig:sentryLog}
+\end{figure}
 
 % cuatrimestre 15 semanas
