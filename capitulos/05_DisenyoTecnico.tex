@@ -4,7 +4,7 @@
 
 \section{Historias de usuario}
 
-\section{Metodologías y tecnologías de base que podrían usarse}
+\section{Metodologías y tecnologías de base que podrían usarse}\label{section:metodologias}
 
 \subsection{Lenguaje de programación}
 Se plantean los siguientes lenguajes de alto nivel, que disponen de frameworks implementados para crear un bot de Telegram:
@@ -40,7 +40,7 @@ Comunidad \footnote{Preguntas totales en stackoverflow: \url{https://stackoverfl
 \end{table}
 
 
-\subsection{Framework para el desarrollo del bot}
+\subsection{Framework para el desarrollo del bot}\label{subsection:elegirFramework}
 
 Existen diversas bibliotecas que ayudan a crear un bot, de forma que no haya que escribir todo el código desde cero para interaccionar con la API de Telegram, siguiendo el principio ``Don't Reinvent the Wheel'' (``No reinventes la rueda'') para también ahorrar presupuesto.
 
@@ -150,9 +150,20 @@ Entre los proveedores que ofrecen servicios gratuitos en la nube se encuentran:
 
 \section{Modelo de la base de datos}
 
+Teniendo claros los requisitos del sistema, podemos analizar la información que necesitaremos representar en la base de datos.
+
+Se propone el modelo de la figura \ref{fig:modeloBaseDatos}, con un total de 11 tablas. La tabla \texttt{Session} se queda aislada ya que será utilizada para guardar las sesiones de los usuarios, y la tabla debe tener un esquema específico para poder usarla automáticamente con el adaptador como se explicará en la sección \ref{subsection:adaptadorPrisma}.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{imagenes/disenyo_tecnico/mordente-db.pdf}
+\caption{Modelo de la base de datos}
+\label{fig:modeloBaseDatos}
+\end{figure}
+
 \section{Arquitectura de Mordente}
 
-Expliquemos la arquitectura utilizada en dos pasos:
+Expliquemos la arquitectura del sistema en dos pasos:
 
 \subsection{Arquitectura entre puntos}
 
@@ -181,7 +192,7 @@ Es importante entender que la única responsabilidad que nos corresponde a nosot
 % VPS   <->   Telegram API   <->    Telegram Client
 
 
-\subsection{Arquitectura entre servicios}
+\subsection{Arquitectura entre servicios}\label{subsection:arquitecturaServicios}
 
 Para la funcionalidad que necesitamos, el bot debe estar compuesto por varios microservicios a su vez: 
 
