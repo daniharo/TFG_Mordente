@@ -84,7 +84,7 @@ Para extraer las historias de usuario se ha usado la aplicación \textbf{Jira}\f
 En esta sección haremos una reflexión y análisis sobre las herramientas que usaremos durante el desarrollo, de forma que pueda existir una formación en el uso de estas tecnologías previa al inicio del desarrollo del proyecto.
 
 \subsection{Lenguaje de programación}
-Se plantean los siguientes lenguajes de alto nivel, que disponen de frameworks implementados para crear un bot de Telegram:
+Se plantean los siguientes lenguajes de alto nivel, que disponen de \textit{frameworks} implementados para crear un bot de Telegram:
 
 \begin{itemize}
     \item \textbf{JavaScript}: es un lenguaje compilado en tiempo de ejecución, con tipado dinámico y multi-paradigma, soportando programación orientada a objetos, funcional, imperativa y dirigida por eventos\cite{wiki:JavaScript}. Se conforma al estándar ``ECMAScript'', y es una de las tecnologías centrales de la World Wide Web: el 98\% de los sitios web lo usan en el lado del cliente\cite{javascriptUsage}, y desde el surgimiento de Node.js es una tecnología en auge para servidores.
@@ -165,64 +165,63 @@ Una vez sopesado esto, el punto que más pesa es la documentación: mientras \te
 
 \subsection{ORM: \textit{Object-relational mapper}}
 
-Un \textbf{ORM} es una biblioteca que nos permite 
+Un \textbf{ORM} es una herramienta que nos permite transformar los registros de la base de datos en objetos del lenguaje de programación que estamos usando y viceversa.
 
-\begin{itemize}
-    \item TypeORM
-    \item Sequelize
-    \item Prisma
-\end{itemize}
+Las más famosas para \textbf{TypeScript} son \textbf{TypeORM}, \textbf{Sequelize} y \textbf{Prisma}. Sin embargo, en este aspecto la decisión es sencilla dado que \textbf{Prisma} es el único los tres con la característica de ser totalmente \textit{type-safe}: ofrece tipado estático para todas las entradas y salidas consultas de la base de datos. Por este motivo \texttt{prisma} se ha erguido como un estándar para el lenguaje \textbf{TypeScript}.
 
 \subsection{Base de datos}
 
-La base de datos es ``una colección compartida de datos lógicamente relacionados, junto con una descripción de estos datos, que están diseñados para satisfacer las necesidades de información de una organización''.\cite{alma991009264529704990}
+La base de datos es ``una colección compartida de datos lógicamente relacionados, junto con una descripción de estos datos, que están diseñados para satisfacer las necesidades de información de una organización''\cite{alma991009264529704990}.
 
-Por otra parte, el sistema gestor de base de datos (SGBD) es ``un sistema software que permite a los usuarios definir, mantener, crear y controlar el acceso a la base de datos.\cite{alma991009264529704990}
+Por otra parte, el sistema gestor de base de datos (SGBD) es ``un sistema software que permite a los usuarios definir, mantener, crear y controlar el acceso a la base de datos\cite{alma991009264529704990}.
 
 Necesitaremos estas herramientas ya que buscamos un sistema que guarde datos de manera persistente y poder recuperarlos y actualizarlos en cualquier momento.
 
 Se analizan alternativas para bases de datos relacionales, basadas en el concepto matemático de relación, representado por tablas\cite{alma991009264529704990}; y también para bases de datos no relacionales documentales.
 
 \begin{itemize}
-    \item Para bases de datos relacionales:
+    \item Para bases de datos \textbf{relacionales}:
     \begin{itemize}
-        \item PostgreSQL (\url{https://www.postgresql.org/}): es un SGBD de código abierto y centrado en la escabilidad.
-        \item MySQL (\url{https://www.mysql.com/}): es un SGDB de código abierto desarrollado por Oracle.
-        \item MariaDB (\url{https://mariadb.org/}): es un SGDB de código abierto creado por desarrolladores de MySQL como respuesta a la adquisición por parte de Oracle, y con características muy parecidas.
+        \item \textbf{PostgreSQL} (\url{https://www.postgresql.org/}): es un SGBD de código abierto y centrado en la escabilidad.
+        \item \textbf{MySQL} (\url{https://www.mysql.com/}): es un SGDB de código abierto desarrollado por Oracle.
+        \item \textbf{MariaDB} (\url{https://mariadb.org/}): es un SGDB de código abierto creado por desarrolladores de MySQL como respuesta a la adquisición por parte de Oracle, y con características muy parecidas.
     \end{itemize}
-    \item Para bases de datos no relacionales:
+    \item Para bases de datos \textbf{no relacionales}:
     \begin{itemize}
-        \item MongoDB (\url{https://www.mongodb.com/}): SGDB de código disponible (no necesariamente de código abierto, por usar una licencia SSPL.\cite{ssplLicense}
-        \item Firestore (\url{https://firebase.google.com/docs/firestore}): incluido en la suite de servicios ``Firebase'' de Google destinada a la gestión rápida y centralizada de aplicaciones.
+        \item \textbf{MongoDB} (\url{https://www.mongodb.com/}): SGDB de código disponible (no necesariamente de código abierto, por usar una licencia SSPL\cite{ssplLicense}.
+        \item \textbf{Firestore} (\url{https://firebase.google.com/docs/firestore}): incluido en la suite de servicios ``Firebase'' de Google destinada a la gestión rápida y centralizada de aplicaciones.
     \end{itemize}
 \end{itemize}
 
-Puesto que las diferencias son pequeñas entre las opciones de base de datos relacional y la documentación de \textbf{Prisma} está mayormente basada en PostgreSQL, se escoge esta opción.
+\subsubsection{Decisión}
+
+El modelo de base de datos que se propone es puramente relacional, por lo que usaremos una base de datos relacional.
+
+Puesto que las diferencias son pequeñas entre las distintas opciones de base de datos relacional y la documentación de \textbf{Prisma} está mayormente basada en PostgreSQL, se escoge esta opción.
 
 \subsection{Servidor virtual}\label{subsection:elegirCloud}
-Entre los proveedores que ofrecen servicios gratuitos en la nube se encuentran:
+Entre los proveedores que ofrecen servicios gratuitos de computación en la nube se encuentran:
 
 \begin{itemize}
-    \item \textbf{DigitalOcean}
-    \item \textbf{Heroku}
-    \item \textbf{Microsoft Azure}, \textbf{Amazon Web Services} o \textbf{Google Cloud} son plataformas usadas por grandes empresas, con configuraciones muy completas y con gran variedad de servicios. Solo Azure ofrece un plan gratuito.
+    \item \textbf{DigitalOcean} (\url{https://www.digitalocean.com/}) ofrece 200\$ gratuitos a estudiantes para desplegar servidores privados y servicios de almacenamiento. Además, dispone de servidores preconfigurados, como el que incluye \texttt{docker} preinstalado\footnote{\url{https://marketplace.digitalocean.com/apps/docker}}.
+    \item \textbf{Heroku} (\url{https://www.heroku.com/}) tiene la desventaja de que no permite desplegar directamente infraestructura configurada con \texttt{docker compose}. Ofrece 14\$ al mes gratuitos para estudiantes.
+    \item \textbf{Microsoft Azure} (\url{https://azure.microsoft.com/}), \textbf{Amazon Web Services} (\url{https://aws.amazon.com/}) o \textbf{Google Cloud} (\url{https://cloud.google.com/}) son plataformas usadas por grandes empresas, con configuraciones muy completas y con gran variedad de servicios. Solo \textbf{Azure} ofrece un plan gratuito para estudiantes.
 \end{itemize}
+
+\subsubsection{Decisión}
 
 Hemos probado a configurar el plan gratuito de \textbf{Microsoft Azure} para crear un servidor, pero hemos encontrado numerosos errores y un panel de configuración caótico y lleno de opciones que no necesitamos, por lo que optaremos por \textbf{DigitalOcean}.
 
 
 \subsection{Almacenamiento de archivos}
-\begin{itemize}
-    \item Amazon S3
-    \item DigitalOcean Spaces
-    \item Google Cloud Storage / Firestore Storage
-\end{itemize}
 
-\subsection{IDE}
-\begin{itemize}
-    \item VSCode
-    \item JetBrains
-\end{itemize}
+Para guardar las partituras de los usuarios necesitaremos un servicio donde almacenarlas. Los servicios más extendidos para guardar archivos de usuarios se denominan de \textbf{almacenamiento de objetos}: ``es una tecnología que almacena y administra datos en un formato no estructurado denominado objetos. [...] Los sistemas de almacenamiento de objetos en la nube distribuyen estos datos a través de varios dispositivos físicos, pero permiten a los usuarios acceder al contenido de forma eficiente desde un único repositorio de almacenamiento virtual''\cite{whatIsObjectStorage}.
+
+Existen varias alternativas de distintos proveedores como \textbf{Amazon S3}\footnote{\url{https://aws.amazon.com/s3}}, \textbf{DigitalOcean Spaces}\footnote{\url{https://www.digitalocean.com/products/spaces}} o \textbf{Google Cloud Storage}\footnote{\url{https://cloud.google.com/storage}}.
+
+\subsubsection{Decisión}
+
+Escogeremos la alternativa de \textbf{DigitalOcean} ya que utiliza la misma API que \textbf{Amazon S3} y nos permitirá tener la administración del servidor y del almacenamiento de archivos centralizada en un mismo panel de control además de utilizar los créditos gratuitos.
 
 %\subsection{Gestor de paquetes}
 %\begin{itemize}
@@ -232,12 +231,18 @@ Hemos probado a configurar el plan gratuito de \textbf{Microsoft Azure} para cre
 %\end{itemize}
 
 \subsection{Documentación}\label{subsection:decisionDocumentacion}
+
+Existen numerosas herramientas para generar páginas web de documentación.
+
 \begin{itemize}
-    \item Docusaurus
-    \item GitBook
-    \item VuePress
+    \item \textbf{GitBook} (\url{https://www.gitbook.com/}): añade estilos a los \texttt{README.md} de \textbf{GitHub}. No permite por tanto crear una \textit{Landing Page} personalizada sino que solo genera páginas de documentación. Un ejemplo creado con \textbf{GitBook} es \url{https://zod.dev/}.
+    \item \textbf{Docusaurus} (\url{https://docusaurus.io/}): se basa en la biblioteca para interfaces de usuario \texttt{react}, y permite crear múltiples páginas además de la documentación. Un ejemplo es \url{https://trpc.io/}.
+    \item \textbf{VuePress} (\url{https://vuepress.vuejs.org/}): Muy parecido a \textbf{Docusaurus}, pero basado en la biblioteca \texttt{vue} en lugar de \texttt{react}. La documentación de \textbf{grammY} (\url{https://grammy.dev/}) está creada con esta biblioteca.
 \end{itemize}
 
+\subsubsection{Decisión}
+
+Solo podremos desarrollar una \textit{landing page} personalizada con \textbf{Docusaurus} o \textbf{VuePress}. Dado que el desarrollador tiene experiencia con \texttt{react}, escogeremos \textbf{Docusaurus} para disminuir el tiempo necesario de formación.
 
 \section{Modelo de la base de datos}
 
