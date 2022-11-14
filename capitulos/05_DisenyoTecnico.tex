@@ -2,11 +2,21 @@
 
 En este capítulo analizaremos los requisitos de la aplicación previamente al inicio de su implementación.
 
-\section{Listado de historias de usuario (Backlog)}
+\section{Listado de historias de usuario (\textit{Backlog})}
+
+
 
 Para extraer las historias de usuario se ha usado la aplicación \textbf{Jira}\footnote{\url{https://www.atlassian.com/software/jira}}, de la compañía \textbf{Atlassian}. Por consistencia y aunque puedan parecer desordenados, los identificadores de las épicas y de las historias que aparecen en esta sección son los que se han obtenido en dicha herramienta.
 
+A continuación se muestran las historias del backlog divididas por épicas, sin priorizar.
+
 \begin{enumerate}
+    \item[MTB-64.] Bot de prueba: Notas.
+        \begin{enumerate}
+            \item[MTB-61.] Como usuario, quiero añadir notas.
+            \item[MTB-62.] Como usuario, quiero eliminar una nota.
+            \item[MTB-63.] Como usuario, quiero ver todas mis notas.
+        \end{enumerate}
     \item[MTB-1.] Gestión de agrupaciones.
         \begin{enumerate}
             \item[MTB-8.] Como administrador de una agrupación, quiero crear una nueva agrupación.
@@ -74,10 +84,466 @@ Para extraer las historias de usuario se ha usado la aplicación \textbf{Jira}\f
         \begin{enumerate}
             \item[MTB-60.] Como administrador de sistemas, quiero tener una vista centralizada de los errores que se hayan registrado en la aplicación.
         \end{enumerate}
+    \item[MTB-42.] Otras tareas.
+        \begin{enumerate}
+            \item[MTB-38.] Crear la \textit{landing page} del proyecto.
+            \item[MTB-39.] Crear la imagen de marca.
+        \end{enumerate}
 \end{enumerate}
 
 
+En la tabla \ref{tab:historiasPriorizadas} se muestran las historias priorizadas y divididas en los distintos sprints que se han planificado.
+
+
+\begin{longtable}{| p{.12\textwidth} | p{.58\textwidth} | p{.12\textwidth} | p{.08\textwidth} |}
+\hline
+ID & Título & Prioridad & Sprint \\ \hline
+MTB-39 & Crear la imagen de marca & Alta & 1 \\ \hline
+MTB-61 & Como usuario, quiero añadir notas & Muy alta & 1 \\ \hline
+MTB-62 & Como usuario, quiero eliminar notas & Muy alta & 1 \\ \hline
+MTB-63 & Como usuario, quiero ver mis notas & Muy alta & 1 \\ \hline
+MTB-8 & Como administrador, quiero crear una agrupación & Muy alta & 2 \\ \hline
+MTB-11 & Como administrador, quiero añadir miembros a mi agrupación & Muy alta & 2 \\ \hline
+MTB-13 & Como usuario, quiero unirme a una agrupación & Muy alta & 2 \\ \hline
+MTB-9 & Como administrador, quiero eliminar una agrupación & Alta & 2 \\ \hline
+MTB-14 & Como miembro, quiero salir de una agrupación & Alta & 2 \\ \hline
+MTB-12 & Como administrador, quiero eliminar miembros de mi agrupación & Alta & 2 \\ \hline
+MTB-66 & Como programador de un bot, quiero que mis usuarios puedan seleccionar una fecha usando un calendario & Media & 3 \\ \hline
+MTB-67 & Como programador de un bot, quiero guardar la sesión en \texttt{prisma} & Alta & 3 \\ \hline
+MTB-16 & Como administrador, quiero crear un evento & Alta & 4 \\ \hline
+MTB-19 & Como miembro, quiero ver la lista de eventos & Alta & 4 \\ \hline
+MTB-20 & Como miembro, quiero ver el detalle de un evento & Alta & 4 \\ \hline
+MTB-18 & Como administrador, quiero eliminar un evento & Alta & 4 \\ \hline
+MTB-36 & Como administrador, quiero publicar un evento & Alta & 4 \\ \hline
+MTB-22 & Como miembro, quiero registrar mi previsión de asistencia a un evento & Media & 4 \\ \hline
+MTB-23 & Como miembro, quiero registrar por qué no puedo asistir a un evento & Baja & 4 \\ \hline
+MTB-30 & Como administrador, quiero hacer que un miembro sea administrador & Alta & 5 \\ \hline
+MTB-31 & Como administrador, quiero quitarle a un miembro los permisos de administrador & Alta & 5 \\ \hline
+MTB-35 & Como administrador, quiero invitar a miembros a un evento & Alta & 5 \\ \hline
+MTB-34 & Como administrador, quiero añadir repertorio a mi agrupación & Media & 5 \\ \hline
+MTB-43 & Como administrador, quiero añadir la partitura de una obra & Media & 5 \\ \hline
+MTB-56 & Como miembro, quiero descargar una partitura & Media & 5 \\ \hline
+MTB-46 & Como administrador, quiero eliminar una obra & Media & 5 \\ \hline
+MTB-24 & Como administrador, quiero ver qué miembros asistirán a un evento & Media & 5 \\ \hline
+MTB-10 & Como administrador, quiero editar mi agrupación & Media & 5 \\ \hline
+MTB-32 & Como miembro, quiero recibir recordatorios de los eventos diarios & Alta & 6 \\ \hline
+MTB-26 & Como miembro, quiero recibir una notificación cuando se me invite a un evento & Media & 6 \\ \hline
+MTB-17 & Como administrador, quiero editar un evento & Media & 6 \\ \hline
+MTB-45 & Como administrador, quiero editar una obra & Media & 6 \\ \hline
+MTB-58 & Como administrador, quiero recibir una notificación cuando un miembro conteste sobre su asistencia a un evento & Media & 6 \\ \hline
+MTB-44 & Como administrador, quiero eliminar una partitura & Baja & 6 \\ \hline
+MTB-60 & Como administrador de sistemas, quiero tener una vista centralizada de los errores registrados & Media & 6 \\ \hline
+MTB-38 & Como usuario, quiero ver una página web con información sobre Mordente & Baja & 6 \\ \hline
+\caption{Historias de usuario priorizadas}
+\label{tab:historiasPriorizadas}
+\end{longtable}
+
+
 \section{Historias de usuario}
+
+\setlist[itemize]{nosep, noitemsep, topsep=0pt}
+
+\newcommand{\historia}[5]{
+\begin{table}[H]
+\setlength\extrarowheight{2pt} % for a bit of visual "breathing space"
+\begin{tabularx}{\textwidth}{| p{.20\textwidth} | p{.73\textwidth} |}
+\hline
+\textbf{Identificador} & #1. #2  \\ \hline
+\textbf{Descripción} & #3  \\ \hline
+\textbf{Pruebas de aceptación} & #4  \\ \hline
+\textbf{Tareas} & #5  \\ \hline
+\end{tabularx}
+\caption{Historia de usuario #1}\label{tab:mtb#1}
+\end{table}
+}
+
+\historia{MTB-39}{Crear la imagen de marca}{Crear una imagen reconocible de la marca \textbf{Mordente}: logotipo y colores.}{
+\begin{itemize}
+    \item Ver el logotipo en la página web.
+    \item Ver el logotipo en el bot.
+    \item Ver los colores de marca en la página web.
+\end{itemize}
+}{
+\begin{itemize}
+    \item Añadir el logotipo a la web.
+    \item Cambiar los colores de la web.
+    \item Cambiar foto de perfil del bot.
+\end{itemize}
+}
+
+\historia{MTB-61}{Como usuario, quiero añadir notas}{Añadir notas al bot de prueba con el comando \texttt{/add}.}{
+\begin{itemize}
+    \item 
+\end{itemize}
+}{
+\begin{itemize}
+    \item Conectar bot con base de datos.
+    \item 
+\end{itemize}
+}
+\historia{MTB-62}{Como usuario, quiero eliminar notas}{}{
+\begin{itemize}
+    \item 
+\end{itemize}
+}{
+\begin{itemize}
+    \item 
+\end{itemize}
+}
+\historia{MTB-63}{Como usuario, quiero ver mis notas}{}{
+\begin{itemize}
+    \item 
+\end{itemize}
+}{
+\begin{itemize}
+    \item 
+\end{itemize}
+}
+
+\historia{MTB-8}{Como administrador, quiero crear una agrupación}{}{
+\begin{itemize}
+    \item 
+\end{itemize}
+}{
+\begin{itemize}
+    \item 
+\end{itemize}
+}
+
+\historia{MTB-11}{Como administrador, quiero añadir miembros a mi agrupación}{}{
+\begin{itemize}
+    \item 
+\end{itemize}
+}{
+\begin{itemize}
+    \item 
+\end{itemize}
+}
+
+\historia{MTB-13}{Como usuario, quiero unirme a una agrupación}{}{
+\begin{itemize}
+    \item 
+\end{itemize}
+}{
+\begin{itemize}
+    \item 
+\end{itemize}
+}
+
+\historia{MTB-9}{Como administrador, quiero eliminar una agrupación}{}{
+\begin{itemize}
+    \item 
+\end{itemize}
+}{
+\begin{itemize}
+    \item 
+\end{itemize}
+}
+
+\historia{MTB-14}{Como miembro, quiero salir de una agrupación}{}{
+\begin{itemize}
+    \item 
+\end{itemize}
+}{
+\begin{itemize}
+    \item 
+\end{itemize}
+}
+
+\historia{MTB-12}{Como administrador, quiero eliminar miembros de mi agrupación}{}{
+\begin{itemize}
+    \item 
+\end{itemize}
+}{
+\begin{itemize}
+    \item 
+\end{itemize}
+}
+
+\historia{MTB-66}{Como programador de un bot, quiero que mis usuarios puedan seleccionar una fecha usando un calendario}{}{
+\begin{itemize}
+    \item 
+\end{itemize}
+}{
+\begin{itemize}
+    \item 
+\end{itemize}
+}
+
+\historia{MTB-67}{Como programador de un bot, quiero guardar la sesión en \texttt{prisma}}{}{
+\begin{itemize}
+    \item 
+\end{itemize}
+}{
+\begin{itemize}
+    \item 
+\end{itemize}
+}
+
+\historia{MTB-16}{Como administrador, quiero crear un evento}{}{
+\begin{itemize}
+    \item 
+\end{itemize}
+}{
+\begin{itemize}
+    \item 
+\end{itemize}
+}
+
+\historia{MTB-19}{Como miembro, quiero ver la lista de eventos}{}{
+\begin{itemize}
+    \item 
+\end{itemize}
+}{
+\begin{itemize}
+    \item 
+\end{itemize}
+}
+
+\historia{MTB-20}{Como miembro, quiero ver el detalle de un evento}{}{
+\begin{itemize}
+    \item 
+\end{itemize}
+}{
+\begin{itemize}
+    \item 
+\end{itemize}
+}
+
+\historia{MTB-18}{Como administrador, quiero eliminar un evento}{}{
+\begin{itemize}
+    \item 
+\end{itemize}
+}{
+\begin{itemize}
+    \item 
+\end{itemize}
+}
+
+\historia{MTB-36}{Como administrador, quiero publicar un evento}{}{
+\begin{itemize}
+    \item 
+\end{itemize}
+}{
+\begin{itemize}
+    \item 
+\end{itemize}
+}
+
+\historia{MTB-22}{Como miembro, quiero registrar mi previsión de asistencia a un evento}{}{
+\begin{itemize}
+    \item 
+\end{itemize}
+}{
+\begin{itemize}
+    \item 
+\end{itemize}
+}
+
+\historia{MTB-23}{Como miembro, quiero registrar por qué no puedo asistir a un evento}{}{
+\begin{itemize}
+    \item 
+\end{itemize}
+}{
+\begin{itemize}
+    \item 
+\end{itemize}
+}
+
+\historia{MTB-30}{Como administrador, quiero hacer que un miembro sea administrador}{}{
+\begin{itemize}
+    \item 
+\end{itemize}
+}{
+\begin{itemize}
+    \item 
+\end{itemize}
+}
+
+\historia{MTB-31}{Como administrador, quiero quitarle a un miembro los permisos de administrador}{}{
+\begin{itemize}
+    \item 
+\end{itemize}
+}{
+\begin{itemize}
+    \item 
+\end{itemize}
+}
+
+\historia{MTB-35}{Como administrador, quiero invitar a miembros a un evento}{}{
+\begin{itemize}
+    \item 
+\end{itemize}
+}{
+\begin{itemize}
+    \item 
+\end{itemize}
+}
+
+\historia{MTB-34}{Como administrador, quiero añadir repertorio a mi agrupación}{}{
+\begin{itemize}
+    \item 
+\end{itemize}
+}{
+\begin{itemize}
+    \item 
+\end{itemize}
+}
+
+\historia{MTB-43}{Como administrador, quiero añadir la partitura de una obra}{}{
+\begin{itemize}
+    \item 
+\end{itemize}
+}{
+\begin{itemize}
+    \item 
+\end{itemize}
+}
+
+\historia{MTB-56}{Como miembro, quiero descargar una partitura}{}{
+\begin{itemize}
+    \item 
+\end{itemize}
+}{
+\begin{itemize}
+    \item 
+\end{itemize}
+}
+
+\historia{MTB-46}{Como administrador, quiero eliminar una obra}{
+
+}{
+\begin{itemize}
+    \item 
+\end{itemize}
+}{
+\begin{itemize}
+    \item 
+\end{itemize}
+}
+
+\historia{MTB-24}{Como administrador, quiero ver qué miembros asistirán a un evento}{
+En el menú de un evento, los administradores deben ver una opción para ver el resumen de asistencia a ese evento.
+}{
+\begin{itemize}
+    \item 
+\end{itemize}
+}{
+\begin{itemize}
+    \item 
+\end{itemize}
+}
+
+\historia{MTB-10}{Como administrador, quiero editar mi agrupación}{
+A través del menú de una agrupación, se deben poder editar sus atributos (nombre, descripción...).
+}{
+\begin{itemize}
+    \item 
+\end{itemize}
+}{
+\begin{itemize}
+    \item 
+\end{itemize}
+}
+
+\historia{MTB-32}{Como miembro, quiero recibir recordatorios de los eventos diarios}{
+Cada día a una hora determinada todos los miembros que estén invitados a un evento o más recibirán una notificación con un resumen de todos los eventos de ese día.
+}{
+\begin{itemize}
+    \item 
+\end{itemize}
+}{
+\begin{itemize}
+    \item 
+\end{itemize}
+}
+
+\historia{MTB-26}{Como miembro, quiero recibir una notificación cuando se me invite a un evento}{
+Cuando un administrador invita a un miembro a un evento, ese miembro debe recibir una notificación.
+}{
+\begin{itemize}
+    \item 
+\end{itemize}
+}{
+\begin{itemize}
+    \item 
+\end{itemize}
+}
+
+\historia{MTB-17}{Como administrador, quiero editar un evento}{
+A través del menú de un evento se deben poder editar sus atributos (nombre, descripción, fecha...).
+}{
+\begin{itemize}
+    \item 
+\end{itemize}
+}{
+\begin{itemize}
+    \item 
+\end{itemize}
+}
+
+\historia{MTB-45}{Como administrador, quiero editar una obra}{
+A través del menú de una obra se debe poder editar su nombre y tipo.
+}{
+\begin{itemize}
+    \item 
+\end{itemize}
+}{
+\begin{itemize}
+    \item 
+\end{itemize}
+}
+
+\historia{MTB-58}{Como administrador, quiero recibir una notificación cuando un miembro conteste sobre su asistencia a un evento}{
+Cuando un miembro contesta su asistencia, todos los administradores de esa agrupación deben recibir una notificación.
+}{
+\begin{itemize}
+    \item 
+\end{itemize}
+}{
+\begin{itemize}
+    \item 
+\end{itemize}
+}
+
+\historia{MTB-44}{Como administrador, quiero eliminar una partitura}{
+El administrador debe poder eliminar el documento de la partitura a través del menú de una obra.
+}{
+\begin{itemize}
+    \item 
+\end{itemize}
+}{
+\begin{itemize}
+    \item 
+\end{itemize}
+}
+
+\historia{MTB-60}{Como administrador de sistemas, quiero tener una vista centralizada de los errores registrados}{
+El registro automático de errores permitirá analizar en tiempo real los problemas del sistema y solucionarlos eficientemente.
+}{
+\begin{itemize}
+    \item 
+\end{itemize}
+}{
+\begin{itemize}
+    \item 
+\end{itemize}
+}
+
+\historia{MTB-38}{Como usuario, quiero ver una página web con información sobre Mordente}{
+La \textit{landing page} debe mostrar un pequeño tutorial y enlaces interesantes al código fuente y a la memoria del proyecto.
+}{
+\begin{itemize}
+    \item 
+\end{itemize}
+}{
+\begin{itemize}
+    \item 
+\end{itemize}
+}
+
+\setlist[itemize]{}
+
 
 \section{Metodologías y tecnologías de base que podrían usarse}\label{section:metodologias}
 
