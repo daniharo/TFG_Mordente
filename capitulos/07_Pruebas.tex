@@ -109,7 +109,36 @@ Este índice puede resultar entre -100 y 100. Diremos que tiene un resultado pos
 
 \section{Informe final de las pruebas}
 
+
+\subsection{Problemas detectados}
+
+\subsubsection{\texttt{username} vacío}
+
 Uno de los problemas detectados durante las pruebas viene derivado por el hecho de que Telegram no obliga a los usuarios a asignarse un nombre de usuario, por lo que el campo \texttt{username} de nuestra base de datos se queda vacío. Esto resultaba en una excepción controlada a la hora de actualizar sus datos que se ha corregido\footnote{\url{https://github.com/daniharo/mordente/commit/70b3b54}}.
+
+\subsubsection{Desbordamiento del campo de ID de Telegram}
+
+Uno de los usuarios que realizaron las pruebas se puso en contacto para manifestar que no era capaz de obtener ninguna respuesta por parte del bot: siempre obtenía un mensaje de error.
+
+Revisando \textbf{Sentry} (sección \ref{subsection:sentry}), vemos que se ha registrado el error (figuras \ref{fig:sentryListaErrores} y \ref{fig:sentryDetalleError}) y que se debe a que el ID de Telegram del usuario no cabe en el tipo \texttt{INTEGER} de \textbf{PostgreSQL}. Revisando la documentación de Telegram\footnote{\url{https://core.telegram.org/bots/api\#chat}}, descubrimos efectivamente que los IDs de Telegram pueden ocupar hasta 52 bits, mientras el tipo \texttt{INTEGER} alberga hasta 32 bits incluyendo el signo.
+
+Para solucionar el problema, migramos la columna \texttt{uid} de la tabla \texttt{User} al tipo \texttt{Float} de Prisma\footnote{\textit{Commit:} \url{https://github.com/daniharo/mordente/commit/46f665c0}}, de forma que el usuario ya pudo terminar las pruebas correctamente.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.75\textwidth]{imagenes/pruebas/sentry_error_uid.png}
+\caption{Lista de errores registrados en Sentry}
+\label{fig:sentryListaErrores}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.75\textwidth]{imagenes/pruebas/sentry_detalle_error_uid.png}
+\caption{Detalle del error generado por desbordamiento del ID de Telegram}
+\label{fig:sentryDetalleError}
+\end{figure}
+
+\subsection{Peticiones}
 
 Una de las peticiones más populares ha sido la de incorporar la funcionalidad de \textbf{calendario} ya que la alternativa que se ha analizado en la sección \ref{subsection:glissandoo} no la implementa. Dado que requiere de más esfuerzo para su implementación, se ha programado como trabajo futuro.
 

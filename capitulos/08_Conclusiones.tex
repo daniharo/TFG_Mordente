@@ -8,13 +8,58 @@
 % memoria se abordan (un par de páginas).
 
 
+Llegados a este punto, podemos analizar si hemos cumplido o no los objetivos específicos de este proyecto:
+
+\subsection{Crear una alternativa de aplicación para la gestión de agrupaciones musicales}
+
+El primero de los objetivos trataba de crear una alternativa de software libre que satisficiera las necesidades de las agrupaciones musicales para su gestión. Podemos decir que se ha cumplido, ya que hemos implementado la mayoría de historias de usuario que se propusieron. Además, la mayoría de historias de usuario que no han sido completadas están preparadas para que su implementación no sea de gran dificultad y no haya que rehacer la interfaz de usuario actual.
+
+Los usuarios encuestados en las pruebas con usuarios reales indican que \textbf{Mordente} manifiesta potencial para erigirse como una alternativa sólida al software disponible actualmente.
+
+\subsection{Investigar las posibilidades que ofrece una interfaz de usuario basada en chat}\label{subsection:investigarInterfazChat}
+
+En el capítulo \ref{chapter:diu} explicábamos que este proyecto, al desarrollar una interfaz de usuario sobre un chat de Telegram, ofrece la oportunidad de analizar si la interfaz humano-chat que aporta Telegram es suficiente para realizar tareas de la complejidad de las que se han propuesto.
+
+La respuesta no es rotunda, ya que por un lado para las tareas más simples la interfaz es suficiente, y el hecho de no pedir que los usuarios instalen una aplicación específica disminuye la barrera inicial para la activación de usuarios. Además, se ha descubierto una ventaja que no se había planteado anteriormente: el historial de chats se guarda en el dispositivo, por lo que los usuarios pueden ver información sobre sus agrupaciones cuando no tienen conexión a internet.
+
+Sin embargo, para tareas más complejas los usuarios prefieren tener un panel más completo de forma que se pueda consultar más información necesitando menos pasos para llegar a ella. En esta misma línea, los flujos necesarios para crear agrupaciones, eventos y obras son totalmente secuenciales a modo de conversación, lo cual ha sido visto por los usuarios de forma dispar: aunque sea un flujo natural, no permite modificar fácilmente un paso anterior. De esta forma un formulario estándar sigue siendo conveniente para flujos de creación de elementos.
+
+\subsection{Contribuir a bibliotecas de software libre}
+
+Aparte de publicar este proyecto como ejemplo de bot que integra distintas tecnologías para futuros proyectos parecidos, se han publicado dos bibliotecas que los usuarios de \texttt{grammY} pedían:
+
+\begin{itemize}
+    \item \textbf{Adaptador de sesión para \texttt{prisma}} (sección \ref{subsection:adaptadorPrisma}): cerrando un \textit{issue} abierto durante tres meses y ampliamente agradecido por la comunidad, incluso publicado en el canal oficial de Telegram de \texttt{grammY}.
+    \item \textbf{Selector de calendario} (sección \ref{subsection:selectorCalendario}): responde a la petición por parte de la comunidad de crear un conjunto de componentes que usan un menú en línea. El selector de calendario es el primero de los componentes que se ha implementado, y su publicación incluso tuvo que ser adelantada dada la cantidad de usuarios pidiendo su implementación.
+\end{itemize}
+
+
+\subsection{Formación en nuevas tecnologías}
+
+Aunque este objetivo no se había planteado inicialmente, se hace importante remarcar la cantidad de tecnologías de actualidad que se han utilizado en este trabajo. La formación en estas tecnologías durante el desarrollo no se limita a la realización de este sino que es totalmente aplicable a trabajos futuros. Entre algunas de las tecnologías que se han aprendido se incluyen \texttt{prisma}, \texttt{grammY}, \texttt{docker}, \texttt{docusaurus}, \texttt{S3}, \texttt{DigitalOcean} o \texttt{Sentry}.
+
+
+
 \section{Trabajos futuros}
 % Cosas que no se han podido hacer por falta de tiempo o
 % restricciones en la tecnología.
 % Cosas que no eran objetivos iniciales y se podrían hacer
 % en un futuro para mejorar el trabajo (una página).
 
-\subsection{Webapp}
-Webapp utilizando el código existente.
+En esta sección se exponen tareas derivadas del \textit{feedback} recogido de los usuarios o por novedades en las tecnologías durante el desarrollo del trabajo.
 
-\subsection{Webapp integrada en el bot}
+\subsection{Función de calendario}
+
+Múltiples usuarios han pedido que se implemente un \textbf{calendario} en el que ver los eventos pasados y próximos de una agrupación. Dado que esta función no la aporta la aplicación que hemos analizado como competencia en la sección \ref{subsection:glissandoo}, se priorizará su implementación como elemento diferenciador.
+
+\subsection{Aplicación web}
+
+Este proyecto se ha dejado preparado para poder implementar en un futuro una aplicación web con la misma funcionalidad que el bot. A nivel de base de datos solo será necesario añadir la información necesaria para el inicio de sesión sin requerir Telegram.
+
+La aplicación web se podría integrar incluso con el bot que hemos desarrollado, de forma que una de las opciones para el inicio de sesión sea obtener un código de inicio de sesión en Telegram.
+
+\subsection{Aplicación web integrada en el bot}
+
+Una de las actualizaciones de la aplicación Telegram que se han lanzado durante el desarrollo de este trabajo incluye la autodenominada \textit{Revolución de los bots}\cite{telegramWebappUpdate}: se trata de la posibilidad de incluir una aplicación web embebida en el bot para tareas que pueden mejorar gracias a su introducción. Una de ellas es la que hemos comentado en la sección \ref{subsection:investigarInterfazChat}: la creación de elementos se beneficia de un formulario tradicional. 
+
+Por ello uno de los trabajos futuros planteados consiste en crear una aplicación web a embeber en el bot que permita, además de crear agrupaciones, eventos y obras, ver un resumen más completo y gráfico de la información interesante para cada usuario, así como la posibilidad de obtener gráficos de asistencia a los eventos y ensayos.
