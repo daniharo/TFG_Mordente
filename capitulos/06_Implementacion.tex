@@ -219,7 +219,7 @@ Teniendo la funcionalidad de crear, ver y eliminar agrupaciones implementada, la
 
 
 
-\subsection{Selector de fecha\footnote{Posteriormente durante el desarrollo del proyecto se ha detectado que este selector de fecha interfiería con una nueva versión de la dependencia \texttt{grammy-conversations}, la cual necesitábamos actualizar. Solucionar este problema en el selector de fecha demoraría demasiado el desarrollo, por lo que se ha optado por sustituirlo temporalmente por mensajes de texto del formato \texttt{DD/MM/YYYY} para la fecha y \texttt{HH:MM} para la hora.}}
+\subsection{Selector de fecha\footnote{Posteriormente durante el desarrollo del proyecto se ha detectado que este selector de fecha interfiería con una nueva versión de la dependencia \texttt{grammy-conversations}, la cual necesitábamos actualizar. Solucionar este problema en el selector de fecha demoraría demasiado el desarrollo, por lo que se ha optado por sustituirlo temporalmente por mensajes de texto del formato \texttt{DD/MM/YYYY} para la fecha y \texttt{HH:MM} para la hora.}}\label{subsection:selectorCalendario}
 
 Dado que uno de los atributos de cada evento es la fecha y hora de inicio y la fecha y hora de fin, debemos otorgar al usuario la posibilidad de responder al bot fácilmente cuando se les pide estos datos.
 
@@ -771,7 +771,7 @@ Es por esto que se ha decidido revertir el cambio de proveedor.
 El proveedor de DNS utilizado para \texttt{mordente.es} nos permite obtener una dirección de correo electrónico gratuita con 2GB de almacenamiento. Por tanto, se ha creado una dirección 
 de soporte (\texttt{soporte@mordente.es}) para los usuarios que puedan tener alguna consulta.
 
-\section{Registro remoto de errores}
+\section{Registro remoto de errores}\label{subsection:sentry}
 
 Por último, vamos a configurar el servicio \textbf{Sentry} para poder obtener en tiempo real registros de los errores que se estén produciendo en la aplicación.
 
