@@ -394,7 +394,7 @@ En un entorno de producción queremos que los contenedores estén totalmente ais
 \subsubsection{Migraciones de la base de datos}
 % migración de base de datos manual ahora https://github.com/daniharo/mordente/commit/98f3186d251d2c4da88e101ed11c5155b763ddb0
 
-Hasta ahora las migraciones de la base de datos\footnote{Las \textbf{migraciones} ajustan la base de datos a cambios en el esquema SQL.} se realizaban de forma automática cada vez que se encendía el bot con \path{docker compose up}.
+Hasta ahora las migraciones de la base de datos\footnote{Las \textbf{migraciones} ajustan la base de datos a cambios en el esquema SQL.} se realizaban de forma automática cada vez que se encendía el bot con \texttt{docker compose up}.
 
 A partir de ahora, querremos que las migraciones se apliquen de forma manual cuando se despliegue código a producción que incluya cambios en el esquema. Para ello, añadimos como \textit{scripts} los comandos necesarios para realizar las migraciones\footnote{\textit{Commit:} \url{https://github.com/daniharo/mordente/commit/98f3186d}}.
 
@@ -411,17 +411,38 @@ Idealmente debemos efectuar esta transpilación mientras construimos la imagen d
 
 Ya tenemos el código listo para desplegarlo en un servidor de producción que esté encendido las 24 horas del día.
 
-Tal y como hemos decidido durante el \textbf{Diseño Técnico} en la sección \ref{subsection:elegirCloud}, procedemos a crear un servidor virtual en la plataforma de \textbf{DigitalOcean}. Para ello empezamos registrándonos en su página web\footnote{\url{https://cloud.digitalocean.com}} y creando un nuevo proyecto llamado \texttt{mordente}.
+Tal y como hemos decidido durante el \textbf{Diseño Técnico} en la sección \ref{subsection:elegirCloud}, procedemos a crear un servidor virtual en la plataforma de \textbf{DigitalOcean}. Para ello empezamos registrándonos en su página web\footnote{\url{https://cloud.digitalocean.com}} y creando un nuevo proyecto llamado \texttt{mordente} (figura \ref{fig:digitalOceanCrearProyecto}).
 
 Los pasos para crear el servidor han sido los siguientes:
 
 \begin{enumerate}
-    \item Pulsar \textbf{Create} y \textbf{Droplets}. Accederemos a la pantalla de creación de Droplets.
+    \item Pulsar \textbf{Create} y \textbf{Droplets} (figura \ref{fig:digitalOceanMenuCreacion}). Accederemos a la pantalla de creación de Droplets.
     \item Seleccionamos la pestaña \textbf{Marketplace}, donde podremos encontrar múltiples plantillas preconfiguradas para necesidades comunes.
-    \item Buscamos \texttt{Docker} dentro del \textbf{Marketplace}, y seleccionamos el resultado principal.
+    \item Buscamos \texttt{Docker} dentro del \textbf{Marketplace}, y seleccionamos el resultado principal (figura \ref{fig:digitalOceanCrearServidor}).
     \item Ajustamos la configuración para usar el plan más económico y ubicar el servidor en Frankfurt, la región con menor latencia desde Granada.
     \item Añadimos la clave pública SSH de nuestro equipo para que la autenticación solo pueda realizarse mediante esta.
 \end{enumerate}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{imagenes/implementacion/digitalocean_crear_proyecto.png}
+\caption{Creando proyecto en DigitalOcean.}
+\label{fig:digitalOceanCrearProyecto}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{imagenes/implementacion/digitalocean_panel_crear.png}
+\caption{Menú de creación de DigitalOcean.}
+\label{fig:digitalOceanMenuCreacion}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{imagenes/implementacion/digitalocean_creando_server.png}
+\caption{Creando servidor en DigitalOcean.}
+\label{fig:digitalOceanCrearServidor}
+\end{figure}
 
 Una vez tenemos el servidor creado, los pasos a ejecutar en el servidor para encender el bot son:
 
