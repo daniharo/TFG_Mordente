@@ -64,3 +64,56 @@ Idealmente, para la introducción de fechas se debería mostrar un menú con for
 \caption{Diseño de la interfaz de creación de un elemento}
 \label{fig:disenyo_creacion}
 \end{figure}
+
+\section{Imagen de marca}
+
+Para que la marca \textbf{Mordente} sea reconocible por los usuarios ya activos y los potenciales usuarios, vamos a definir tres elementos básicos: tipografía, logotipo y paleta de colores.
+
+\subsection{Tipografía}
+
+Para el logotipo hemos escogido la tipografía \textbf{Eczar} debido a su parecido con la mayoría de tipografías utilizadas para la edición de partituras.
+
+El resto de la aplicación utilizará la tipografía por defecto del sistema, ya que esto es controlado por \textbf{Telegram}. La \textit{landing page} reproducirá este mismo comportamiento, de modo que todo el contenido excepto el logotipo utilizará la tipografía del sistema.
+
+\subsection{Logotipo}
+
+El logotipo usará un color \textbf{negro piano} (\#000000) con símbolo blanco.
+
+Se compondrá del texto \textbf{mordente} en la tipografía escogida y un símbolo de mordente a la izquierda sobre el texto, ligeramente sobresaliendo por la izquierda del espacio que ocupa el texto.
+
+Podemos ver el imagotipo (compuesto por el símbolo y el texto) en la figura \ref{fig:imagotipo}. El isotipo, compuesto solo por el símbolo y usado cuando se dispone de menos espacio, se puede ver en la figura \ref{fig:isotipo}.
+
+\begin{figure}[]
+\minipage{0.5\textwidth}
+  \centering
+  \includegraphics[width=0.7\linewidth]{imagenes/logo_mordente.pdf}
+  \caption{Imagotipo de \textbf{Mordente}}\label{fig:imagotipo}
+\endminipage\hfill
+\minipage{0.5\textwidth}%
+  \centering
+  \includegraphics[width=0.7\linewidth]{imagenes/isotipo_mordente.pdf}
+  \caption{Isotipo de \textbf{Mordente}}\label{fig:isotipo}
+\endminipage
+\end{figure}
+
+\subsection{Paleta de colores}
+
+Crearemos una paleta de colores usando la herramienta \texttt{coolors.co} (\url{https://coolors.co}) que nos permite encontrar colores complementarios fácilmente.
+
+Tras decidir entre varias alternativas, la paleta generada se puede observar en la figura \ref{fig:paletaMordente}.
+
+Por un lado tendremos los dos colores del logotipo: negro piano y blanco puro, a los que añadiremos el rojo ``Rubí Antiguo'' como color primario y el color naranja ``Mandarina'' como color secundario:
+
+\begin{itemize}
+    \item El \textbf{rojo ``Rubí Antiguo''} (\#832232) imita al color de la madera los instrumentos de cuerda frotada.
+    \item El \textbf{naranja ``Mandarina''} (\#EF8354) complementa al color primario añadiendo más cantidad de amarillo.
+\end{itemize}
+
+
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{imagenes/disenyo_interfaz/mordente_paleta.pdf}
+\caption{Paleta de colores}
+\label{fig:paletaMordente}
+\end{figure}

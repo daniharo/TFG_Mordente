@@ -604,10 +604,10 @@ Cuando cambiamos el código del proyecto, para actualizar el código que tenemos
 \begin{enumerate}
     \item Acceder mediante \texttt{ssh} al servidor.
     \item Actualizar el código con \texttt{git pull}.
-    \item Reconstruir la imagen de \texttt{docker} usando el comando \texttt{docker compose up --build}.
+    \item Reconstruir la imagen de \texttt{docker} usando el comando \texttt{docker compose -f docker-compose.yml -f docker-compose.prod.yml up -{}-build}.
 \end{enumerate}
 
-Dado que estos pasos se van a seguir de formar repetitiva cada vez que 
+Dado que estos pasos se van a seguir de forma repetitiva cada vez que hayamos hecho cambios en el código que queramos que entren al entorno de producción, es obvio que es una tarea que disfrutaría de una automatización para que ese tiempo se pueda dedicar a otra tarea.
 
 Es aquí cuando entra en juego el \textbf{Despliegue Continuo (CD)}: es una técnica que consiste en desplegar automáticamente la aplicación a producción cuando se realizan cambios (\textit{commits}) en el código\cite{Shahin_2017}. 
 % https://arxiv.org/pdf/1703.07019.pdf
