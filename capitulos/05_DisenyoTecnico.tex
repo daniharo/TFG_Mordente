@@ -4,11 +4,29 @@ En este capítulo analizaremos los requisitos de la aplicación previamente al i
 
 \section{Listado de historias de usuario (\textit{Backlog})}
 
-
+En el \textit{Backlog} vamos a incluir una lista de todo el trabajo necesario ordenado por prioridades a partir de la hoja de ruta que contiene los requisitos del producto \cite{whatIsBacklog}.
 
 Para extraer las historias de usuario se ha usado la aplicación \textbf{Jira}\footnote{\url{https://www.atlassian.com/software/jira}}, de la compañía \textbf{Atlassian}. Por consistencia y aunque puedan parecer desordenados, los identificadores de las épicas y de las historias que aparecen en esta sección son los que se han obtenido en dicha herramienta.
 
-A continuación se muestran las historias del backlog divididas por épicas, sin priorizar.
+En la figura \ref{fig:jiraBacklog} se puede observar la interfaz de usuario de \textbf{Jira} que se ha usado para registrar las historias de usuario. Así mismo, en la figura \ref{fig:jiraTodos} se puede observar el \textit{Backlog} completo exportado desde \textbf{Jira}.
+
+\begin{figure}[h]
+\centering
+\captionsetup{justification=centering}
+\includegraphics[width=\textwidth]{imagenes/disenyo_tecnico/jira_backlog.png}
+\caption{Interfaz para crear y consultar historias de usuario en el \textit{Backlog} de \textbf{Jira}.}
+\label{fig:jiraBacklog}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\captionsetup{justification=centering}
+\includegraphics[width=\textwidth]{imagenes/disenyo_tecnico/jira_todos.pdf}
+\caption{Lista completa de las historias de usuario creadas en el \textit{Backlog} de \textbf{Jira}.}
+\label{fig:jiraTodos}
+\end{figure}
+
+A continuación vamos a mostrar las historias del backlog divididas en \textbf{épicas}, sin priorizar. Las \textbf{épicas} agrupan las historias de usuario dependiendo de qué parte de la lógica de negocio de la aplicación las relaciona.
 
 \begin{enumerate}
     \item[MTB-64.] Bot de prueba: Notas.
@@ -92,7 +110,7 @@ A continuación se muestran las historias del backlog divididas por épicas, sin
 \end{enumerate}
 
 
-En la tabla \ref{tab:historiasPriorizadas} se muestran las historias priorizadas y divididas en los distintos sprints que se han planificado.
+En la tabla \ref{tab:historiasPriorizadas} se muestran las historias priorizadas y divididas en los distintos \textit{sprints} que se han planificado.
 
 
 \begin{longtable}{| p{.12\textwidth} | p{.58\textwidth} | p{.12\textwidth} | p{.08\textwidth} |}
@@ -141,6 +159,8 @@ MTB-38 & Como usuario, quiero ver una página web con información sobre Mordent
 
 \section{Historias de usuario}
 
+En esta sección describiremos en detalle cada una de las historias de usuario, incluyendo su \textbf{descripción}, las \textbf{pruebas de aceptación} necesarias para darla por completada y las \textbf{tareas} en las que se subdivide.
+
 \setlist[itemize]{nosep, noitemsep, topsep=0pt}
 
 \newcommand{\historia}[5]{
@@ -171,254 +191,396 @@ MTB-38 & Como usuario, quiero ver una página web con información sobre Mordent
 \end{itemize}
 }
 
-\historia{MTB-61}{Como usuario, quiero añadir notas}{Añadir notas al bot de prueba con el comando \texttt{/add}.}{
+\historia{MTB-61}{Como usuario, quiero añadir notas}{
+Añadir notas al bot de prueba con el comando \texttt{/add}.
+}{
 \begin{itemize}
-    \item 
+    \item Las notas se guardan con el formato en el que se enviaron.
+    \item Las notas se guardan asignadas al usuario que las crea.
 \end{itemize}
 }{
 \begin{itemize}
     \item Conectar bot con base de datos.
-    \item 
-\end{itemize}
-}
-\historia{MTB-62}{Como usuario, quiero eliminar notas}{}{
-\begin{itemize}
-    \item 
-\end{itemize}
-}{
-\begin{itemize}
-    \item 
-\end{itemize}
-}
-\historia{MTB-63}{Como usuario, quiero ver mis notas}{}{
-\begin{itemize}
-    \item 
-\end{itemize}
-}{
-\begin{itemize}
-    \item 
+    \item Manejar el comando \texttt{/add}.
+    \item Hacer petición a base de datos para añadir nota.
 \end{itemize}
 }
 
-\historia{MTB-8}{Como administrador, quiero crear una agrupación}{}{
+\historia{MTB-62}{Como usuario, quiero eliminar notas}{
+Cada usuario podrá eliminar las notas que ha añadido.
+}{
 \begin{itemize}
-    \item 
+    \item Si intento eliminar una nota que no existe, recibo un error.
 \end{itemize}
 }{
 \begin{itemize}
-    \item 
+    \item Manejar el comando \texttt{/delete}.
+    \item Hacer petición a base de datos para eliminar nota.
 \end{itemize}
 }
 
-\historia{MTB-11}{Como administrador, quiero añadir miembros a mi agrupación}{}{
+\historia{MTB-63}{Como usuario, quiero ver mis notas}{
+Cada usuario podrá ver las notas que ha añadido.
+}{
 \begin{itemize}
-    \item 
+    \item No puedo ver las notas de otros usuarios.
+    \item Veo las notas en el formato en el que las añadí.
 \end{itemize}
 }{
 \begin{itemize}
-    \item 
+    \item Consulta a base de datos.
+    \item Manejar comando \texttt{/list}.
 \end{itemize}
 }
 
-\historia{MTB-13}{Como usuario, quiero unirme a una agrupación}{}{
+\historia{MTB-8}{Como administrador, quiero crear una agrupación}{
+Los usuarios del bot podrán crear una nueva agrupación, convirtiéndose inmediatamente en su administrador.
+}{
 \begin{itemize}
-    \item 
+    \item Cuando se ha creado la agrupación, soy su administrador.
 \end{itemize}
 }{
 \begin{itemize}
-    \item 
+    \item Manejar comando \texttt{/start}.
+    \item Manejar comando \texttt{/create}.
 \end{itemize}
 }
 
-\historia{MTB-9}{Como administrador, quiero eliminar una agrupación}{}{
+\historia{MTB-11}{Como administrador, quiero añadir miembros a mi agrupación}{
+Los administradores podrán invitar a usuarios a su agrupación mediante un enlace de invitación generado.
+}{
 \begin{itemize}
-    \item 
+    \item Cuando recibo el enlace, puedo reenviarlo a un usuario.
+    \item En cualquier momento puedo hacer que no se pueda usar ese enlace.
 \end{itemize}
 }{
 \begin{itemize}
-    \item 
+    \item Añadir vista de lista de agrupaciones.
+    \item Añadir vista de detalle de agrupación.
+    \item Añadir menú de agrupación, con botón de \texttt{Invitar}.
+    \item Añadir botón de \texttt{Deshabilitar enlace} si está activado.
+    \item Generar código para el enlace.
+    \item Consulta a base de datos para saber si el usuario es administrador.
+    \item Petición a base de datos para activar o desactivar enlace.
 \end{itemize}
 }
 
-\historia{MTB-14}{Como miembro, quiero salir de una agrupación}{}{
+\historia{MTB-13}{Como usuario, quiero unirme a una agrupación}{
+Los usuarios del bot podrán unirse a una agrupación abriendo un enlace que les haya proporcionado un administrador.
+}{
 \begin{itemize}
-    \item 
+    \item Si abro un enlace que no existe, recibo un error.
+    \item Si el enlace está deshabilitado, recibo un error.
+    \item Si el enlace es correcto, recibo una confirmación y los detalles de la agrupación.
 \end{itemize}
 }{
 \begin{itemize}
-    \item 
+    \item Manejar comando \texttt{/start} acompañado del código de invitación.
+    \item Petición a base de datos para comprobar que la agrupación existe y su enlace de invitación está activado.
+    \item Petición a base de datos para añadir nueva membresía.
 \end{itemize}
 }
 
-\historia{MTB-12}{Como administrador, quiero eliminar miembros de mi agrupación}{}{
+\historia{MTB-9}{Como administrador, quiero eliminar una agrupación}{
+En el menú de una agrupación, los administradores podrán elegir eliminarla.
+}{
 \begin{itemize}
-    \item 
+    \item Si no soy administrador, no puedo eliminar la agrupación.
+    \item Al pulsar el botón, se solicita una confirmación.
+    \item Si contesto que finalmente no quiero eliminar, no se elimina.
+    \item Si contesto que sí quiero, se elimina la agrupación y todos sus datos relacionados.
 \end{itemize}
 }{
 \begin{itemize}
-    \item 
+    \item Implementar menú de agrupación.
+    \item Implementar conversación para confirmar si desea seguir con la eliminación.
+    \item Consulta a base de datos para saber si el usuario es administrador.
+    \item Petición a base de datos para eliminar la agrupación.
+    \item Confirmación de la eliminación.
 \end{itemize}
 }
 
-\historia{MTB-66}{Como programador de un bot, quiero que mis usuarios puedan seleccionar una fecha usando un calendario}{}{
+\historia{MTB-14}{Como miembro, quiero salir de una agrupación}{
+En el menú de membresía, cada miembro podrá elegir salir de la agrupación.
+}{
 \begin{itemize}
-    \item 
+    \item Si me salgo de la agrupación, también se eliminan mis invitaciones a eventos.
 \end{itemize}
 }{
 \begin{itemize}
-    \item 
+    \item Menú de agrupación con botón para salirme de la agrupación.
+    \item Petición a base de datos para eliminar la membresía.
 \end{itemize}
 }
 
-\historia{MTB-67}{Como programador de un bot, quiero guardar la sesión en \texttt{prisma}}{}{
+\historia{MTB-12}{Como administrador, quiero eliminar miembros de mi agrupación}{
+En el menú de membresía, los administradores podrán seleccionar la opción de \texttt{Eliminar miembro}.
+}{
 \begin{itemize}
-    \item 
+    \item Si no soy administrador, no puedo realizar la acción.
+    \item Cuando elimino un miembro, también se eliminan sus invitaciones a eventos.
 \end{itemize}
 }{
 \begin{itemize}
-    \item 
+    \item Menú de agrupación con botón para eliminar de la agrupación a un miembro.
+    \item Consulta a base de datos para saber si el usuario es administrador.
+    \item Petición a base de datos para eliminar la membresía.
 \end{itemize}
 }
 
-\historia{MTB-16}{Como administrador, quiero crear un evento}{}{
+\historia{MTB-66}{Como programador de un bot, quiero que mis usuarios puedan seleccionar una fecha usando un calendario}{
+Se debe desarrollar un complemento para \texttt{grammY} que proporcione un selector de fechas a modo de calendario.
+}{
 \begin{itemize}
-    \item 
+    \item No se puede seleccionar una fecha inferior a la marcada como mínima.
+    \item No se puede seleccionar una fecha superior a la marcada como máxima.
 \end{itemize}
 }{
 \begin{itemize}
-    \item 
+    \item Implementar nuevo menú personalizado que guarda estado de la fecha.
+    \item Implementar \texttt{middleware} que guarda en el contexto qué fecha se ha seleccionado cuando el usuario ha terminado la selección.
+    \item Implementar opciones del calendario: fecha mínima, máxima, botones adicionales.
 \end{itemize}
 }
 
-\historia{MTB-19}{Como miembro, quiero ver la lista de eventos}{}{
+\historia{MTB-67}{Como programador de un bot, quiero guardar la sesión en \texttt{prisma}}{
+Se debe desarrollar un paquete para \texttt{grammY} que permita guardar la sesión utilizando \texttt{prisma}, y publicarlo para el resto de la comunidad.
+}{
 \begin{itemize}
-    \item 
+    \item El \textit{plugin} debe pasar todos los tests implementados en la biblioteca de adaptadores de sesión.
 \end{itemize}
 }{
 \begin{itemize}
-    \item 
+    \item Clonar repositorio de adaptadores de sesión en local.
+    \item Crear nuevo adaptador para prisma tomando inspiración del de \texttt{TypeORM}.
+    \item Implementar los tests.
+    \item Iterar hasta que los tests tengan resultado positivo.
+    \item Publicar el \textit{plugin}.
 \end{itemize}
 }
 
-\historia{MTB-20}{Como miembro, quiero ver el detalle de un evento}{}{
+\historia{MTB-16}{Como administrador, quiero crear un evento}{
+En la lista de eventos, los administradores verán la opción de crear un nuevo evento, lo cual abrirá una conversación para su creación.
+}{
 \begin{itemize}
-    \item 
+    \item Si no soy administrador, no puedo realizar la acción.
+    \item Puedo saltar los pasos opcionales.
+    \item Si selecciono una fecha que no existe, recibo un error.
+    \item Si selecciono una hora que no existe, recibo un error.
 \end{itemize}
 }{
 \begin{itemize}
-    \item 
+    \item Consulta a base de datos para saber si el usuario es administrador.
+    \item Menú de lista de eventos.
+    \item Botón de crear evento en lista de eventos.
+    \item Conversación para crear el evento.
+    \item Petición a base de datos para crear el evento.
 \end{itemize}
 }
 
-\historia{MTB-18}{Como administrador, quiero eliminar un evento}{}{
+\historia{MTB-19}{Como miembro, quiero ver la lista de eventos}{
+Cada miembro podrá ver la lista de eventos a los que está asignado.
+}{
 \begin{itemize}
-    \item 
+    \item Si no soy miembro de la agrupación no puedo ver los eventos.
+    \item Si no estoy invitado a un evento, no puedo verlo en la lista.
 \end{itemize}
 }{
 \begin{itemize}
-    \item 
+    \item Consulta a base de datos de la lista de eventos para el miembro.
+    \item Vista de lista de eventos.
 \end{itemize}
 }
 
-\historia{MTB-36}{Como administrador, quiero publicar un evento}{}{
+\historia{MTB-20}{Como miembro, quiero ver el detalle de un evento}{
+En la lista de eventos, los miembros podrán escoger un evento para ver sus detalles.
+}{
 \begin{itemize}
-    \item 
+    \item Si no soy miembro de la agrupación no puedo ver el evento.
+    \item Si el evento consultado no existe recibo un error.
 \end{itemize}
 }{
 \begin{itemize}
-    \item 
+    \item Manejar comando \texttt{/event\_N}
+    \item Vista de detalle de evento.
+    \item Consulta a base de datos del detalle del evento.
 \end{itemize}
 }
 
-\historia{MTB-22}{Como miembro, quiero registrar mi previsión de asistencia a un evento}{}{
+\historia{MTB-18}{Como administrador, quiero eliminar un evento}{
+En el menú de un evento, los administradores verán una opción de eliminarlo.
+}{
 \begin{itemize}
-    \item 
+    \item Si no soy administrador, no puedo realizar la acción.
+    \item Si no participo en la agrupación, no puedo realizar la acción.
+    \item Recibo una pregunta de confirmación de la eliminación.
+    \item Si selecciono finalmente que no quiero eliminar, no se elimina el evento.
+    \item Al eliminar el evento, ya no le aparece a los miembros.
 \end{itemize}
 }{
 \begin{itemize}
-    \item 
+    \item Consulta a base de datos para saber si el usuario es administrador.
+    \item Menú de detalle de evento con botón para eliminar.
+    \item Conversación para confirmar la eliminación.
+    \item Petición a base de datos para eliminar el evento.
 \end{itemize}
 }
 
-\historia{MTB-23}{Como miembro, quiero registrar por qué no puedo asistir a un evento}{}{
+\historia{MTB-36}{Como administrador, quiero publicar un evento}{
+Una vez guardado un evento nuevo, los administradores podrán decidir dejarlo como borrador o publicarlo en cualquier momento.
+}{
 \begin{itemize}
-    \item 
+    \item Si no soy administrador, no puedo realizar la acción.
+    \item Hasta que no está publicado el evento, no le aparece a los miembros.
+    \item Si ya está publicado, no aparece la opción de publicar.
 \end{itemize}
 }{
 \begin{itemize}
-    \item 
+    \item Consulta a base de datos para saber si el usuario es administrador.
+    \item Consulta a base de datos para saber si el evento está publicado.
+    \item Petición a base de datos para marcar el evento como publicado.
+    \item Botón de publicar evento en el menú de detalle de evento.
 \end{itemize}
 }
 
-\historia{MTB-30}{Como administrador, quiero hacer que un miembro sea administrador}{}{
+\historia{MTB-22}{Como miembro, quiero registrar mi previsión de asistencia a un evento}{
+En el menú de un evento, los miembros invitados verán una opción para escoger si asistirán o no.
+}{
 \begin{itemize}
-    \item 
+    \item Si no estoy invitado al evento, no puedo responder.
+    \item Cuando respondo, en el menú se marca la opción que he elegido.
 \end{itemize}
 }{
 \begin{itemize}
-    \item 
+    \item Consulta a base de datos para saber si el miembro ha respondido.
+    \item Petición a base de datos para registrar la asistencia prevista.
+    \item Botones de asistencia positiva y negativa a un evento en el menú de detalle de evento.
 \end{itemize}
 }
 
-\historia{MTB-31}{Como administrador, quiero quitarle a un miembro los permisos de administrador}{}{
+\historia{MTB-23}{Como miembro, quiero registrar por qué no puedo asistir a un evento}{
+Cuando un miembro responde que no podrá asistir a un evento, el bot le preguntará si quiere dar una justificación. La justificación se enviará a los administradores.
+}{
 \begin{itemize}
-    \item 
+    \item Si he respondido que sí asistiré, no recibo ninguna pregunta.
+    \item Si he respondido que no asistiré, el bot me pregunta si quiero dar una justificación.
+    \item Si selecciono saltar la justificación, salgo de la conversación.
 \end{itemize}
 }{
 \begin{itemize}
-    \item 
+    \item Conversación para preguntar la justificación de la no asistencia.
+    \item Petición a base de datos para guardar la justificación.
+    \item Menú para saltar la justificación.
 \end{itemize}
 }
 
-\historia{MTB-35}{Como administrador, quiero invitar a miembros a un evento}{}{
+\historia{MTB-30}{Como administrador, quiero hacer que un miembro sea administrador}{
+Cualquier administrador podrá hacer que otro miembro sea administrador a través de su menú de membresía.
+}{
 \begin{itemize}
-    \item 
+    \item Si no soy administrador, no puedo realizar la acción.
 \end{itemize}
 }{
 \begin{itemize}
-    \item 
+    \item Consulta a base de datos para saber si el usuario es administrador.
+    \item Botón para añadir administrador en el menú de membresía.
+    \item Petición a base de datos para añadir administrador.
 \end{itemize}
 }
 
-\historia{MTB-34}{Como administrador, quiero añadir repertorio a mi agrupación}{}{
+\historia{MTB-31}{Como administrador, quiero quitarle a un miembro los permisos de administrador}{
+Cualquier administrador podrá quitar los permisos de administrador a los demás administradores a través de su menú de membresía.
+}{
 \begin{itemize}
-    \item 
+    \item Si no soy administrador, no puedo realizar la acción.
+    \item Si soy el único administrador, no puedo realizar la acción.
 \end{itemize}
 }{
 \begin{itemize}
-    \item 
+    \item Consulta a base de datos para saber si el usuario es administrador.
+    \item Botón para quitar administrador en el menú de membresía.
+    \item Petición a base de datos para eliminar administrador.
 \end{itemize}
 }
 
-\historia{MTB-43}{Como administrador, quiero añadir la partitura de una obra}{}{
+\historia{MTB-35}{Como administrador, quiero invitar a miembros a un evento}{
+Los administradores podrán seleccionar qué miembros están invitados a un evento o invitarlos automáticamente a todos al crear el evento.
+}{
 \begin{itemize}
-    \item 
+    \item Si no soy administrador, no puedo realizar la acción.
+    \item Al seleccionar un miembro, si está invitado se marca como no invitado en el menú.
+    \item Al seleccionar un miembro, si no está invitado se marca como invitado en el menú.
+    \item Al terminar de crear un evento, el bot me pregunta si quiero invitar a todos los miembros automáticamente.
 \end{itemize}
 }{
 \begin{itemize}
-    \item 
+    \item Consulta a base de datos para saber si el usuario es administrador.
+    \item Botón de asignar miembros en el menú de detalle de evento.
+    \item Menú paginado de miembros de la agrupación para seleccionar invitados.
+    \item Petición a base de datos para añadir o eliminar invitado.
+    \item Pregunta final en la conversación de creación de evento para la asignación automática de todos los miembros.
 \end{itemize}
 }
 
-\historia{MTB-56}{Como miembro, quiero descargar una partitura}{}{
+\historia{MTB-34}{Como administrador, quiero añadir repertorio a mi agrupación}{
+Los administradores podrán añadir, a partir de la lista de obras, nuevas obras.
+}{
 \begin{itemize}
-    \item 
+    \item Si no soy administrador, no puedo realizar la acción.
 \end{itemize}
 }{
 \begin{itemize}
-    \item 
+    \item Consulta a base de datos para saber si el usuario es administrador.
+    \item Botón de añadir obra en el menú de la vista de listado de obras.
+    \item Petición a base de datos para añadir la obra.
+\end{itemize}
+}
+
+\historia{MTB-43}{Como administrador, quiero añadir la partitura de una obra}{
+Los administradores podrán subir un archivo que contenga la partitura de una obra.
+}{
+\begin{itemize}
+    \item Si no soy administrador, no puedo realizar la acción.
+    \item Si envío algo que no sea un documento cuando el bot me pide la partitura, no ocurre nada.
+    \item Cuando envío la partitura, se queda guardada en el servicio de almacenamiento de objetos.
+\end{itemize}
+}{
+\begin{itemize}
+    \item Consulta a base de datos para saber si el usuario es administrador.
+    \item Petición a la API de Telegram para descargar el archivo que ha enviado el usuario.
+    \item Petición al servicio de almacenamiento de objetos para subir el archivo.
+    \item Petición a base de datos para guardar la clave del archivo.
+\end{itemize}
+}
+
+\historia{MTB-56}{Como miembro, quiero descargar una partitura}{
+Los miembros verán un botón de \texttt{Descargar} en el menú de una obra si tiene una partitura añadida.
+}{
+\begin{itemize}
+    \item Si la obra no tiene la partitura añadida, no aparece el botón de \texttt{Descargar}.
+    \item Cuando pulso en \texttt{Descargar}, recibo el archivo en la misma conversación.
+\end{itemize}
+}{
+\begin{itemize}
+    \item Consulta a base de datos para saber la clave del archivo.
+    \item Petición al servicio de almacenamiento de objetos para desacargar el archivo.
+    \item Petición a la API de Telegram para enviar el archivo al miembro.
 \end{itemize}
 }
 
 \historia{MTB-46}{Como administrador, quiero eliminar una obra}{
-
+Los administradores deben ver un botón de \texttt{Eliminar} en el menú de una obra para poder eliminarla.
 }{
 \begin{itemize}
-    \item 
+    \item Si no soy administrador, no puedo realizar la acción.
+    \item Cuando se elimina la obra, ya no le aparece a los miembros.
 \end{itemize}
 }{
 \begin{itemize}
-    \item 
+    \item Consulta a base de datos para saber si el usuario es administrador.
+    \item Botón en el menú de la vista del detalle de obra para eliminar la obra.
+    \item Petición a base de datos para eliminar la obra y obtener la clave del archivo.
+    \item Petición al servicio de almacenamiento de objetos, si corresponde, para eliminar el archivo.
 \end{itemize}
 }
 
@@ -426,11 +588,17 @@ MTB-38 & Como usuario, quiero ver una página web con información sobre Mordent
 En el menú de un evento, los administradores deben ver una opción para ver el resumen de asistencia a ese evento.
 }{
 \begin{itemize}
-    \item 
+    \item Si no soy administrador, no puedo realizar la acción.
+    \item Aparece un símbolo verde en los miembros que han respondido que asistirán.
+    \item Aparece un símbolo rojo en los miembros que han respondido que no asistirán.
+    \item Aparece la justificación opcional de los miembros que han respondido de forma negativa.
 \end{itemize}
 }{
 \begin{itemize}
-    \item 
+    \item Consulta a base de datos para saber si el usuario es administrador.
+    \item Vista de resumen de asistencia.
+    \item Botón de consultar resumen de asistencia en menú del detalle de evento.
+    \item Consulta a base de datos para conocer la asistencia al evento.
 \end{itemize}
 }
 
@@ -438,11 +606,16 @@ En el menú de un evento, los administradores deben ver una opción para ver el 
 A través del menú de una agrupación, se deben poder editar sus atributos (nombre, descripción...).
 }{
 \begin{itemize}
-    \item 
+    \item Si no soy administrador, no puedo realizar la acción.
+    \item Puedo seleccionar qué campo quiero editar.
 \end{itemize}
 }{
 \begin{itemize}
-    \item 
+    \item Consulta a base de datos para saber si el usuario es administrador.
+    \item Botón de \texttt{Editar} en el menú del detalle de agrupación.
+    \item Menú para seleccionar qué campo se desea editar.
+    \item Conversación para preguntar por el nuevo valor del campo.
+    \item Petición a base de datos para modificar el registro de la agrupación.
 \end{itemize}
 }
 
@@ -450,11 +623,15 @@ A través del menú de una agrupación, se deben poder editar sus atributos (nom
 Cada día a una hora determinada todos los miembros que estén invitados a un evento o más recibirán una notificación con un resumen de todos los eventos de ese día.
 }{
 \begin{itemize}
-    \item 
+    \item Si no estoy invitado a ningún evento en un día, no recibo el recordatorio.
+    \item Si estoy invitado a un evento o más en un día, recibo solo un recordatorio resumiendo todos los eventos de ese día.
 \end{itemize}
 }{
 \begin{itemize}
-    \item 
+    \item Consulta a base de datos para saber si el usuario es administrador.
+    \item Configuración de \texttt{cron} para enviar mensajes todos los días.
+    \item Consulta a base de datos para conocer las invitaciones a eventos que se producen hoy.
+    \item Envío de mensajes a todos los miembros con al menos una invitación para hoy.
 \end{itemize}
 }
 
@@ -462,11 +639,13 @@ Cada día a una hora determinada todos los miembros que estén invitados a un ev
 Cuando un administrador invita a un miembro a un evento, ese miembro debe recibir una notificación.
 }{
 \begin{itemize}
-    \item 
+    \item Si no he sido invitado a un evento, no recibo notificación.
+    \item Si he sido invitado a un evento, recibo una notificación.
+    \item Si he sido invitado a un evento pero no ha sido publicado, no recibo notificación.
 \end{itemize}
 }{
 \begin{itemize}
-    \item 
+    \item Envío de notificaciones a los invitados al evento.
 \end{itemize}
 }
 
@@ -474,11 +653,16 @@ Cuando un administrador invita a un miembro a un evento, ese miembro debe recibi
 A través del menú de un evento se deben poder editar sus atributos (nombre, descripción, fecha...).
 }{
 \begin{itemize}
-    \item 
+    \item Si no soy administrador, no puedo realizar la acción.
+    \item Puedo seleccionar qué campo quiero editar.
 \end{itemize}
 }{
 \begin{itemize}
-    \item 
+    \item Consulta a base de datos para saber si el usuario es administrador.
+    \item Botón de \texttt{Editar} en el menú del detalle de evento.
+    \item Menú para seleccionar qué campo se desea editar.
+    \item Conversación para preguntar por el nuevo valor del campo.
+    \item Petición a base de datos para modificar el registro del evento.
 \end{itemize}
 }
 
@@ -486,11 +670,16 @@ A través del menú de un evento se deben poder editar sus atributos (nombre, de
 A través del menú de una obra se debe poder editar su nombre y tipo.
 }{
 \begin{itemize}
-    \item 
+    \item Si no soy administrador, no puedo realizar la acción.
+    \item Puedo seleccionar qué campo quiero editar.
 \end{itemize}
 }{
 \begin{itemize}
-    \item 
+    \item Consulta a base de datos para saber si el usuario es administrador.
+    \item Botón de \texttt{Editar} en el menú del detalle de obra.
+    \item Menú para seleccionar qué campo se desea editar.
+    \item Conversación para preguntar por el nuevo valor del campo.
+    \item Petición a base de datos para modificar el registro de la obra.
 \end{itemize}
 }
 
@@ -498,11 +687,13 @@ A través del menú de una obra se debe poder editar su nombre y tipo.
 Cuando un miembro contesta su asistencia, todos los administradores de esa agrupación deben recibir una notificación.
 }{
 \begin{itemize}
-    \item 
+    \item Si no soy administrador, no recibo estas notificaciones.
+    \item Si el miembro ha justificado su no ausencia, en la notificación puedo ver la justificación.
 \end{itemize}
 }{
 \begin{itemize}
-    \item 
+    \item Consulta a base de datos para saber los administradores de una agrupación.
+    \item Envío de notificaciones de asistencia a los administradores.
 \end{itemize}
 }
 
@@ -510,11 +701,15 @@ Cuando un miembro contesta su asistencia, todos los administradores de esa agrup
 El administrador debe poder eliminar el documento de la partitura a través del menú de una obra.
 }{
 \begin{itemize}
-    \item 
+    \item Si no soy administrador, no puedo realizar la acción.
+    \item Si he eliminado la partitura, no se puede volver a descargar.
 \end{itemize}
 }{
 \begin{itemize}
-    \item 
+    \item Consulta a base de datos para saber si el usuario es administrador.
+    \item Consulta a base de datos para conocer la clave del archivo.
+    \item Petición al servicio de almacenamiento de objetos para eliminar el archivo.
+    \item Petición a base de datos para eliminar la clave del archivo.
 \end{itemize}
 }
 
@@ -522,11 +717,16 @@ El administrador debe poder eliminar el documento de la partitura a través del 
 El registro automático de errores permitirá analizar en tiempo real los problemas del sistema y solucionarlos eficientemente.
 }{
 \begin{itemize}
-    \item 
+    \item Al abrir \textbf{Sentry}, puedo ver un resumen de los errores que han ocurrido en el entorno de producción.
+    \item Para cada error que se haya producido, puedo ver los detalles de la línea de código y del usuario que envió el mensaje.
+    \item Si no añado la URL de \textbf{Sentry} a las variables de entorno, el código funciona igual excluyendo el registro remota de errores.
 \end{itemize}
 }{
 \begin{itemize}
-    \item 
+    \item Crear cuenta en \textbf{Sentry}.
+    \item Configurar proyecto de \textbf{Sentry} para la plataforma \texttt{Node.js}.
+    \item Modificar el código para capturar las excepciones en \textbf{Sentry}.
+    \item Modificar el código para añadir la información del usuario a las excepciones capturadas en \textbf{Sentry}.
 \end{itemize}
 }
 
@@ -534,11 +734,17 @@ El registro automático de errores permitirá analizar en tiempo real los proble
 La \textit{landing page} debe mostrar un pequeño tutorial y enlaces interesantes al código fuente y a la memoria del proyecto.
 }{
 \begin{itemize}
-    \item 
+    \item Al abrir la \textit{landing page}, hay un botón bien visible para probar el bot.
+    \item Al abrir la \textit{landing page}, puedo acceder a un tutorial corto de uso del bot.
 \end{itemize}
 }{
 \begin{itemize}
-    \item 
+    \item Crear página web usando \texttt{docusaurus}.
+    \item Decidir qué servicio de alojamiento es más conveniente y rápido.
+    \item Alojar la página web en un servicio en la nube.
+    \item Registrar dominio \href{https://mordente.es}{mordente.es}.
+    \item Asignar el dominio \href{https://mordente.es}{mordente.es} a la página que hemos creado.
+    \item Crear redirecciones por parte del servidor para URLs útiles del proyecto.
 \end{itemize}
 }
 
