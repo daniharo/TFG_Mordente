@@ -667,11 +667,10 @@ Una vez configurado, comprobamos que cuando hay actualizaciones disponibles obte
 \section{La función de editar}
 % https://github.com/daniharo/mordente/commit/3e630b1fe45c479f836f21de003e7f6cc7f0bbee
 
-La última funcionalidad que falta para que el bot sea usable es la de \textbf{editar} elementos, ya sean agrupaciones, eventos u obras. 
+La última funcionalidad que falta para que el bot sea usable es la de \textbf{editar} elementos, ya sean agrupaciones, eventos u obras.
 
-Dado que el tiempo restante para terminar el proyecto es limitado, se ha decidido implementar solo la edición de agrupaciones de forma que la edición de eventos y obras estaría preparada, solo pendiente de readaptar el código ya implementado.
 
-El flujo del usuario será:
+Para el caso de las agrupaciones, el flujo del usuario será:
 \begin{enumerate}
     \item Abrir el detalle de la agrupación.
     \item Pulsar el botón de ``Editar'' debajo del detalle, que solo aparecerá si es usuario administrador.
@@ -684,6 +683,8 @@ El flujo del usuario será:
 Para ello, implementamos el menú para seleccionar qué atributo vamos a editar (\texttt{editEnsembleMenu}) y una nueva conversación para cada atributo que se puede editar: \texttt{editEnsembleNameConversation}, \texttt{editEnsembleDescriptionConversation}...
 
 Los cambios en el código se pueden ver en el repositorio\footnote{\url{https://github.com/daniharo/mordente/commit/3e630b1}}.
+
+Para eventos y obras, el flujo que debe seguir el usuario y el código necesario es análogo.
 
 
 \section{Página web: \href{https://mordente.es}{\texttt{mordente.es}}}
