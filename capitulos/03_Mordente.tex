@@ -4,15 +4,15 @@ Tras estudiar la motivación de este trabajo y habiendo justificado la necesidad
 
 El nombre que hemos decidido para nuestro producto es \textbf{Mordente}. Un \textbf{mordente} en música es, según la RAE, una ``nota o grupo de notas de adorno que acompañan a una principal''. Nuestro bot va a acompañar a las agrupaciones musicales para que su actividad principal sea siempre la música, y la gestión sea algo secundario y automatizado.
 
-Para esta fase se va a hacer uso de la llamada metodología de Diseño Centrado en el Usuario (UCD por sus siglas en inglés), descrita en la sección \ref{section:desarrolloMordente}. Posteriormente en la sección \ref{section:personasFicticias} analizaremos cómo diversas personas ficticias pueden presentar distintas necesidades respecto a nuestra aplicación. En la sección \ref{section:feedbackCaptureGrid} resumiremos en un \textit{Feedback Capture Grid} los puntos positivos, negativos, dudas e ideas a partir de la idea. Por último describiremos la propuesta en la sección \ref{section:descripcionPropuesta}.
+Para esta fase se va a hacer uso de la llamada metodología de \textbf{Diseño Centrado en el Usuario} (UCD por sus siglas en inglés), descrita en la sección \ref{section:desarrolloMordente}. Posteriormente en la sección \ref{section:personasFicticias} analizaremos cómo diversas personas ficticias pueden presentar distintas necesidades respecto a nuestra aplicación. En la sección \ref{section:feedbackCaptureGrid} resumiremos en un \textit{Feedback Capture Grid} los puntos positivos, negativos, dudas e ideas a partir de la idea. Por último describiremos la propuesta en la sección \ref{section:descripcionPropuesta}.
 
 \section{Desarrollo de Mordente}\label{section:desarrolloMordente}
 
-En este punto se van a establecer las metodologías de diseño a seguir durante el desarrollo de la herramienta, de modo que tengamos disponibles unas guías a seguir durante el proceso y unas herramientas que nos permitan definir la funcionalidad esperada y concretar las necesidades de los futuros usuarios.
+En este punto se van a establecer las metodologías de diseño con las que proceder durante el desarrollo de la herramienta, de modo que tengamos disponibles unas guías a seguir durante el proceso y unas herramientas que nos permitan definir la funcionalidad esperada y concretar las necesidades de los futuros usuarios.
 
 \subsection{Diseño Centrado en el Usuario}
 
-El Diseño Centrado en el Usuario está estrechamente relacionado con el Diseño Centrado en el Humano\cite{w3UCD}. Este último ``es una aproximación al desarrollo de sistemas interactivos que se centra específicamente en hacer sistemas usables. Es una actividad multi-disciplinar'' \cite{isoHCD}.
+El \textbf{Diseño Centrado en el Usuario} está estrechamente relacionado con el \textbf{Diseño Centrado en el Humano}\cite{w3UCD}. Este último ``es una aproximación al desarrollo de sistemas interactivos que se centra específicamente en hacer sistemas usables. Es una actividad multi-disciplinar'' \cite{isoHCD}.
 
 Los principios\cite{jeffreyUCD} en los que se fundamenta se pueden resumir en:
 
@@ -144,52 +144,55 @@ Primeramente se determinan unas características y funcionalidades mínimas para
 \begin{enumerate}
     \item Agrupaciones:
     \begin{enumerate}
-        \item {[Administrador]} Crear nuevas agrupaciones
-        \item {[Administrador]} Eliminar agrupaciones
-        \item {[Administrador]} Invitar miembros a la agrupación
-        \item {[Administrador]} Eliminar miembros de la agrupación
-        \item {[Usuario]} Unirse a una agrupación existente
-        \item {[Usuario]} Salirse de una agrupación
-        \item {[Usuario]} Ver todas las agrupaciones en las que estoy inscrito
-        \item {[Usuario]} Ver el detalle de una agrupación
+        \item {[Administrador]} Crear nuevas agrupaciones.
+        \item {[Administrador]} Eliminar agrupaciones.
+        \item {[Administrador]} Editar agrupaciones.
+        \item {[Administrador]} Invitar miembros a la agrupación.
+        \item {[Administrador]} Eliminar miembros de la agrupación.
+        \item {[Usuario]} Unirse a una agrupación existente.
+        \item {[Miembro]} Salirse de una agrupación.
+        \item {[Miembro]} Ver todas las agrupaciones en las que estoy inscrito.
+        \item {[Miembro]} Ver el detalle de una agrupación.
     \end{enumerate}
     \item Eventos:
     \begin{enumerate}
-        \item {[Administrador]} Crear nuevos eventos en mi agrupación
-        \item {[Administrador]} Eliminar eventos
-        \item {[Administrador]} Invitar miembros a un evento
-        \item {[Administrador]} Eliminar miembros de un evento
-        \item {[Usuario]} Ver los eventos próximos
-        \item {[Usuario]} Ver el detalle de un evento
+        \item {[Administrador]} Crear nuevos eventos en mi agrupación.
+        \item {[Administrador]} Eliminar eventos.
+        \item {[Administrador]} Editar eventos.
+        \item {[Administrador]} Invitar miembros a un evento.
+        \item {[Administrador]} Eliminar miembros de un evento.
+        \item {[Miembro]} Ver los eventos próximos.
+        \item {[Miembro]} Ver el detalle de un evento.
     \end{enumerate}
     \item Asistencia:
     \begin{enumerate}
-        \item {[Administrador]} Ver qué usuarios han respondido su asistencia a un evento
-        \item {[Usuario]} Responder la asistencia a un evento
-        \item {[Usuario]} Registrar la razón por la que no puedo asistir a un evento
+        \item {[Administrador]} Ver qué usuarios han respondido su asistencia a un evento.
+        \item {[Miembro]} Responder la asistencia a un evento.
+        \item {[Miembro]} Registrar la razón por la que no puedo asistir a un evento.
     \end{enumerate}
     \item Recordatorios:
     \begin{enumerate}
-        \item {[Usuario]} Recibir recordatorios diarios con los eventos de ese día
+        \item {[Miembro]} Recibir recordatorios diarios con los eventos de ese día.
     \end{enumerate}
     \item Repertorio:
     \begin{enumerate}
-        \item {[Administrador]} Añadir una obra a la agrupación
-        \item {[Administrador]} Eliminar una obra la agrupación
-        \item {[Administrador]} Subir partituras de las obras
-        \item {[Administrador]} Eliminar una obra de la agrupación
-        \item {[Usuario]} Ver las obras de mi agrupación
-        \item {[Usuario]} Descargar las partituras de mi agrupación
+        \item {[Administrador]} Añadir una obra a la agrupación.
+        \item {[Administrador]} Eliminar una obra la agrupación.
+        \item {[Administrador]} Editar una obra.
+        \item {[Administrador]} Subir partituras de las obras.
+        \item {[Administrador]} Eliminar una obra de la agrupación.
+        \item {[Miembro]} Ver las obras de mi agrupación.
+        \item {[Miembro]} Descargar las partituras de mi agrupación.
     \end{enumerate}
     \item Administración:
     \begin{enumerate}
-        \item {[Administrador]} Añadir administradores
-        \item {[Administrador]} Quitar administradores
+        \item {[Administrador]} Añadir administradores.
+        \item {[Administrador]} Quitar administradores.
     \end{enumerate}
     \item Notificaciones:
     \begin{enumerate}
-        \item {[Administrador]} Recibir notificación cuando un miembro responde sobre su asistencia
-        \item {[Usuario]} Recibir notificación cuando se asigna un evento
+        \item {[Administrador]} Recibir notificación cuando un miembro responde sobre su asistencia.
+        \item {[Miembro]} Recibir notificación cuando se asigna un evento.
     \end{enumerate}
 \end{enumerate}
 
@@ -217,12 +220,12 @@ Los sprints corresponden a objetivos concretos del producto, por lo que el resto
 
 \begin{enumerate}
 
-\item \textbf{Primer sprint:} Se va a implementar un bot de prueba con funcionalidad de actualización de una base de datos de palabras. Este bot servirá como exploración de las distintas funcionalidades que se usarán posteriormente.
+\item \textbf{Primer sprint:} Se va a implementar un bot de prueba con funcionalidad de actualización de una base de datos de notas. Este bot servirá como exploración de las distintas funcionalidades que se usarán posteriormente.
 \item \textbf{Segundo sprint:} Se va a implementar la lógica para responder a los comandos de los usuarios, así como la funcionalidad para crear agrupaciones y unirse a una agrupación.
-\item \textbf{Tercer sprint:} Se van a crear diversos plugins, uno para permitir guardar la sesión del usuario en la base de datos y otro para usar un menú de calendario que sirva para fijar las fechas de eventos. Estos plugins serán publicados.
+\item \textbf{Tercer sprint:} Se van a crear diversos \textit{plugins}, uno para permitir guardar la sesión del usuario en la base de datos y otro para usar un menú de calendario que sirva para fijar las fechas de eventos. Estos \textit{plugins} serán publicados.
 \item \textbf{Cuarto sprint:} Se añadirá la funcionalidad básica relacionada con los eventos, como la creación y eliminación. También permitir a un miembro salirse de una agrupación, así como habilitar enlaces de invitación.
-\item \textbf{Quinto sprint:} Se podrán añadir y eliminar obras a las agrupaciones. Función de edición de agrupaciones, eventos y obras. Añadir y quitar administradores.
-\item \textbf{Sexto sprint:} Notificaciones de asignación de eventos y adición de miembros a las agrupaciones además de recordatorios de los eventos diarios.
+\item \textbf{Quinto sprint:} Se podrán añadir y eliminar obras a las agrupaciones. Función de edición de agrupaciones. Añadir y quitar administradores.
+\item \textbf{Sexto sprint:} Notificaciones de asignación de eventos y adición de miembros a las agrupaciones además de recordatorios de los eventos diarios. Edición de eventos y obras.
 \end{enumerate}
 
 \subsubsection{Planificación temporal}
@@ -244,18 +247,18 @@ Este exceso de tiempo no se estima perjudicial dada la naturaleza formativa de e
     \centering
     \begin{tabular}{|c|c|}
         \hline
-        Toma de decisiones & 10 horas \\
+        Toma de decisiones & 20 horas \\
         \hline
         Formación   & 100 horas \\
         \hline
-        Implementación & 150 horas \\
+        Implementación & 215 horas \\
         \hline
-        Pruebas & 10 horas \\
+        Pruebas & 20 horas \\
         \hline
-        Memoria & 150 horas \\
+        Memoria & 170 horas \\
         \hline
         \hline
-        Total & 420 horas \\
+        Total & 525 horas \\
         \hline
     \end{tabular}
     \caption{Planificación temporal}
@@ -265,13 +268,13 @@ Este exceso de tiempo no se estima perjudicial dada la naturaleza formativa de e
 
 \subsubsection{Diagrama de Gantt}
 
-El diagrama de Gantt que se puede ver en la figura \ref{fig:gantt} se ha construido teniendo en cuenta que cada día se van a trabajar 2 horas, por lo tanto se van a trabajar 210 días, o lo que es lo mismo, 42 semanas.
+El diagrama de Gantt que se puede ver en la figura \ref{fig:gantt} se ha construido teniendo en cuenta que cada día se van a trabajar $2.5$ horas, por lo tanto se van a trabajar 210 días, o lo que es lo mismo, 42 semanas.
 
 Así mismo, no se concretan las fechas reales ya que pueden cambiar por factores externos durante el desarrollo del proyecto.
 
 \begin{figure}[h]
 \centering
-\includegraphics[angle=90,origin=c,width=0.85\textwidth]{imagenes/gantt.png}
+\includegraphics[angle=90,origin=c,width=0.75\textwidth]{imagenes/gantt.png}
 \caption{Diagrama de Gantt del proyecto}
 \label{fig:gantt}
 \end{figure}
@@ -296,10 +299,10 @@ $${\textnormal{coste por hora: }} \frac{15860.56}{1920} = 8.26 {\textnormal{ \te
         \hline
         \textbf{Concepto} & \textbf{Unidades} & \textbf{\texteuro/unidad} & \textbf{Total} \\
         \hline
-        Hora de Programador Junior & 420 & 8,26 & 3469,2 \\
+        Hora de Programador Junior & 525 & 8,26 & 4336,5 \\
         \hline
         \hline
-        Total & & & 3469,2 \\
+        \textbf{Total} & & & 4336,5 \\
         \hline
     \end{tabular}
     \caption{Presupuesto del desarrollo.}
@@ -316,12 +319,12 @@ En el presupuesto de mantenimiento del producto (tabla \ref{tab:presupuestoMante
         \hline
         Hora de Programador Junior & 100 & 8,26 & 826 \\
         \hline
-        Servicio de almacenamiento de objetos 5GB: \textbf{DigitalOcean Spaces} & 1 & 5,86 & 5,86 \\
+        \makecell[l]{Servicio de almacenamiento de objetos 5GB:\\ \textbf{DigitalOcean Spaces}} & 1 & 5,86 & 5,86 \\
         \hline
         Servidor privado virtual en \textbf{DigitalOcean} con 1GB de RAM y 25GB de almacenamiento & 1 & 8,21 & 8,21 \\
         \hline
         \hline
-        Total al mes & & & 840,07 \\
+        \textbf{Total al mes} & & & 840,07 \\
         \hline
     \end{tabularx}
     \caption{Presupuesto del mantenimiento del producto.}

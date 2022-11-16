@@ -1,6 +1,6 @@
 \chapter{Diseño de la interfaz de usuario}\label{chapter:diu}
 
-A nivel de diseño de la interfaz, lo principal es reseñar que nos encontramos con una gran limitación: no podemos desarrollar una interfaz totalmente a nuestro gusto\footnote{El 16 de abril de 2022, la API para bots Telegram fue actualizada\cite{telegramWebappUpdate} con una nueva función para abrir una aplicación web sin salir del bot como respuesta a varios eventos. Sin embargo, esa opción se ha descartado para este trabajo ya que la implementación del bot se encontraba en estado avanzado y se ha analizado que las complicaciones técnicas de implementar esta nueva interfaz extenderían el tiempo de desarrollo considerablemente. Se propone como mejora futura.}, sino que debemos usar la API que nos proporciona Telegram.
+A nivel de diseño de la interfaz, lo principal es reseñar que nos encontramos con una gran limitación: no podemos desarrollar una interfaz totalmente a nuestro gusto\footnote{El 16 de abril de 2022, la API para bots de Telegram fue actualizada\cite{telegramWebappUpdate} con una nueva función para abrir una aplicación web sin salir del bot como respuesta a varios eventos. Sin embargo, esa opción se ha descartado para este trabajo ya que la implementación del bot se encontraba en estado avanzado y se ha analizado que las complicaciones técnicas de implementar esta nueva interfaz extenderían el tiempo de desarrollo considerablemente. Se propone como mejora futura.}, sino que debemos usar la API que nos proporciona Telegram.
 
 Es decir, \textbf{Mordente bot} va a operar dentro de un chat, y como todo chat, la interfaz estará compuesto sola y únicamente por mensajes, que podrán ser de distinto tipo (texto, imágenes, documentos, stickers...). La única adición que aporta Telegram a esta interfaz es que los mensajes que envía el bot pueden adjuntar un menú de opciones que el usuario puede pulsar para pedir al bot una determinada acción, además de tener un menú de comandos disponible continuamente junto al cuadro de introducción de texto.
 
@@ -55,7 +55,7 @@ En este caso, toda la información sobre el elemento se muestra en el mensaje de
 
 \subsubsection{Creación de elemento}
 
-La interfaz más sencilla y equivalente a un formulario para crear un elemento es una conversación: el bot va preguntando cada campo requerido al usuario, que puede saltar los campos opcionales mediante un botón de ``Saltar''.
+La interfaz más sencilla y equivalente a un formulario para crear un elemento es una conversación: el bot va preguntando cada campo requerido al usuario, que puede saltar los campos opcionales mediante un botón de \texttt{Saltar}.
 Idealmente, para la introducción de fechas se debería mostrar un menú con forma de calendario. Ver figura \ref{fig:disenyo_creacion}.
 
 \begin{figure}[h]
@@ -73,11 +73,11 @@ Para que la marca \textbf{Mordente} sea reconocible por los usuarios ya activos 
 
 Para el logotipo hemos escogido la tipografía \textbf{Eczar} debido a su parecido con la mayoría de tipografías utilizadas para la edición de partituras.
 
-El resto de la aplicación utilizará la tipografía por defecto del sistema, ya que esto es controlado por \textbf{Telegram}. La \textit{landing page} reproducirá este mismo comportamiento, de modo que todo el contenido excepto el logotipo utilizará la tipografía del sistema.
+El resto de la aplicación utilizará la tipografía por defecto del sistema, ya que esto es controlado por \textbf{Telegram}. La \textit{landing page} reproducirá este mismo comportamiento, de modo que todo el contenido excepto el logotipo utilizará la tipografía nativa del sistema.
 
 \subsection{Logotipo}
 
-El logotipo usará un color \textbf{negro piano} (\#000000) con símbolo blanco.
+El logotipo usará un color \textbf{negro piano} (\#000000) con símbolo \textbf{blanco} (\#FFFFFF).
 
 Se compondrá del texto \textbf{mordente} en la tipografía escogida y un símbolo de mordente a la izquierda sobre el texto, ligeramente sobresaliendo por la izquierda del espacio que ocupa el texto.
 

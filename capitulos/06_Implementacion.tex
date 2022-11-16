@@ -574,7 +574,7 @@ Todo sistema que pretenda ser \textbf{fiable} para los usuarios debe implementar
 
 Esto lo podemos solucionar fácilmente añadiendo un nuevo servicio a la infraestructura montada en \texttt{docker compose}.
 
-Haciendo una búsqueda, encontramos que la imagen de \texttt{docker} \path{eeshugerman/postgres-backup-s3} tiene lo que necesitamos: realiza una copia de seguridad en un \textit{bucket} de S3 (recordemos que hemos creado uno en la sección \ref{subsection:crearBucket}) con la configuración dada.
+Haciendo una búsqueda, encontramos que la imagen de \texttt{docker} \\\path{eeshugerman/postgres-backup-s3} tiene lo que necesitamos: realiza una copia de seguridad en un \textit{bucket} de S3 (recordemos que hemos creado uno en la sección \ref{subsection:crearBucket}) con la configuración dada.
 
 Las variables de configuración que le tenemos que proporcionar a este servicio son todas las relacionadas con el \textit{bucket S3}, explicadas en la tabla \ref{tab:envS3}, las relacionadas con el acceso a la base de datos, y las relativas a la copia de seguridad que se detallan en la tabla \ref{tab:envBackup}.
 
@@ -625,7 +625,7 @@ Cuando cambiamos el código del proyecto, para actualizar el código que tenemos
 \begin{enumerate}
     \item Acceder mediante \texttt{ssh} al servidor.
     \item Actualizar el código con \texttt{git pull}.
-    \item Reconstruir la imagen de \texttt{docker} usando el comando \texttt{docker compose -f docker-compose.yml -f docker-compose.prod.yml up -{}-build}.
+    \item Reconstruir la imagen de \texttt{docker} usando el comando \\ \texttt{docker compose -f docker-compose.yml \textbackslash \\-f docker-compose.prod.yml up -{}-build}
 \end{enumerate}
 
 Dado que estos pasos se van a seguir de forma repetitiva cada vez que hayamos hecho cambios en el código que queramos que entren al entorno de producción, es obvio que es una tarea que disfrutaría de una automatización para que ese tiempo se pueda dedicar a otra tarea.
@@ -814,28 +814,28 @@ En la página del proyecto en \textbf{Sentry} podemos observar que los registros
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.75\textwidth]{imagenes/implementacion/sentry_creando_proyecto.png}
+\includegraphics[width=0.9\textwidth]{imagenes/implementacion/sentry_creando_proyecto.png}
 \caption{Creando el proyecto de \textbf{Sentry}}
 \label{fig:sentryCreandoProyecto}
 \end{figure}
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.75\textwidth]{imagenes/implementacion/sentry_codigo_generado.png}
+\includegraphics[width=0.9\textwidth]{imagenes/implementacion/sentry_codigo_generado.png}
 \caption{Código generado por \textbf{Sentry} para incluir en un proyecto}
 \label{fig:sentryCodigoGenerado}
 \end{figure}
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.75\textwidth]{imagenes/implementacion/sentry_esperando_log.png}
+\includegraphics[width=0.9\textwidth]{imagenes/implementacion/sentry_esperando_log.png}
 \caption{Esperando al primer log de \textbf{Sentry}}
 \label{fig:sentryEsperandoLog}
 \end{figure}
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.75\textwidth]{imagenes/implementacion/sentry_log.png}
+\includegraphics[width=0.9\textwidth]{imagenes/implementacion/sentry_log.png}
 \caption{Registro de un error en \textbf{Sentry}}
 \label{fig:sentryLog}
 \end{figure}
